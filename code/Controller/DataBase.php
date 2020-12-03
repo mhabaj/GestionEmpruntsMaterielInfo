@@ -13,7 +13,7 @@ class DataBase
         'username' => 'root',
         'password' => ''
     );
-
+    // test
     public function __construct()
     {
         $this->connect();
