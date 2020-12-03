@@ -3,8 +3,6 @@
 
 class DataBase
 {
-
-
     private $_con;
     private $_config = array(
         'driver' => 'mysql',
