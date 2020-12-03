@@ -4,7 +4,7 @@ include("DataBase.php");
 abstract class User
 {
     protected $_idUser;
-    protected $_idRole;
+    protected $_matriculeUser;
     protected $_email;
     protected $_password;
     protected $_name;
@@ -107,20 +107,22 @@ abstract class User
         $this->_idUser = $idUser;
     }
 
+
+
     /**
      * @return mixed
      */
-    public function getIdRole()
+    public function getMatriculeUser()
     {
-        return $this->_idRole;
+        return $this->_matriculeUser;
     }
 
     /**
-     * @param mixed $idRole
+     * @param mixed $matriculeUser
      */
-    public function setIdRole($idRole)
+    public function setMatriculeUser($matriculeUser): void
     {
-        $this->_idRole = $idRole;
+        $this->_matriculeUser = $matriculeUser;
     }
 
 
@@ -142,7 +144,7 @@ abstract class User
             //Inserer valeurs
             $requete = "SELECT * FROM users WHERE matricule_user = ? AND password_user= ?";
             $stmt = $con->prepare($requete);
-            $stmt->execute([$this->pseudo, $hash_mdp]);
+            $stmt->execute([$this->_matriculeUser, $hash_mdp]);
             $result = $stmt->rowCount();
 
             if($result == 1) {
@@ -152,14 +154,13 @@ abstract class User
                 $_SESSION['PSEUDO'] = $infoUser['PSEUDO'];
                 $User_ID = $infoUser;
 
-                $msg .= "<p>Connexion reussie</p>";
-                echo "user connecté";
                 redirect('training.php');
             } else {
-                $msg .= "<p>Mauvaise combis pseudo/mdp</p>";
+
             }
 
     }
+
 
 
 
