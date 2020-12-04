@@ -12,13 +12,14 @@ class Borrow
     /**
      * Borrow constructor.
      * @param $_ref_equip
+     * @throws Exception
      */
 
     public function __construct($_ref_equip,$_end_date)
     {
         $this->_ref_equip = $_ref_equip;
         $this->_end_date = $_end_date;
-        $date =  date("Y/m/d");
+        $date =  date("d/m/Y");
         $this->_start_date = $date;
 
         $bdd = new DataBase();
@@ -29,7 +30,9 @@ class Borrow
         $resultSelect = $answerSelect->fetch();
 
         $this->_device_id = $resultSelect['id_device'];
-        $this->startBorrow($this->_end_date);
+
+        if ($this->startBorrow($this->_end_date) == False)
+            throw new Exception('Erreur Création Borrow');
 
     }
 
@@ -53,17 +56,18 @@ class Borrow
             $con->query($requestInsert1);
 
             $con->commit();
+            return TRUE;
         }
-        catch(PDOExecption $e)
+        catch(PDOException $e)
         {
             $con->rollback();
             print "Error!: " . $e->getMessage() . "</br>";
+            return FALSE;
         }
     }
 
     public function endBorrow()
     {
-        //mettre is available a false avec le bon id device
         $date =  date("Y/m/d");
         $this->_end_date = $date;
 
@@ -78,11 +82,14 @@ class Borrow
 
             $requestUpdate2 = "UPDATE borrow_info SET enddate_borrow = $this->_end_date,isActive = FALSE WHERE id_borrow = $this->id_borrow  ;";
             $con->query($requestUpdate);
+            return TRUE;
         }
-        catch(PDOExecption $e)
+        catch(PDOException $e)
         {
             $con->rollback();
             print "Error!: " . $e->getMessage() . "</br>";
+            return FALSE;
         }
     }
 }
+
