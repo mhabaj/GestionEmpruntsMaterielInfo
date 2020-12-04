@@ -28,8 +28,13 @@
     <property name="settings.editor.selected.configurable" value="ssh.settings" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Programmes\wamp64\www\GestionEmpruntsMaterielInfo\code\Model" />
+    </key>
+  </component>
   <component name="RunManager">
-    <configuration name="User.php" type="PhpLocalRunConfigurationType" factoryName="PHP Console" temporary="true" path="$PROJECT_DIR$/code/Controller/User.php">
+    <configuration name="User.php" type="PhpLocalRunConfigurationType" factoryName="PHP Console" temporary="true" path="$PROJECT_DIR$/code/Model/User.php">
       <method v="2" />
     </configuration>
     <recent_temporary>
@@ -46,7 +51,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1607027890758</updated>
-      <workItem from="1607027894614" duration="10643000" />
+      <workItem from="1607027894614" duration="14552000" />
     </task>
     <servers />
   </component>
