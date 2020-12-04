@@ -8,7 +8,7 @@ include("../Model/User.php");
 ?>
     <body>
 
-        <form action="" method="POST">
+        <form method="POST" enctype="multipart/form-data">
             <h1>Connexion</h1>
 
             <label><b>Nom d'utilisateur</b></label>
@@ -17,17 +17,17 @@ include("../Model/User.php");
             <label><b>Mot de passe</b></label>
             <input type="password" placeholder="Entrer le mot de passe" name="password" required>
 
-            <input type="submit" id='submit' value='Connexion' >
-            <?php
-            if(isset($_GET['erreur'])){
-                $err = $_GET['erreur'];
-                if($err==1 || $err==2)
-                    echo "<p style='color:red'>Utilisateur ou mot de passe incorrect</p>";
-            }
-            ?>
+
+            <button type="submit" name="submitCo" class="btn btn-primary">Connexion</button>
+
+
         </form>
 
-
+        <?php
+        if(isset($_POST['submitCo'])){
+            echo "<p style='color:red'>Utilisateur ou mot de passe incorrect</p>";
+        }
+        ?>
 
 
     </body>
