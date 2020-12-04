@@ -1,7 +1,6 @@
 <?php
 
 include("Database.php");
-include("UserAdmin.php");
 
 class Equipment
 {
@@ -32,7 +31,7 @@ class Equipment
     {
         $date =  date("Y/m/d");
 
-        // Connection à la base de données
+        // Connection à la base de donnees
         $bdd = new DataBase();
         $con = $bdd->getCon();
 
@@ -46,31 +45,30 @@ class Equipment
         $con->beginTransaction();
         try
         {
-            $requestUpdate = "UPDATE DEVICE SET isAvailable = FALSE WHERE id_device = $id_device_tmp;";
-            $answerUpdate = $con->query($requestUpdate);
+            $requestUpdate = "UPDATE DEVICE SET isAvailable = FALSE WHERE id_device = '$id_device_tmp';";
+            $con->query($requestUpdate);
             $con->commit();
         }
         catch( PDOExecption $e )
         {
             $con->rollback();
             print "Error!: " . $e->getMessage() . "</br>";
-
         }
 
         $con->beginTransaction();
         try
         {
-            $requestInsert = "INSERT INTO borrow_info (startdate_borrow, enddate_borrow, isActive) VALUES ($date, ? , TRUE); ";
+            $requestInsert = "INSERT INTO borrow_info (startdate_borrow, enddate_borrow, isActive) VALUES ('$date', ? , TRUE); ";
             $myStatement = $con->prepare($requestInsert);
             $myStatement->execute([$_enddate]);
             $id_borrow_tmp = $con->lastInsertId("id_borrow");
 
-            $requestInsert1 = "INSERT INTO borrow (id_user, id_device, id_borrow) VALUES ($User.getIdUser(), $id_device_tmp , $id_borrow_tmp);";
-            $answerInsert = $con->query($requestInsert1);
+            $requestInsert1 = "INSERT INTO borrow (id_user, id_device, id_borrow) VALUES ('$_SESSION[id_user]', '$id_device_tmp' , '$id_borrow_tmp');";
+            $con->query($requestInsert1);
 
             $con->commit();
         }
-        catch( PDOExecption $e )
+        catch(PDOExecption $e)
         {
             $con->rollback();
             print "Error!: " . $e->getMessage() . "</br>";
@@ -78,7 +76,7 @@ class Equipment
     }
 
     /**
-     * @return RefEquip
+     * @return String RefEquip
      */
     public function getRefEquip()
     {
@@ -94,7 +92,7 @@ class Equipment
     }
 
     /**
-     * @return type_equip
+     * @return String type_equip
      */
     public function getTypeEquip()
     {
@@ -110,7 +108,7 @@ class Equipment
     }
 
     /**
-     * @return NameEquip
+     * @return String NameEquip
      */
     public function getNameEquip()
     {
@@ -126,7 +124,7 @@ class Equipment
     }
 
     /**
-     * @return BrandEquip
+     * @return String BrandEquip
      */
     public function getBrandEquip()
     {
@@ -142,7 +140,7 @@ class Equipment
     }
 
     /**
-     * @return VersionEquip
+     * @return String VersionEquip
      */
     public function getVersionEquip()
     {
@@ -156,4 +154,19 @@ class Equipment
     {
         $this->_version_equip = $version_equip;
     }
+
 }
+
+$idUser = 1;
+$mat = new Equipment('AX330','Tele','TV5042155','LG','10.4');
+$mat->borrowDevice('21/07/2020');
+
+
+
+
+
+
+
+
+
+
