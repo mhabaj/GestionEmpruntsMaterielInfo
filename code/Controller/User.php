@@ -180,17 +180,16 @@ class User
     public function update(){
         $bdd = new DataBase();
         $con = $bdd->getCon();
-        $query = "UPDATE users SET email_user = ?, matricule_user = ?, password_user = ?, name_user = ?, lastname_user = ?, phone_user = ?";
+        $query = "UPDATE users SET email_user = ?, matricule_user = ?, password_user = ?, name_user = ?, lastname_user = ?, phone_user = ? where users.id_user = ?";
         try {
             $con->beginTransaction();
             $stmt = $con->prepare($query);
             $stmt->execute([$this->getEmail(), $this->getMatriculeUser(), $this->getPassword(), $this->getName(), $this->getLastName(), $this->getPhone()]);
             $con->commit();
-        } catch(PDOExecption $e) {
+        } catch(PDOException  $e) {
             $con->rollback();
             print "Error!: " . $e->getMessage() . "</br>";
         }
-        closeCon();
     }
 }
 

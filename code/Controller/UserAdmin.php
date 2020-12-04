@@ -18,7 +18,7 @@ class UserAdmin extends User
         echo 'prenom :', $result['name_user'];
         echo 'nom :', $result['lastname_user'];
         echo 'numero :', $result['phone_user'];
-        closeCon();
+        $bdd->closeCon();
     }
     public function createUser($_matricule_user,$_email_user,$_password_user,$_name_user,$_lastname_user,$_phone,$_isAdmin_user)
     {
@@ -27,7 +27,7 @@ class UserAdmin extends User
         $query="INSERT INTO users (matricule_user,email_user,password_user,name_user,lastname_user,phone_user,isAdmin_user) VALUES (?,?,?,?,?,?,?);";
         $stmt=$con->prepare($query);
         $stmt->execute([$_matricule_user,$_email_user,$_password_user,$_name_user,$_lastname_user,$_phone,$_isAdmin_user]);
-        closeCon();
+        $bdd->closeCon();
     }
 
     /* */
@@ -43,12 +43,12 @@ class UserAdmin extends User
             $myStatement->execute([$_ref_equipDel]);
             $con->commit();
         }
-        catch(PDOExecption $e)
+        catch(PDOException  $e)
         {
             $con->rollback();
             print "Error!: " . $e->getMessage() . "</br>";
         }
-        closeCon();
+        $bdd->closeCon();
     }
 
     public function modifyEquipment($_ref_equipUpdate, $type_equipUpd, $brand_equipUpd,$name_equipUpd, $version_equipUpd)
@@ -64,12 +64,12 @@ class UserAdmin extends User
             $myStatement->execute([$_ref_equipUpdate,$type_equipUpd, $brand_equipUpd,$name_equipUpd,$version_equipUpd]);
             $con->commit();
         }
-        catch(PDOExecption $e)
+        catch(PDOException  $e)
         {
             $con->rollback();
             print "Error!: " . $e->getMessage() . "</br>";
         }
-        closeCon();
+        $bdd->closeCon();
     }
 
     public function createEquipment($_ref_equipNew, $type_equipNew, $brand_equipNew,$name_equipNew, $version_equipNew)
@@ -86,12 +86,12 @@ class UserAdmin extends User
             $myStatement->execute([$_ref_equipNew,$type_equipNew,$brand_equipNew,$name_equipNew,$version_equipNew]);
             $con->commit();
         }
-        catch(PDOExecption $e)
+        catch(PDOException  $e)
         {
             $con->rollback();
             print "Error!: " . $e->getMessage() . "</br>";
         }
-        closeCon();
+        $bdd->closeCon();
     }
 
     public function modifyRole($_id_user,$_new_isAdmin_user)
@@ -101,7 +101,7 @@ class UserAdmin extends User
         $query="UPDATE users SET isAdmin_user=? WHERE id_user=?;";
         $stmt=$con->prepare($query);
         $stmt->execute([$_new_isAdmin_user,$_id_user]);
-        closeCon();
+        $bdd->closeCon();
 
     }
     public function modifyAnyProfile($_id_role,$_matricule_user,$_email_user,$_password_user,$_name_user,$_lastname_user,$_phone,$_isAdmin_user)
@@ -111,7 +111,7 @@ class UserAdmin extends User
         $query="UPDATE users SET matricule_user=?,email_user=?,password_user=?,name_user=?,lastname_user=?,phone_user=?,isAdmin_user=? WHERE id_role=?;";
         $stmt=$con->prepare($query);
         $stmt->execute([$_matricule_user,$_email_user,$_password_user,$_name_user,$_lastname_user,$_phone,$_isAdmin_user,$_id_role]);
-        closeCon();
+        $bdd->closeCon();
     }
 
 }
