@@ -1,7 +1,7 @@
 <?php
 
 include "../Controller/DataBase.php";
-
+include "Borrow.php";
 class User
 {
     protected $_idUser;
@@ -11,6 +11,7 @@ class User
     protected $_name;
     protected $_lastName;
     protected $_phone;
+    protected $_borrowList = array();
     /**
      * @return mixed
      */
@@ -126,33 +127,56 @@ class User
     /**
      * @return mixed
      */
-    public function getIdRole()
+    public function getBorrowList()
     {
-        return $this->_idRole;
+        return $this->_borrowList;
     }
 
     /**
-     * @param mixed $idRole
+     * @param mixed $borrowList
      */
-    public function setIdRole($idRole)
+    public function setBorrowList($borrowList)
     {
-        $this->_idRole = $idRole;
+        $this->_borrowList = $borrowList;
     }
 
     /**
-     * @return mixed
+     * @param mixed $borrowList
      */
-    public function getProfile()
+    public function addBorrowToList($BorrowItem)
     {
-        return $this->_profile;
+        //array_push($this->_borrowList,$ref_equip_toBorrow);
+        $this->_borrowList[] = $BorrowItem;
     }
 
     /**
-     * @param mixed $profile
+     * @param $ref_equip_toBorrow
+     * @param $dateFin
+     * @return false
      */
-    public function setProfile($profile)
-    {
-        $this->_profile = $profile;
+    public function borrowEquipement($ref_equip_toBorrow, $dateFin){
+        try {
+            $newBorrow = new Borrow($ref_equip_toBorrow, $dateFin);
+        } catch (Exception $e) {
+            return False;
+        }
+
+    }
+
+    /**
+     * @param $id_borrow
+     */
+    public function endborrow($id_borrow){
+        $cpt_array = 0;
+        foreach($this->_borrowList as $borrow):
+            if($borrow->getIdBorrow() == $id_borrow ){
+                $borrow->endBorrow();
+                unset($this->_borrowList[$cpt_array]);
+                break;
+            }
+            $cpt_array+=1;
+        endforeach;
+
     }
 
     public function __construct(){
@@ -165,21 +189,20 @@ class User
         $stmt = $con->prepare($query);
         $stmt->execute([$this->_idUser]);
         $result = $stmt->fetch();
-
         $this->setEmail($result['email_user']);
         $this->setMatriculeUser($result['matricule_user']);
         $this->setPassword($result['password_user']);
         $this->setName($result['name_user']);
         $this->setLastName($result['lastname_user']);
         $this->setPhone($result['phone_user']);
-        $this->setIdRole($result['id_role']);
+        $this->_borrowList->
+        $bdd->closeCon();
     }
 
     public function connect() {
 
         $bdd = new DataBase();
         $con = $bdd->getCon();
-
 
         //Hashage du mdp
         $hash_mdp = sha1($this->_password);
@@ -195,42 +218,47 @@ class User
             $infoUser = $stmt->fetch();
             $_SESSION['id_user'] = $infoUser['id_user'];
             $this->_idUser = $infoUser;
+            $bdd->closeCon();
             return TRUE;
             //redirect('training.php'); A METTRE DANS LE CONTROLLER
         } else {
+            $bdd->closeCon();
             return FALSE;
         }
     }
-
     public function disconnect() {
         session_unset();
         session_destroy();
         return TRUE;
     }
+
     public function update(){
         $bdd = new DataBase();
         $con = $bdd->getCon();
-        $query = "UPDATE users SET email_user = ?,matricule_user = ?, password_user = ?, name_user = ?, lastname_user = ?, phone_user = ?";
+        $query = "UPDATE users SET email_user = ?, matricule_user = ?, password_user = ?, name_user = ?, lastname_user = ?, phone_user = ? where users.id_user = ?";
         try {
             $con->beginTransaction();
             $stmt = $con->prepare($query);
-            $stmt->execute([$this->getEmail(), $this->getMatriculeUser(), $this->getPassword(), $this->getName(), $this->getLastName(), $this->getPhone(), $this->getIdRole()]);
+            $stmt->execute([$this->getEmail(), $this->getMatriculeUser(), $this->getPassword(), $this->getName(), $this->getLastName(), $this->getPhone(), $this->_idUser]);
             $con->commit();
-        } catch(PDOExecption $e) {
+        } catch(PDOException $e) {
             $con->rollback();
             print "Error!: " . $e->getMessage() . "</br>";
         }
+        $bdd->closeCon();
     }
+
 }
 /*
 $user = new User();
 
 echo $user->getName() ." ";
 echo $user->getLastName() ." ";
-echo $user->getEmail() ."<br>";
-echo "Change nom -> Bob<br>";
+echo $user->getEmail() ."</br>";
+
 $user->setName("tom");
 $user->update();
+
 echo $user->getName() ." ";
 echo $user->getLastName() ." ";
 echo $user->getEmail();
