@@ -51,14 +51,47 @@ class UserAdmin extends User
         closeCon();
     }
 
-    public function modifyEquipment($_ref_equip)
+    public function modifyEquipment($_ref_equipUpdate, $type_equipUpd, $brand_equipUpd,$name_equipUpd, $version_equipUpd)
     {
+        $bdd = new DataBase();
+        $con = $bdd->getCon();
+        $con->beginTransaction();
 
+        try
+        {
+            $requestUpdate = "UPDATE EQUIPMENT SET ref_equip =?, type_equip =?, brand_equip =?, name_equip =?, version_equip =? ;";
+            $myStatement = $con->prepare($requestUpdate);
+            $myStatement->execute([$_ref_equipUpdate,$type_equipUpd, $brand_equipUpd,$name_equipUpd,$version_equipUpd]);
+            $con->commit();
+        }
+        catch(PDOExecption $e)
+        {
+            $con->rollback();
+            print "Error!: " . $e->getMessage() . "</br>";
+        }
+        closeCon();
     }
 
-    public function createEquipment($_ref_equip)
+    public function createEquipment($_ref_equipNew, $type_equipNew, $brand_equipNew,$name_equipNew, $version_equipNew)
     {
+        $bdd = new DataBase();
+        $con = $bdd->getCon();
+        $con->beginTransaction();
 
+        try
+        {
+            $requestCreate = " INSERT INTO equipment (ref_equip, type_equip, brand_equip, name_equip,version_equip) VALUES 
+            (?, ?, ?,?,?) ;";
+            $myStatement = $con->prepare($requestCreate);
+            $myStatement->execute([$_ref_equipNew,$type_equipNew,$brand_equipNew,$name_equipNew,$version_equipNew]);
+            $con->commit();
+        }
+        catch(PDOExecption $e)
+        {
+            $con->rollback();
+            print "Error!: " . $e->getMessage() . "</br>";
+        }
+        closeCon();
     }
 
     public function modifyRole($_id_user,$_new_isAdmin_user)
