@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="dataSourceStorageLocal">
+<<<<<<< Updated upstream
     <data-source name="bddprojet@localhost" uuid="8e89536e-1ead-4f32-aaec-da3cb156ac8c">
+=======
+    <data-source name="bddprojet@localhost" uuid="1c874756-0775-4781-9870-2b6a9ebffa57">
+>>>>>>> Stashed changes
       <database-info product="MySQL" version="8.0.21" jdbc-version="4.2" driver-name="MySQL Connector/J" driver-version="mysql-connector-java-8.0.21 (Revision: 33f65445a1bcc544eb0120491926484da168f199)" dbms="MYSQL" exact-version="8.0.21" exact-driver-version="8.0">
         <extra-name-characters>#@</extra-name-characters>
         <identifier-quote-string>`</identifier-quote-string>
