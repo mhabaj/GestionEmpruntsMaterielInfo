@@ -11,8 +11,6 @@ class User
     protected $_name;
     protected $_lastName;
     protected $_phone;
-    protected $_idRole;
-
     /**
      * @return mixed
      */
@@ -195,20 +193,24 @@ class User
         if($result == 1) {
             session_start();
             $infoUser = $stmt->fetch();
-            $_SESSION['ID'] = $infoUser['ID_USER'];
-            $_SESSION['PSEUDO'] = $infoUser['PSEUDO'];
-            $User_ID = $infoUser;
-
-            redirect('training.php');
+            $_SESSION['id_user'] = $infoUser['id_user'];
+            $this->_idUser = $infoUser;
+            return TRUE;
+            //redirect('training.php'); A METTRE DANS LE CONTROLLER
         } else {
-
+            return FALSE;
         }
     }
 
+    public function disconnect() {
+        session_unset();
+        session_destroy();
+        return TRUE;
+    }
     public function update(){
         $bdd = new DataBase();
         $con = $bdd->getCon();
-        $query = "UPDATE users SET email_user = ?,matricule_user = ?, password_user = ?, name_user = ?, lastname_user = ?, phone_user = ?, id_role = ?";
+        $query = "UPDATE users SET email_user = ?,matricule_user = ?, password_user = ?, name_user = ?, lastname_user = ?, phone_user = ?";
         try {
             $con->beginTransaction();
             $stmt = $con->prepare($query);
@@ -220,9 +222,8 @@ class User
         }
     }
 }
-
+/*
 $user = new User();
-
 echo $user->getName() ." ";
 echo $user->getLastName() ." ";
 echo $user->getEmail() ."<br>";
@@ -232,3 +233,4 @@ $user->update();
 echo $user->getName() ." ";
 echo $user->getLastName() ." ";
 echo $user->getEmail();
+*/
