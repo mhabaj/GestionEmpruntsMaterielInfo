@@ -1,6 +1,5 @@
 <?php
 
-
 class Borrow
 {
     private $_id_borrow;
@@ -9,6 +8,22 @@ class Borrow
     private $_start_date;
     private $_end_date;
 
+
+    /**
+     * @return mixed
+     */
+    public function getIdBorrow()
+    {
+        return $this->_id_borrow;
+    }
+
+    /**
+     * @param mixed $id_borrow
+     */
+    public function setIdBorrow($id_borrow): void
+    {
+        $this->_id_borrow = $id_borrow;
+    }
     /**
      * Borrow constructor.
      * @param $_ref_equip
@@ -68,7 +83,7 @@ class Borrow
 
     public function endBorrow()
     {
-        $date =  date("Y/m/d");
+        $date =  date("d/m/Y");
         $this->_end_date = $date;
 
         $bdd = new DataBase();
@@ -77,10 +92,10 @@ class Borrow
         $con->beginTransaction();
         try
         {
-            $requestUpdate = "UPDATE DEVICE SET isAvailable = TRUE WHERE id_device = '$this->idevice_id';";
+            $requestUpdate = "UPDATE DEVICE SET isAvailable = 1 WHERE id_device = '$this->_device_id';";
             $con->query($requestUpdate);
 
-            $requestUpdate2 = "UPDATE borrow_info SET enddate_borrow = $this->_end_date,isActive = FALSE WHERE id_borrow = $this->id_borrow  ;";
+            $requestUpdate2 = "UPDATE borrow_info SET enddate_borrow = '$this->_end_date',isActive = 0 WHERE id_borrow = '$this->_id_borrow';";
             $con->query($requestUpdate);
             return TRUE;
         }
@@ -91,5 +106,7 @@ class Borrow
             return FALSE;
         }
     }
+
+
 }
 

@@ -1,6 +1,6 @@
 <?php
 
-include("Database.php");
+require("../Controller/Database.php");
 
 class Equipment
 {
@@ -26,6 +26,7 @@ class Equipment
         $this->_brand_equip = $_brand_equip;
         $this->_version_equip = $_version_equip;
     }
+
 
     /**
      * @return String RefEquip

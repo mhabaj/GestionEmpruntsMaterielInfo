@@ -23,7 +23,7 @@ CREATE TABLE equipment(
 
 CREATE TABLE device(
         id_device   Int  Auto_increment  NOT NULL ,
-        isAvailable Boolean NOT NULL ,
+        isAvailable Bool NOT NULL ,
         ref_equip   Varchar (5) NOT NULL
 	,CONSTRAINT device_PK PRIMARY KEY (id_device)
 
@@ -52,7 +52,7 @@ CREATE TABLE borrow_info(
         id_borrow        Int  Auto_increment  NOT NULL ,
         startdate_borrow Date NOT NULL ,
         enddate_borrow   Date NOT NULL ,
-        isActive         Boolean NOT NULL
+        isActive         Bool NOT NULL
 	,CONSTRAINT borrow_info_PK PRIMARY KEY (id_borrow)
 )ENGINE=InnoDB;
 
@@ -73,14 +73,14 @@ CREATE TABLE role(
 #------------------------------------------------------------
 
 CREATE TABLE users(
-        id_user       Int  Auto_increment  NOT NULL ,
-        email_user    Varchar (50) NOT NULL ,
-        password_user Varchar (50) NOT NULL ,
-        role_user     Boolean NOT NULL ,
-        name_user     Varchar (30) NOT NULL ,
-        lastname_user Varchar (30) NOT NULL ,
-        phone_user    Int ,
-        id_role       Int NOT NULL
+        id_user        Int  Auto_increment  NOT NULL ,
+        matricule_user Varchar (50) NOT NULL ,
+        email_user     Varchar (50) NOT NULL ,
+        password_user  Varchar (50) NOT NULL ,
+        name_user      Varchar (30) NOT NULL ,
+        lastname_user  Varchar (30) NOT NULL ,
+        phone_user     Int ,
+        id_role        Int NOT NULL
 	,CONSTRAINT users_PK PRIMARY KEY (id_user)
 
 	,CONSTRAINT users_role_FK FOREIGN KEY (id_role) REFERENCES role(id_role)
