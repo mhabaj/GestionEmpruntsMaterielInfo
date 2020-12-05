@@ -1,6 +1,5 @@
 <?php
 
-
 class DataBase
 {
     private $_con;

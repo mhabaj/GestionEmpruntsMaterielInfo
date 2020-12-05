@@ -1,9 +1,18 @@
 <?php
 
-require("../Controller/DataBase.php");
+
+require("../Model/User.php");
 
 class UserAdmin extends User
 {
+    // dans le controller
+    public function identification($_matriculeUser, $_password)
+    {
+        $this->_matriculeUser = $_matriculeUser;
+        $this->_password = $_password;
+        $this->connect();
+    }
+
     public function consultUser($_id_user)
     {
         $bdd= new DataBase();
@@ -50,7 +59,7 @@ class UserAdmin extends User
         }
         $bdd->closeCon();
     }
-
+    /*PREC $_ref_equipUpdate != any existent ref*/
     public function modifyEquipment($_ref_equipUpdate, $type_equipUpd, $brand_equipUpd,$name_equipUpd, $version_equipUpd)
     {
         $bdd = new DataBase();
@@ -61,7 +70,7 @@ class UserAdmin extends User
         {
             $requestUpdate = "UPDATE EQUIPMENT SET type_equip =?, brand_equip =?, name_equip =?, version_equip =? where ref_equip like ? ;";
             $myStatement = $con->prepare($requestUpdate);
-            $myStatement->execute([$_ref_equipUpdate,$type_equipUpd, $brand_equipUpd,$name_equipUpd,$version_equipUpd, $_ref_equipUpdate]);
+            $myStatement->execute([$_ref_equipUpdate, $type_equipUpd, $brand_equipUpd, $name_equipUpd, $version_equipUpd, $_ref_equipUpdate]);
             $con->commit();
         }
         catch(PDOException $e)
@@ -72,7 +81,8 @@ class UserAdmin extends User
         $bdd->closeCon();
     }
 
-    public function createEquipment($_ref_equipNew, $type_equipNew, $brand_equipNew,$name_equipNew, $version_equipNew)
+    /* prec le ref equipement ne doit pas deja etre dans la bdd et quantity >0   */
+    public function createEquipment($_ref_equipNew, $type_equipNew, $brand_equipNew,$name_equipNew, $version_equipNew,$quantity)
     {
         $bdd = new DataBase();
         $con = $bdd->getCon();
@@ -84,6 +94,13 @@ class UserAdmin extends User
             (?, ?, ?,?,?) ;";
             $myStatement = $con->prepare($requestCreate);
             $myStatement->execute([$_ref_equipNew,$type_equipNew,$brand_equipNew,$name_equipNew,$version_equipNew]);
+
+            for($indexOf =0 ; $indexOf < $quantity ; $indexOf++)
+            {
+                $requestCreate2 = " INSERT INTO device (isAvailable, ref_equip) VALUES ( 1, ?) ;";
+                $myStatement2 = $con->prepare($requestCreate2);
+                $myStatement2->execute([$_ref_equipNew]);
+            }
             $con->commit();
         }
         catch(PDOException $e)
@@ -94,6 +111,7 @@ class UserAdmin extends User
         $bdd->closeCon();
     }
 
+    /* PREC l'utilistauer existe dans la bdd */
     public function modifyRole($_id_user,$_new_isAdmin_user)
     {
         $bdd= new DataBase();
@@ -104,6 +122,7 @@ class UserAdmin extends User
         $bdd->closeCon();
 
     }
+    /* PREC l'utilistauer existe dans la bdd */
     public function modifyAnyProfile($_id_user,$_matricule_user,$_email_user,$_password_user,$_name_user,$_lastname_user,$_phone,$_isAdmin_user)
     {
         $bdd= new DataBase();
@@ -118,5 +137,81 @@ class UserAdmin extends User
         }
         $bdd->closeCon();
     }
+    /* PRECONDITION ON NE PEUT PAS DELETE DES DEVICES DONT LE CHAMP isAVAILABLE EST FALSE, $desiredQuantity ne peut pas etre < 0, */
+    public function updateDeviceCount($_ref_equip,$desiredQuantity)
+    {
+        $bdd = new DataBase();
+        $con = $bdd->getCon();
+
+        $requestCount = "SELECT COUNT(*) FROM DEVICE WHERE ref_equip = '$_ref_equip';";
+        $answerCount = $con->query($requestCount);
+        $resultCount = $answerCount->fetch();
+        $numberOfDevices = $resultCount['COUNT(*)'];
+
+        if ($numberOfDevices > $desiredQuantity)
+        {
+            $indexOf = 0;
+            while($indexOf < $numberOfDevices - $desiredQuantity)
+            {
+                $con->beginTransaction();
+                try
+                {
+                    $requestDelete = "DELETE FROM device WHERE ref_equip = ?;";
+                    $myStatement = $con->prepare($requestDelete);
+                    $myStatement->execute([$_ref_equip]);
+                    $con->commit();
+                }
+                catch(PDOException $e)
+                {
+                    $con->rollback();
+                    throw new PDOException('Erreur update device count');
+                }
+            }
+            $indexOf++;
+        }
+        elseif ($numberOfDevices < $desiredQuantity)
+        {
+            $indexOf = 0;
+            while($indexOf < $desiredQuantity - $numberOfDevices)
+            {
+                $con->beginTransaction();
+                try
+                {
+                    $requestInsert = "INSERT INTO device(isAvailable,ref_equip) VALUES (1, ? ); ";
+                    $myStatement = $con->prepare($requestInsert);
+                    $myStatement->execute([$_ref_equip]);
+                    $con->commit();
+                }
+                catch(PDOException $e)
+                {
+                    $con->rollback();
+                    throw new PDOException('Erreur update device count');
+                }
+
+            }
+            $indexOf++;
+        }
+        else
+        {
+            //rien à changer
+        }
+    }
 
 }
+
+$admin = new UserAdmin();
+$admin->identification('admin','123456789');
+$admin->loadUser();
+//$admin->createEquipment('AX151','Smartphone','Iphone','9','9.0',6);
+//$admin->createEquipment('AX156','Smartphone','HUWEI','11','15.0',5);
+//$admin->borrowEquipement('AX151','2020/12/05',1);
+//$admin->borrowEquipement('AX156','2021/07/15',1);
+//$admin->borrowEquipement('AX156','2021/11/12',1);
+
+$admin->updateDeviceCount('AX151',15);
+
+//var_dump($admin);
+//$admin->endborrow(29);
+//echo 'salut';
+//var_dump($admin->getBorrowList());
+
