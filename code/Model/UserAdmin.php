@@ -1,6 +1,6 @@
 <?php
 
-include("DataBase.php");
+require("../Controller/DataBase.php");
 
 class UserAdmin extends User
 {
@@ -8,7 +8,7 @@ class UserAdmin extends User
     {
         $bdd= new DataBase();
         $con= $bdd->getCon();
-        $query="SELECT * FROM users WHERE id_user=?;";
+        $query="SELECT * FROM users WHERE id_user= ? ;";
         $stmt=$con->prepare($query);
         $stmt->execute([$_id_user]);
         $result=$stmt->fetchAll();
@@ -59,9 +59,9 @@ class UserAdmin extends User
 
         try
         {
-            $requestUpdate = "UPDATE EQUIPMENT SET ref_equip =?, type_equip =?, brand_equip =?, name_equip =?, version_equip =? ;";
+            $requestUpdate = "UPDATE EQUIPMENT SET type_equip =?, brand_equip =?, name_equip =?, version_equip =? where ref_equip like ? ;";
             $myStatement = $con->prepare($requestUpdate);
-            $myStatement->execute([$_ref_equipUpdate,$type_equipUpd, $brand_equipUpd,$name_equipUpd,$version_equipUpd]);
+            $myStatement->execute([$_ref_equipUpdate,$type_equipUpd, $brand_equipUpd,$name_equipUpd,$version_equipUpd, $_ref_equipUpdate]);
             $con->commit();
         }
         catch(PDOException $e)
@@ -86,12 +86,12 @@ class UserAdmin extends User
             $myStatement->execute([$_ref_equipNew,$type_equipNew,$brand_equipNew,$name_equipNew,$version_equipNew]);
             $con->commit();
         }
-        catch(PDOExecption $e)
+        catch(PDOException $e)
         {
             $con->rollback();
             print "Error!: " . $e->getMessage() . "</br>";
         }
-        closeCon();
+        $bdd->closeCon();
     }
 
     public function modifyRole($_id_user,$_new_isAdmin_user)
@@ -101,17 +101,22 @@ class UserAdmin extends User
         $query="UPDATE users SET isAdmin_user=? WHERE id_user=?;";
         $stmt=$con->prepare($query);
         $stmt->execute([$_new_isAdmin_user,$_id_user]);
-        closeCon();
+        $bdd->closeCon();
 
     }
-    public function modifyAnyProfile($_id_role,$_matricule_user,$_email_user,$_password_user,$_name_user,$_lastname_user,$_phone,$_isAdmin_user)
+    public function modifyAnyProfile($_id_user,$_matricule_user,$_email_user,$_password_user,$_name_user,$_lastname_user,$_phone,$_isAdmin_user)
     {
         $bdd= new DataBase();
         $con= $bdd->getCon();
-        $query="UPDATE users SET matricule_user=?,email_user=?,password_user=?,name_user=?,lastname_user=?,phone_user=?,isAdmin_user=? WHERE id_role=?;";
-        $stmt=$con->prepare($query);
-        $stmt->execute([$_matricule_user,$_email_user,$_password_user,$_name_user,$_lastname_user,$_phone,$_isAdmin_user,$_id_role]);
-        closeCon();
+        $con->beginTransaction();
+        try {
+            $query = "UPDATE users SET matricule_user=?,email_user=?,password_user=?,name_user=?,lastname_user=?,phone_user=?,isAdmin_user=? where users.id_user = ?  ;";
+            $stmt = $con->prepare($query);
+            $stmt->execute([$_matricule_user, $_email_user, $_password_user, $_name_user, $_lastname_user, $_phone, $_isAdmin_user, $_id_user]);
+        }catch(PDOException $e){
+            throw new PDOException("Error!: " . $e->getMessage());
+        }
+        $bdd->closeCon();
     }
 
 }

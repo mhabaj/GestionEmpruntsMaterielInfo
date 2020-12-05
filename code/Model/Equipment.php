@@ -1,6 +1,6 @@
 <?php
 
-include("Database.php");
+require("../Controller/Database.php");
 
 class Equipment
 {

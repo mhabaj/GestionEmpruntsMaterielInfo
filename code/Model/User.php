@@ -1,8 +1,8 @@
 <?php
 
-include "../Controller/DataBase.php";
-include "Borrow.php";
-class User
+require "../Controller/DataBase.php";
+require "Borrow.php";
+abstract class User
 {
     protected $_idUser;
     protected $_matriculeUser;
@@ -152,13 +152,15 @@ class User
     /**
      * @param $ref_equip_toBorrow
      * @param $dateFin
-     * @return false
+     * @return Borrow Object, else null
      */
-    public function borrowEquipement($ref_equip_toBorrow, $dateFin){
+    public function borrowEquipement($ref_equip_toBorrow, $dateFin)
+    {
         try {
-            $newBorrow = new Borrow($ref_equip_toBorrow, $dateFin);
+
+            return new Borrow($ref_equip_toBorrow, $dateFin);
         } catch (Exception $e) {
-            return False;
+            return null;
         }
 
     }
@@ -185,7 +187,7 @@ class User
 
         $bdd = new DataBase();
         $con = $bdd->getCon();
-        $query = "SELECT * FROM users WHERE id_user = ?";
+        $query = "SELECT * FROM users WHERE id_user = ? ;";
         $stmt = $con->prepare($query);
         $stmt->execute([$this->_idUser]);
         $result = $stmt->fetch();
@@ -208,7 +210,7 @@ class User
         $hash_mdp = sha1($this->_password);
 
         //Inserer valeurs
-        $requete = "SELECT * FROM users WHERE matricule_user = ? AND password_user= ?";
+        $requete = "SELECT * FROM users WHERE matricule_user = ? AND password_user= ? ;";
         $stmt = $con->prepare($requete);
         $stmt->execute([$this->_matriculeUser, $hash_mdp]);
         $result = $stmt->rowCount();
@@ -217,7 +219,7 @@ class User
             session_start();
             $infoUser = $stmt->fetch();
             $_SESSION['id_user'] = $infoUser['id_user'];
-            $this->_idUser = $infoUser;
+            $this->_idUser = $infoUser['id_user'];
             $bdd->closeCon();
             return TRUE;
             //redirect('training.php'); A METTRE DANS LE CONTROLLER
@@ -235,7 +237,7 @@ class User
     public function update(){
         $bdd = new DataBase();
         $con = $bdd->getCon();
-        $query = "UPDATE users SET email_user = ?, matricule_user = ?, password_user = ?, name_user = ?, lastname_user = ?, phone_user = ? where users.id_user = ?";
+        $query = "UPDATE users SET email_user = ?, matricule_user = ?, password_user = ?, name_user = ?, lastname_user = ?, phone_user = ? where users.id_user = ? ;";
         try {
             $con->beginTransaction();
             $stmt = $con->prepare($query);
