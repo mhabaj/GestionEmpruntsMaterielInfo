@@ -4,15 +4,33 @@
 
 
 #------------------------------------------------------------
+# Table: users
+#------------------------------------------------------------
+
+CREATE TABLE users(
+        id_user        Int  Auto_increment  NOT NULL ,
+        matricule_user Varchar (50) NOT NULL ,
+        email_user     Varchar (50) NOT NULL ,
+        password_user  Varchar (50) NOT NULL ,
+        name_user      Varchar (30) NOT NULL ,
+        lastname_user  Varchar (30) NOT NULL ,
+        phone_user     Int ,
+        isAdmin_user   Bool NOT NULL
+	,CONSTRAINT users_PK PRIMARY KEY (id_user)
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
 # Table: equipment
 #------------------------------------------------------------
 
 CREATE TABLE equipment(
-        ref_equip     Varchar (5) NOT NULL ,
-        type_equip    Varchar (30) NOT NULL ,
-        brand_equip   Varchar (30) NOT NULL ,
-        name_equip    Varchar (30) NOT NULL ,
-        version_equip Varchar (15) NOT NULL
+        ref_equip         Varchar (5) NOT NULL ,
+        type_equip        Varchar (30) NOT NULL ,
+        brand_equip       Varchar (30) NOT NULL ,
+        name_equip        Varchar (30) NOT NULL ,
+        version_equip     Varchar (15) NOT NULL ,
+        description_equip Varchar (50)
 	,CONSTRAINT equipment_PK PRIMARY KEY (ref_equip)
 )ENGINE=InnoDB;
 
@@ -54,36 +72,6 @@ CREATE TABLE borrow_info(
         enddate_borrow   Date NOT NULL ,
         isActive         Bool NOT NULL
 	,CONSTRAINT borrow_info_PK PRIMARY KEY (id_borrow)
-)ENGINE=InnoDB;
-
-
-#------------------------------------------------------------
-# Table: role
-#------------------------------------------------------------
-
-CREATE TABLE role(
-        id_role  Int  Auto_increment  NOT NULL ,
-        nom_role Varchar (50) NOT NULL
-	,CONSTRAINT role_PK PRIMARY KEY (id_role)
-)ENGINE=InnoDB;
-
-
-#------------------------------------------------------------
-# Table: users
-#------------------------------------------------------------
-
-CREATE TABLE users(
-        id_user        Int  Auto_increment  NOT NULL ,
-        matricule_user Varchar (50) NOT NULL ,
-        email_user     Varchar (50) NOT NULL ,
-        password_user  Varchar (50) NOT NULL ,
-        name_user      Varchar (30) NOT NULL ,
-        lastname_user  Varchar (30) NOT NULL ,
-        phone_user     Int ,
-        id_role        Int NOT NULL
-	,CONSTRAINT users_PK PRIMARY KEY (id_user)
-
-	,CONSTRAINT users_role_FK FOREIGN KEY (id_role) REFERENCES role(id_role)
 )ENGINE=InnoDB;
 
 
