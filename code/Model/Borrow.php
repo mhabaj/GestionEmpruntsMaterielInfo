@@ -15,7 +15,6 @@ class Borrow
      */
     public function __construct($_ref_equip,$_end_date)
     {
-
         $this->_ref_equip = $_ref_equip;
         $this->_end_date = $_end_date;
     }
@@ -66,7 +65,6 @@ class Borrow
 
     public function stopBorrow()
     {
-        echo 'END BORROW';
         date_default_timezone_set('Europe/Paris');
         $currentDateTime = date('Y/m/d');
         $this->_end_date = $currentDateTime;

@@ -1,8 +1,10 @@
 <?php
 
 require("Controller/DataBase.php");
-require("Model/UserRegular.php");
 require("Model/UserAdmin.php");
+
+
+//require("Model/UserAdmin.php");
 
 
 if(isset($_POST['submitLogin'])){
@@ -14,9 +16,6 @@ if(isset($_POST['submitLogin'])){
         if(strlen($matricule) > 7){
 
         }
-
-
-
 
     }
 }

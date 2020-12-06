@@ -1,6 +1,6 @@
 <?php
 
-require("../Controller/Database.php");
+require("Controller/Database.php");
 
 class Equipment
 {
@@ -91,7 +91,6 @@ class Equipment
             //rien à changer
         }
     }
-
 
     /**
      * @return String RefEquip

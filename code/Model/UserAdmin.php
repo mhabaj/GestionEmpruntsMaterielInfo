@@ -1,7 +1,7 @@
 <?php
 
 
-require("../Model/User.php");
+require("Model/User.php");
 
 class UserAdmin extends User
 {

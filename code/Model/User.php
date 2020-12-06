@@ -1,7 +1,7 @@
 <?php
 
-require "../Controller/DataBase.php";
-require "Borrow.php";
+require "Controller/DataBase.php";
+require "Model/Borrow.php";
 
 abstract class User
 {
