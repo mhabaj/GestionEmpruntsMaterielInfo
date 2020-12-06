@@ -132,74 +132,28 @@ class UserAdmin extends User
             $query = "UPDATE users SET matricule_user=?,email_user=?,password_user=?,name_user=?,lastname_user=?,phone_user=?,isAdmin_user=? where users.id_user = ?  ;";
             $stmt = $con->prepare($query);
             $stmt->execute([$_matricule_user, $_email_user, $_password_user, $_name_user, $_lastname_user, $_phone, $_isAdmin_user, $_id_user]);
-        }catch(PDOException $e){
+        }catch(PDOException $e)
+        {
             throw new PDOException("Error!: " . $e->getMessage());
         }
         $bdd->closeCon();
     }
-    /* PRECONDITION ON NE PEUT PAS DELETE DES DEVICES DONT LE CHAMP isAVAILABLE EST FALSE, $desiredQuantity ne peut pas etre < 0, */
-    public function updateDeviceCount($_ref_equip,$desiredQuantity)
+
+    /**
+     * @param $id_borrow_toDel
+     */
+    public function endborrow($id_borrow_toDel)
     {
-        $bdd = new DataBase();
-        $con = $bdd->getCon();
-
-        $requestCount = "SELECT COUNT(*) FROM DEVICE WHERE ref_equip = '$_ref_equip';";
-        $answerCount = $con->query($requestCount);
-        $resultCount = $answerCount->fetch();
-        $numberOfDevices = $resultCount['COUNT(*)'];
-
-        if ($numberOfDevices > $desiredQuantity)
-        {
-            $indexOf = 0;
-            echo $numberOfDevices;
-            echo $desiredQuantity;
-            echo "avant";
-            while($indexOf < ($numberOfDevices - $desiredQuantity))
+        $cpt_array = 0;
+        foreach($this->_borrowList as $borrow):
+            if($borrow->getIdBorrow() == $id_borrow_toDel )
             {
-                echo $indexOf;
-                $con->beginTransaction();
-                try
-                {
-                    $requestDelete = "DELETE FROM device WHERE ref_equip = ? LIMIT 1;";
-                    $myStatement = $con->prepare($requestDelete);
-                    $myStatement->execute([$_ref_equip]);
-                    $con->commit();
-                }
-                catch(PDOException $e)
-                {
-                    $con->rollback();
-                    throw new PDOException('Erreur update device count');
-                }
-                $indexOf++;
+                $borrow->stopBorrow();
+                unset($this->_borrowList[$cpt_array]);
+                break;
             }
-
-        }
-        elseif ($numberOfDevices < $desiredQuantity)
-        {
-            $indexOf = 0;
-            while($indexOf < ($desiredQuantity - $numberOfDevices))
-            {
-                $con->beginTransaction();
-                try
-                {
-                    $requestDelete = "INSERT INTO device(isAvailable,ref_equip) VALUES (1, ? ); ";
-                    $myStatement = $con->prepare($requestDelete);
-                    $myStatement->execute([$_ref_equip]);
-                    $con->commit();
-                }
-                catch(PDOException $e)
-                {
-                    $con->rollback();
-                    throw new PDOException('Erreur update device count');
-                }
-                $indexOf++;
-            }
-
-        }
-        else
-        {
-            //rien à changer
-        }
+            $cpt_array+=1;
+        endforeach;
     }
 
 }
@@ -211,14 +165,14 @@ $admin->identification('admin','12345');
 //$admin->createEquipment('AX151','Smartphone','Iphone','9','9.0',6);
 //$admin->createEquipment('XX157','Smartphone','HUWEI','11','15.0',5);
 //$admin->createEquipment('XX283','Smartphone','HUWEI','11','15.0',5);
-//$admin->borrowEquipement('AX151','2020/12/05',1);
+//$admin->borrowEquipement('XX157','2021/12/05',1);
 //$admin->borrowEquipement('AX156','2021/07/15',1);
 //$admin->borrowEquipement('AX156','2021/11/12',1);
 
 //$admin->updateDeviceCount('XX157',3);
 
 //var_dump($admin);
-//$admin->endborrow(29);
+$admin->endborrow(5);
 //echo 'salut';
 //var_dump($admin->getBorrowList());
 

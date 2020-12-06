@@ -8,6 +8,11 @@ class Borrow
     private $_start_date;
     private $_end_date;
 
+    /**
+     * Borrow constructor.
+     * @param $_ref_equip
+     * @throws Exception
+     */
     public function __construct($_ref_equip,$_end_date)
     {
 
@@ -167,11 +172,7 @@ class Borrow
     {
         $this->_id_borrow = $id_borrow;
     }
-    /**
-     * Borrow constructor.
-     * @param $_ref_equip
-     * @throws Exception
-     */
+
 
 
 }

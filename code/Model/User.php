@@ -30,7 +30,6 @@ abstract class User
 
     }
 
-
     /**
      * @param mixed $borrowList
      */
@@ -53,7 +52,6 @@ abstract class User
             {
                 $newBorrow = new Borrow($ref_equip_toBorrow, $dateFin);
             }
-
             $newBorrow->startBorrow();
             $this->addBorrowToList($newBorrow);
             return TRUE;
@@ -64,25 +62,6 @@ abstract class User
         }
     }
 
-    /**
-     * @param $id_borrow_toDel
-     */
-    public function endborrow($id_borrow_toDel)
-    {
-        $cpt_array = 0;
-        foreach($this->_borrowList as $borrow):
-            echo 'JE SUIS DANS LA FOR';
-            var_dump($borrow);
-            if($borrow->getIdBorrow() == $id_borrow_toDel )
-            {
-                echo 'JE SUIS DANS LA BOUCLE';
-                $borrow->stopBorrow();
-                unset($this->_borrowList[$cpt_array]);
-                break;
-            }
-            $cpt_array+=1;
-        endforeach;
-    }
 
     public function loadUser()
     {
@@ -151,7 +130,7 @@ abstract class User
             //redirect('training.php'); A METTRE DANS LE CONTROLLER
         } else {
             $bdd->closeCon();
-            echo "tu mens";
+            echo "Mauvais Id ou mdp";
             return FALSE;
         }
     }
@@ -171,7 +150,9 @@ abstract class User
             $stmt = $con->prepare($query);
             $stmt->execute([$this->getEmail(), $this->getMatriculeUser(), $this->getPassword(), $this->getName(), $this->getLastName(), $this->getPhone(), $this->_idUser]);
             $con->commit();
-        } catch(PDOException $e) {
+        }
+        catch(PDOException $e)
+        {
             $con->rollback();
             print "Error!: " . $e->getMessage() . "</br>";
         }
