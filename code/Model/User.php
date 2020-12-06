@@ -123,7 +123,6 @@ abstract class User
                 array_push($this->_borrowList,$BorrowItem);
             }
         }
-
         $bdd->closeCon();
     }
 
@@ -146,13 +145,13 @@ abstract class User
             $infoUser = $stmt->fetch();
             $_SESSION['id_user'] = $infoUser['id_user'];
             $this->_idUser = $infoUser['id_user'];
+            $this->loadUser();
             $bdd->closeCon();
             return TRUE;
             //redirect('training.php'); A METTRE DANS LE CONTROLLER
-        }
-        else {
+        } else {
             $bdd->closeCon();
-            echo " tu mens";
+            echo "tu mens";
             return FALSE;
         }
     }

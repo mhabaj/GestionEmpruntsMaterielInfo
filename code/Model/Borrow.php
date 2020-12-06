@@ -44,8 +44,10 @@ class Borrow
             $myStatement->execute([$this->_end_date]);
             $this->_id_borrow = $con->lastInsertId("id_borrow");
 
-            $requestInsert1 = "INSERT INTO borrow (id_user, id_device, id_borrow) VALUES ('$_SESSION[id_user]', '$this->_device_id' , '$this->_id_borrow');";
-            $con->query($requestInsert1);
+            $requestInsert1 = "INSERT INTO borrow (id_user, id_device, id_borrow) VALUES (?, '$this->_device_id' , '$this->_id_borrow');";
+            $myStatement = $con->prepare($requestInsert1);
+            $myStatement->execute([$_SESSION['id_user']]);
+
 
             $con->commit();
             return TRUE;

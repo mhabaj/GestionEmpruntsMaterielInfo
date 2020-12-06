@@ -151,12 +151,16 @@ class UserAdmin extends User
         if ($numberOfDevices > $desiredQuantity)
         {
             $indexOf = 0;
-            while($indexOf < $numberOfDevices - $desiredQuantity)
+            echo $numberOfDevices;
+            echo $desiredQuantity;
+            echo "avant";
+            while($indexOf < ($numberOfDevices - $desiredQuantity))
             {
+                echo $indexOf;
                 $con->beginTransaction();
                 try
                 {
-                    $requestDelete = "DELETE FROM device WHERE ref_equip = ?;";
+                    $requestDelete = "DELETE FROM device WHERE ref_equip = ? LIMIT 1;";
                     $myStatement = $con->prepare($requestDelete);
                     $myStatement->execute([$_ref_equip]);
                     $con->commit();
@@ -166,19 +170,20 @@ class UserAdmin extends User
                     $con->rollback();
                     throw new PDOException('Erreur update device count');
                 }
+                $indexOf++;
             }
-            $indexOf++;
+
         }
         elseif ($numberOfDevices < $desiredQuantity)
         {
             $indexOf = 0;
-            while($indexOf < $desiredQuantity - $numberOfDevices)
+            while($indexOf < ($desiredQuantity - $numberOfDevices))
             {
                 $con->beginTransaction();
                 try
                 {
-                    $requestInsert = "INSERT INTO device(isAvailable,ref_equip) VALUES (1, ? ); ";
-                    $myStatement = $con->prepare($requestInsert);
+                    $requestDelete = "INSERT INTO device(isAvailable,ref_equip) VALUES (1, ? ); ";
+                    $myStatement = $con->prepare($requestDelete);
                     $myStatement->execute([$_ref_equip]);
                     $con->commit();
                 }
@@ -187,9 +192,9 @@ class UserAdmin extends User
                     $con->rollback();
                     throw new PDOException('Erreur update device count');
                 }
-
+                $indexOf++;
             }
-            $indexOf++;
+
         }
         else
         {
@@ -200,15 +205,17 @@ class UserAdmin extends User
 }
 
 $admin = new UserAdmin();
-$admin->identification('admin','123456789');
-$admin->loadUser();
+$admin->identification('admin','12345');
+
+//$admin->loadUser();
 //$admin->createEquipment('AX151','Smartphone','Iphone','9','9.0',6);
-//$admin->createEquipment('AX156','Smartphone','HUWEI','11','15.0',5);
+//$admin->createEquipment('XX157','Smartphone','HUWEI','11','15.0',5);
+//$admin->createEquipment('XX283','Smartphone','HUWEI','11','15.0',5);
 //$admin->borrowEquipement('AX151','2020/12/05',1);
 //$admin->borrowEquipement('AX156','2021/07/15',1);
 //$admin->borrowEquipement('AX156','2021/11/12',1);
 
-$admin->updateDeviceCount('AX151',15);
+//$admin->updateDeviceCount('XX157',3);
 
 //var_dump($admin);
 //$admin->endborrow(29);

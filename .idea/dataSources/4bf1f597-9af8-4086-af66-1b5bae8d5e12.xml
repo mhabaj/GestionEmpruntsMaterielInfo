@@ -9,7 +9,7 @@
     </root>
     <schema id="2" parent="1" name="bddprojet">
       <Current>1</Current>
-      <Collation>utf8mb4_0900_ai_ci</Collation>
+      <Collation>utf8_bin</Collation>
     </schema>
     <schema id="3" parent="1" name="information_schema">
       <Collation>utf8_general_ci</Collation>
