@@ -1,6 +1,6 @@
 <?php
 
-require("../Controller/Database.php");
+require_once("Controller/Database.php");
 
 class Equipment
 {

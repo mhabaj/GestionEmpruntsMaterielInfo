@@ -1,8 +1,9 @@
 <?php
 
 require_once("Controller/DataBase.php");
+require_once("Model/User.php");
 require_once("Model/UserRegular.php");
-require_once("Model/UserAdmin.php");
+require("Model/UserAdmin.php");
 
 Class AuthentificationController{
 
@@ -43,7 +44,7 @@ Class AuthentificationController{
                     $newUserAdmin->loadUser();
                     $_SESSION['User'] = $newUserAdmin;
                     $_SESSION['isAdmin_user'] = 1;
-                    redirect('Catalogue.php');
+                    header('Location: Catalogue.php');
                 }
              }else{
                  $newUserRegular = new UserRegular();
@@ -53,7 +54,7 @@ Class AuthentificationController{
                      $newUserRegular->loadUser();
                      $_SESSION['User'] = $newUserRegular;
                      $_SESSION['isAdmin_user'] = 0;
-                     redirect('Catalogue.php');
+                     header('Location: Catalogue.php');
                  }
              }
 

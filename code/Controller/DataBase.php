@@ -42,8 +42,8 @@ class DataBase
     }
 }
 
-$bdd = new DataBase();
-$con = $bdd->getCon();
+//$bdd = new DataBase();
+//$con = $bdd->getCon();
 
 /*$requete = "SELECT * FROM role";
 $reponse = $con->query($requete);

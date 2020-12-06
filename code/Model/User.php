@@ -1,7 +1,7 @@
 <?php
 
-require "../Controller/DataBase.php";
-require "Borrow.php";
+require_once "Controller/DataBase.php";
+require_once "Model/Borrow.php";
 
 abstract class User
 {
@@ -16,14 +16,7 @@ abstract class User
 
     /**
      * User constructor.
-     * @param $_idUser
-     * @param $_matriculeUser
-     * @param $_email
-     * @param $_password
-     * @param $_name
-     * @param $_lastName
-     * @param $_phone
-     * @param array $_borrowList
+
      */
     public function __construct()
     {
@@ -128,10 +121,9 @@ abstract class User
             $this->loadUser();
             $bdd->closeCon();
             return TRUE;
-            //redirect('training.php'); A METTRE DANS LE CONTROLLER
         } else {
             $bdd->closeCon();
-            echo "Mauvais Id ou mdp";
+            echo "Mauvais Id ou m poihazepofhaofdp";
             return FALSE;
         }
     }
