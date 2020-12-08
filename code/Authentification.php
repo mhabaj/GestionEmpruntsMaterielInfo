@@ -3,12 +3,17 @@
 require_once("Controller/DataBase.php");
 require_once("Model/User.php");
 require_once("Model/UserRegular.php");
-require("Model/UserAdmin.php");
+require_once("Model/UserAdmin.php");
 
 Class AuthentificationController{
 
     private $_matriculeUser;
     private $_password;
+
+    public function  __construct($matriculeUser, $password){
+        $this->_matriculeUser = $matriculeUser;
+        $this->_password = $password;
+    }
 
     public function isAdmin(){
 
@@ -31,15 +36,14 @@ Class AuthentificationController{
         }
     }
 
-    public function identification($_matriculeUser, $_password)
+    public function identification()
     {
-         $this->_matriculeUser = $_matriculeUser;
-         $this->_password = $_password;
+
          try {
              if ($this->isAdmin() == 1) {
                 $newUserAdmin = new UserAdmin();
-                $newUserAdmin->setMatriculeUser($_matriculeUser);
-                $newUserAdmin->setPassword($_password);
+                $newUserAdmin->setMatriculeUser($this->_matriculeUser);
+                $newUserAdmin->setPassword( $this->_password);
                 if($newUserAdmin->connect() == true){
                     $newUserAdmin->loadUser();
                     $_SESSION['User'] = $newUserAdmin;
@@ -48,8 +52,8 @@ Class AuthentificationController{
                 }
              }else{
                  $newUserRegular = new UserRegular();
-                 $newUserRegular->setMatriculeUser($_matriculeUser);
-                 $newUserRegular->setPassword($_password);
+                 $newUserRegular->setMatriculeUser($this->_matriculeUser);
+                 $newUserRegular->setPassword( $this->_password);
                  if($newUserRegular->connect() == true){
                      $newUserRegular->loadUser();
                      $_SESSION['User'] = $newUserRegular;
@@ -62,24 +66,26 @@ Class AuthentificationController{
             echo("<p>Invalide User credentials</p>");
          }
     }
-}
 
+    /**
+     * @return mixed
+     */
+    public function getPassword()
+    {
+        return $this->_password;
+    }
 
-if(isset($_POST['submitLogin'])){
-
-    if(!isset($_SESSION['id_user'])) {
-        $matricule = $_POST['matricule'];
-        $password = $_POST['password'];
-
-        if(strlen($matricule) > 7){
-
-        }
-
-
-
-
+    /**
+     * @param mixed $password
+     */
+    public function setPassword($password): void
+    {
+        $this->_password = $password;
     }
 }
+
+
+
 
 ?>
 <html>
@@ -103,8 +109,30 @@ if(isset($_POST['submitLogin'])){
         </form>
 
 
+
     </body>
+
 
 </html>
 
 
+<?php
+
+if(isset($_POST['submitLogin'])){
+
+    if(!isset($_SESSION['id_user'])) {
+        $matricule = $_POST['matricule'];
+        $password = $_POST['password'];
+
+        if(strlen($matricule) == 7){
+            $authCont = new AuthentificationController($matricule, $password);
+            $authCont->identification();
+        }
+
+
+
+
+    }
+}
+
+?>
