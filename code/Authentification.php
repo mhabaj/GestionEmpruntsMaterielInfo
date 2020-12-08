@@ -1,10 +1,10 @@
 <?php
-
 require_once("Controller/DataBase.php");
 require_once("Model/User.php");
 require_once("Model/UserRegular.php");
 require_once("Model/UserAdmin.php");
 
+if(!isset($_SESSION['id_user'])) {
 Class AuthentificationController{
 
     private $_matriculeUser;
@@ -118,21 +118,24 @@ Class AuthentificationController{
 
 <?php
 
-if(isset($_POST['submitLogin'])){
 
-    if(!isset($_SESSION['id_user'])) {
-        $matricule = $_POST['matricule'];
-        $password = $_POST['password'];
+    if(isset($_POST['submitLogin'])){
 
-        if(strlen($matricule) == 7){
-            $authCont = new AuthentificationController($matricule, $password);
-            $authCont->identification();
+     if(!isset($_SESSION['id_user'])) {
+           $matricule = $_POST['matricule'];
+           $password = $_POST['password'];
+
+           if(strlen($matricule) == 7){
+             $authCont = new AuthentificationController($matricule, $password);
+              $authCont->identification();
+           }
+
+       }else{
+            header('Location: Catalogue.php');
         }
-
-
-
-
     }
+}else{
+    header('Location: Catalogue.php');
 }
 
 ?>
