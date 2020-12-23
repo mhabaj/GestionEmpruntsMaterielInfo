@@ -5,7 +5,7 @@ require_once("Model/UserRegular.php");
 require_once("Model/UserAdmin.php");
 
 if(!isset($_SESSION['id_user'])) {
-Class AuthentificationController{
+Class AuthentificationController {
 
     private $_matriculeUser;
     private $_password;

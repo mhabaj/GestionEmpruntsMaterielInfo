@@ -25,7 +25,7 @@ abstract class User
 
 
     /**
-     * @param mixed $borrowList
+     * @param array $borrowList
      */
     public function addBorrowToList($BorrowItem)
     {
