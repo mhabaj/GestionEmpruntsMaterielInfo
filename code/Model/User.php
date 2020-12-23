@@ -1,7 +1,7 @@
 <?php
 
-require "Controller/DataBase.php";
-require "Model/Borrow.php";
+require_once "Controller/DataBase.php";
+require_once "Model/Borrow.php";
 
 abstract class User
 {
@@ -16,22 +16,16 @@ abstract class User
 
     /**
      * User constructor.
-     * @param $_idUser
-     * @param $_matriculeUser
-     * @param $_email
-     * @param $_password
-     * @param $_name
-     * @param $_lastName
-     * @param $_phone
-     * @param array $_borrowList
+
      */
     public function __construct()
     {
 
     }
 
+
     /**
-     * @param mixed $borrowList
+     * @param array $borrowList
      */
     public function addBorrowToList($BorrowItem)
     {
@@ -127,10 +121,8 @@ abstract class User
             $this->loadUser();
             $bdd->closeCon();
             return TRUE;
-            //redirect('training.php'); A METTRE DANS LE CONTROLLER
         } else {
             $bdd->closeCon();
-            echo "Mauvais Id ou mdp";
             return FALSE;
         }
     }
@@ -140,24 +132,7 @@ abstract class User
         return TRUE;
     }
 
-    public function update()
-    {
-        $bdd = new DataBase();
-        $con = $bdd->getCon();
-        $query = "UPDATE users SET email_user = ?, matricule_user = ?, password_user = ?, name_user = ?, lastname_user = ?, phone_user = ? where users.id_user = ? ;";
-        try {
-            $con->beginTransaction();
-            $stmt = $con->prepare($query);
-            $stmt->execute([$this->getEmail(), $this->getMatriculeUser(), $this->getPassword(), $this->getName(), $this->getLastName(), $this->getPhone(), $this->_idUser]);
-            $con->commit();
-        }
-        catch(PDOException $e)
-        {
-            $con->rollback();
-            print "Error!: " . $e->getMessage() . "</br>";
-        }
-        $bdd->closeCon();
-    }
+
 
     /**
      * @return mixed

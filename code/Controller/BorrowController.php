@@ -11,28 +11,17 @@ class BorrowController
 ?>
 
 <html>
-    <body>
-        <form method="POST" enctype="multipart/form-data">
-            <h1>Réservation</h1>
+<body>
+<form method="POST" enctype="multipart/form-data">
+    <h1>Réservation</h1>
 
-            <label><b>Date de fin</b></label>
-            <input type="text" placeholder="AAAA-MM-JJ" name="endDate" required>
+    <label><b>Date de fin</b></label>
+    <input type="text" placeholder="AAAA-MM-JJ" name="endDate" required>
 
-            <label><b>Quantité</b></label>
-            <input type="number" min="1" value="1" placeholder="Quantité" name="quantity" required>
+    <label><b>Quantité</b></label>
+    <input type="number" min="1" value="1" placeholder="Quantité" name="quantity" required>
 
-            <button type="submit" name="startBorrow">Réserver</button>
-        </form>
-    </body>
+    <button type="submit" name="startBorrow">Réserver</button>
+</form>
+</body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
