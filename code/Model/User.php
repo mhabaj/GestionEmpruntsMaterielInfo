@@ -1,7 +1,7 @@
 <?php
 
-require "../Controller/DataBase.php";
-require "../Model/Borrow.php";
+require_once "Controller/DataBase.php";
+require_once "Model/Borrow.php";
 
 abstract class User
 {
@@ -25,7 +25,7 @@ abstract class User
 
 
     /**
-     * @param mixed $borrowList
+     * @param array $borrowList
      */
     public function addBorrowToList($BorrowItem)
     {
@@ -123,7 +123,6 @@ abstract class User
             return TRUE;
         } else {
             $bdd->closeCon();
-            echo "Mauvais Id ou m poihazepofhaofdp";
             return FALSE;
         }
     }
@@ -133,24 +132,7 @@ abstract class User
         return TRUE;
     }
 
-    public function update()
-    {
-        $bdd = new DataBase();
-        $con = $bdd->getCon();
-        $query = "UPDATE users SET email_user = ?, matricule_user = ?, password_user = ?, name_user = ?, lastname_user = ?, phone_user = ? where users.id_user = ? ;";
-        try {
-            $con->beginTransaction();
-            $stmt = $con->prepare($query);
-            $stmt->execute([$this->getEmail(), $this->getMatriculeUser(), $this->getPassword(), $this->getName(), $this->getLastName(), $this->getPhone(), $this->_idUser]);
-            $con->commit();
-        }
-        catch(PDOException $e)
-        {
-            $con->rollback();
-            print "Error!: " . $e->getMessage() . "</br>";
-        }
-        $bdd->closeCon();
-    }
+
 
     /**
      * @return mixed

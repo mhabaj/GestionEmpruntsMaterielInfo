@@ -38,7 +38,70 @@ class UserAdmin extends User
         $stmt->execute([$_matricule_user,$_email_user,$_password_user,$_name_user,$_lastname_user,$_phone,$_isAdmin_user]);
         $bdd->closeCon();
     }
+    /* PRECONDITION ON NE PEUT PAS DELETE DES DEVICES DONT LE CHAMP isAVAILABLE EST FALSE, $desiredQuantity ne peut pas etre < 0, */
+    public function updateDeviceCount($_ref_equip,$desiredQuantity)
+    {
+        $bdd = new DataBase();
+        $con = $bdd->getCon();
 
+        $requestCount = "SELECT COUNT(*) FROM DEVICE WHERE ref_equip = '$_ref_equip';";
+        $answerCount = $con->query($requestCount);
+        $resultCount = $answerCount->fetch();
+        $numberOfDevices = $resultCount['COUNT(*)'];
+
+        if ($numberOfDevices > $desiredQuantity)
+        {
+            $indexOf = 0;
+            echo $numberOfDevices;
+            echo $desiredQuantity;
+            echo "avant";
+            while($indexOf < ($numberOfDevices - $desiredQuantity))
+            {
+                echo $indexOf;
+                $con->beginTransaction();
+                try
+                {
+                    $requestDelete = "DELETE FROM device WHERE ref_equip = ? AND isAvailable = 1 LIMIT 1;";
+                    $myStatement = $con->prepare($requestDelete);
+                    $myStatement->execute([$_ref_equip]);
+                    $con->commit();
+                }
+                catch(PDOException $e)
+                {
+                    $con->rollback();
+                    throw new PDOException('Erreur update device count');
+                }
+                $indexOf++;
+            }
+
+        }
+        elseif ($numberOfDevices < $desiredQuantity)
+        {
+            $indexOf = 0;
+            while($indexOf < ($desiredQuantity - $numberOfDevices))
+            {
+                $con->beginTransaction();
+                try
+                {
+                    $requestDelete = "INSERT INTO device(isAvailable,ref_equip) VALUES (1, ? ); ";
+                    $myStatement = $con->prepare($requestDelete);
+                    $myStatement->execute([$_ref_equip]);
+                    $con->commit();
+                }
+                catch(PDOException $e)
+                {
+                    $con->rollback();
+                    throw new PDOException('Erreur update device count');
+                }
+                $indexOf++;
+            }
+
+        }
+        else
+        {
+            //rien à changer
+        }
+    }
     /* */
     public function deleteEquipment($_ref_equipDel)
     {
@@ -161,13 +224,13 @@ class UserAdmin extends User
 
 }
 
-$admin = new UserAdmin();
-$admin->identification('admin','12345');
+//$admin = new UserAdmin();
+//$admin->identification('admin','12345');
 
-
-$admin->createEquipment('AX151','Smartphone','Iphone','9','9.0',6);
-$admin->createEquipment('XX157','Smartphone','HUWEI','11','15.0',5);
-$admin->createEquipment('XX283','Smartphone','HUWEI','11','15.0',5);
+//$admin->loadUser();
+//$admin->createEquipment('AX151','Smartphone','Iphone','9','9.0',6);
+//$admin->createEquipment('XX157','Smartphone','HUWEI','11','15.0',5);
+//$admin->createEquipment('XX283','Smartphone','HUWEI','11','15.0',5);
 //$admin->borrowEquipement('XX157','2021/12/05',1);
 //$admin->borrowEquipement('AX156','2021/07/15',1);
 //$admin->borrowEquipement('AX156','2021/11/12',1);
