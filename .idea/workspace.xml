@@ -37,11 +37,18 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1608734198082</updated>
-      <workItem from="1608734199534" duration="426000" />
+      <workItem from="1608734199534" duration="927000" />
+      <workItem from="1608735158170" duration="857000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="794" y="443" key="NewPhpFileDialog" timestamp="1608735380918">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="794" y="443" key="NewPhpFileDialog/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1608735380918" />
   </component>
 </project>
