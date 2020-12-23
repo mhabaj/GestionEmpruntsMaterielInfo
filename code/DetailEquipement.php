@@ -52,6 +52,7 @@ if (isset($_GET['ref_equip']) && $_GET['ref_equip'] != null) {
                    name="reserveEquipment">
 
 
+            
 
         </form>
         <?php
