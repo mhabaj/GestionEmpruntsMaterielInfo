@@ -4,13 +4,16 @@ require_once("Model/User.php");
 require_once("Model/UserRegular.php");
 require_once("Model/UserAdmin.php");
 
-if(!isset($_SESSION['id_user'])) {
-Class AuthentificationController {
+if(!isset($_SESSION['id_user']))
+{
+    Class AuthentificationController
+{
 
     private $_matriculeUser;
     private $_password;
 
-    public function  __construct($matriculeUser, $password){
+    public function  __construct($matriculeUser, $password)
+    {
         $this->_matriculeUser = $matriculeUser;
         $this->_password = $password;
     }
@@ -83,9 +86,6 @@ Class AuthentificationController {
         $this->_password = $password;
     }
 }
-
-
-
 
 ?>
 <html>

@@ -1,6 +1,5 @@
 <?php
 
-
 require_once("Model/User.php");
 
 class UserAdmin extends User
@@ -13,32 +12,31 @@ class UserAdmin extends User
         $this->connect();
     }
 
-    public function consultUser($_id_user)
-    {
-        $bdd= new DataBase();
-        $con= $bdd->getCon();
-        $query="SELECT * FROM users WHERE id_user= ? ;";
-        $stmt=$con->prepare($query);
-        $stmt->execute([$_id_user]);
-        $result=$stmt->fetchAll();
-
-        echo 'pseudo :', $result['matricule_user'];
-        echo 'email :', $result['email_user '];
-        echo 'prenom :', $result['name_user'];
-        echo 'nom :', $result['lastname_user'];
-        echo 'numero :', $result['phone_user'];
-        $bdd->closeCon();
-    }
+    /* add fonction que MATRICULE USER N EST PAS DEJA UTILISE  */
     public function createUser($_matricule_user,$_email_user,$_password_user,$_name_user,$_lastname_user,$_phone,$_isAdmin_user)
     {
         $bdd= new DataBase();
         $con= $bdd->getCon();
-        $query="INSERT INTO users (matricule_user,email_user,password_user,name_user,lastname_user,phone_user,isAdmin_user) VALUES (?,?,?,?,?,?,?);";
-        $stmt=$con->prepare($query);
-        $stmt->execute([$_matricule_user,$_email_user,$_password_user,$_name_user,$_lastname_user,$_phone,$_isAdmin_user]);
+
+        $con->beginTransaction();
+
+        try
+        {
+            $query="INSERT INTO users (matricule_user,email_user,password_user,name_user,lastname_user,phone_user,isAdmin_user) VALUES (?,?,?,?,?,?,?);";
+            $stmt=$con->prepare($query);
+            $stmt->execute([$_matricule_user,$_email_user,$_password_user,$_name_user,$_lastname_user,$_phone,$_isAdmin_user]);
+            $con->commit();
+        }
+        catch(PDOException $e)
+        {
+            $con->rollback();
+            throw new Exception("<p> Could not create the user, invalid user input </p> ");
+        }
         $bdd->closeCon();
     }
-    /* PRECONDITION ON NE PEUT PAS DELETE DES DEVICES DONT LE CHAMP isAVAILABLE EST FALSE, $desiredQuantity ne peut pas etre < 0, */
+    /* PRECONDITION ON NE PEUT PAS DELETE DES DEVICES DONT LE CHAMP isAVAILABLE EST FALSE, $desiredQuantity ne peut pas etre < 0,
+        Cette fonction ne s'occupe des devices dont le champ isAVAILABLE es TRUE */
+
     public function updateDeviceCount($_ref_equip,$desiredQuantity)
     {
         $bdd = new DataBase();
@@ -73,7 +71,6 @@ class UserAdmin extends User
                 }
                 $indexOf++;
             }
-
         }
         elseif ($numberOfDevices < $desiredQuantity)
         {
@@ -95,7 +92,6 @@ class UserAdmin extends User
                 }
                 $indexOf++;
             }
-
         }
         else
         {
@@ -108,6 +104,7 @@ class UserAdmin extends User
         $bdd = new DataBase();
         $con = $bdd->getCon();
         $con->beginTransaction();
+
         try
         {
             $requestDelete = " DELETE FROM device WHERE isAvailable = TRUE AND ref_equip = ? ; ";
@@ -191,12 +188,16 @@ class UserAdmin extends User
         $bdd= new DataBase();
         $con= $bdd->getCon();
         $con->beginTransaction();
-        try {
+
+        try
+        {
             $query = "UPDATE users SET matricule_user=?,email_user=?,password_user=?,name_user=?,lastname_user=?,phone_user=?,isAdmin_user=? where users.id_user = ?  ;";
             $stmt = $con->prepare($query);
             $stmt->execute([$_matricule_user, $_email_user, $_password_user, $_name_user, $_lastname_user, $_phone, $_isAdmin_user, $_id_user]);
+            $con->commit();
         }catch(PDOException $e)
         {
+            $con->rollback();
             throw new PDOException("Error!: " . $e->getMessage());
         }
         $bdd->closeCon();
