@@ -17,10 +17,11 @@ require "Controller/DataBase.php";
 if (isset($_POST['startSearching'])) {
     $bdd = new DataBase();
     $con = $bdd->getCon();
+    $UserToSearch = $_POST['UserToSearch'];
 
     $queryEquipments = "SELECT * FROM users WHERE matricule_user LIKE ?;";
     $myStatement = $con->prepare($queryEquipments);
-    $myStatement->execute([$_POST['UserToSearch']]);
+    $myStatement->execute(["%".$UserToSearch."%"]);
 
     while ($donnees = $myStatement->fetch()) { ?>
         <a href="https://youtu.be/rrNTRqf-Nqs">
