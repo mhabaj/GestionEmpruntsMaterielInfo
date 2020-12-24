@@ -85,11 +85,15 @@ class Equipment
         if (strlen($this->_ref_equip)) {
             $bdd = new DataBase();
             $con = $bdd->getCon();
-            $query = ("select count(*) from equipment where ref_equip like " . $this->_ref_equip . " ;");
+            $query = ("select count(*) as 'somme' from equipment where ref_equip like ? ;");
+            $stmt=$con->prepare($query);
+            $stmt->execute([$this->_ref_equip]);
+            $result=$stmt->fetch();
             $bdd->closeCon();
-            $answerCount = $con->query($query);
-            $resultCount = $answerCount->fetch();
-            return $resultCount['COUNT(*)'];
+            if($result['somme'] > 0){
+                return true;
+            }
+
         }
         return false;
     }

@@ -122,7 +122,7 @@ class UserAdmin extends User
         }
         $bdd->closeCon();
     }
-    /*PREC $_ref_equipUpdate != any existent ref*/
+    /* PREC $_ref_equipUpdate != any existent ref*/
     public function modifyEquipment($_ref_equipUpdate, $type_equipUpd, $brand_equipUpd,$name_equipUpd, $version_equipUpd)
     {
         $bdd = new DataBase();

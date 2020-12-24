@@ -45,9 +45,10 @@ abstract class User
             for($indexOf =0 ; $indexOf < $quantity ; $indexOf++)
             {
                 $newBorrow = new Borrow($ref_equip_toBorrow, $dateFin);
+                $newBorrow->startBorrow();
+                $this->addBorrowToList($newBorrow);
             }
-            $newBorrow->startBorrow();
-            $this->addBorrowToList($newBorrow);
+
             return TRUE;
         }
         catch (Exception $e)

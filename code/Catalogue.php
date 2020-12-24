@@ -1,7 +1,8 @@
 <?php
+require "Controller/DataBase.php";
 require_once("Controller/control-session.php");
 
-require "Controller/DataBase.php";
+
 
 ?>
 <html>
