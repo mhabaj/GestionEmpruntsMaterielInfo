@@ -9,32 +9,45 @@ require "Controller/DataBase.php";
 <form method="POST" enctype="multipart/form-data">
     <h1>Recherche utilisateur</h1>
     <label>Rechercher utilisateur:</label>
-    <input type="search" placeholder="Inserer le matricule de l'utilisateur" name="UserToSearch">
+    <input type="search" placeholder="Matricule de l'utilisateur" name="UserToSearch">
     <button type="submit" name="startSearching">Rechercher</button>
 </form>
 <?php
 
-if (isset($_POST['startSearching'])) {
+if (isset($_POST['startSearching']) && $_POST['UserToSearch']!=null && $_POST['UserToSearch']!=" ") {
     $bdd = new DataBase();
     $con = $bdd->getCon();
-    $UserToSearch = $_POST['UserToSearch'];
+    $UserToSearch = trim($_POST['UserToSearch']);
 
     $queryEquipments = "SELECT * FROM users WHERE matricule_user LIKE ?;";
     $myStatement = $con->prepare($queryEquipments);
-    $myStatement->execute(["%".$UserToSearch."%"]);
+    $myStatement->execute([$UserToSearch."%"]);
 
-    while ($donnees = $myStatement->fetch()) { ?>
-        <a href="https://youtu.be/rrNTRqf-Nqs">
-            <div>
-                <strong> Firstname </strong> : <?php echo $donnees['name_user']; ?> <br/>
-                <strong> Lastname </strong> : <?php echo $donnees['lastname_user']; ?> <br/>
-                <strong> email </strong> : <?php echo $donnees['email_user']; ?> <br/> <br/>
-            </div>
-        </a>
+    if($myStatement->rowCount() > 0)
+    {
+        while ($donnees = $myStatement->fetch()) { ?>
+            <a href="https://youtu.be/rrNTRqf-Nqs">
+                <div>
+                    <strong> Matricule </strong> : <?php echo $donnees['matricule_user']; ?> <br/>
+                    <strong> Firstname </strong> : <?php echo $donnees['name_user']; ?> <br/>
+                    <strong> Lastname </strong> : <?php echo $donnees['lastname_user']; ?> <br/>
+                    <strong> email </strong> : <?php echo $donnees['email_user']; ?> <br/> <br/>
+                </div>
+            </a>
+            <?php
+        }
+    }
+    else{
+        ?>
+        <label>Aucun document ne correspond aux termes de recherche spécifiés.</label>
         <?php
     }
     $myStatement->closeCursor();
-
+}
+else{
+    ?>
+    <label>Veuillez remplir le champ de recherche avant d'appuyer sur le bouton de .</label>
+    <?php
 }
 ?>
 
