@@ -26,7 +26,7 @@ if (isset($_POST['startSearching']) && $_POST['UserToSearch']!=null && $_POST['U
     if($myStatement->rowCount() > 0)
     {
         while ($donnees = $myStatement->fetch()) { ?>
-            <a href="https://youtu.be/rrNTRqf-Nqs">
+            <a href="DetailUser.php?id_user_toDisplay=<?php echo $donnees['id_user'] ?>">
                 <div>
                     <strong> Matricule </strong> : <?php echo $donnees['matricule_user']; ?> <br/>
                     <strong> Firstname </strong> : <?php echo $donnees['name_user']; ?> <br/>
