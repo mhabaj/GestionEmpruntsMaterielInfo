@@ -182,18 +182,23 @@ class UserAdmin extends User
         $bdd->closeCon();
 
     }
-    /* PREC l'utilistauer existe dans la bdd */
-    public function modifyAnyProfile($_id_user,$_matricule_user,$_email_user,$_password_user,$_name_user,$_lastname_user,$_phone,$_isAdmin_user)
+    /* PREC l'utilistauer existe dans la bdd + rajouter methode update password*/
+    public function modifyAnyProfile($_id_user,$_matricule_user,$_email_user,$_name_user,$_lastname_user,$_phone,$_isAdmin_user)
     {
+        if($_matricule_user != 7)
+        {
+            throw new Exception("Matricule de taille incorrecte");
+        }
+
         $bdd= new DataBase();
         $con= $bdd->getCon();
         $con->beginTransaction();
 
         try
         {
-            $query = "UPDATE users SET matricule_user=?,email_user=?,password_user=?,name_user=?,lastname_user=?,phone_user=?,isAdmin_user=? where users.id_user = ?  ;";
+            $query = "UPDATE users SET matricule_user=?,email_user=?,name_user=?,lastname_user=?,phone_user=?,isAdmin_user=? where users.id_user = ?  ;";
             $stmt = $con->prepare($query);
-            $stmt->execute([$_matricule_user, $_email_user, $_password_user, $_name_user, $_lastname_user, $_phone, $_isAdmin_user, $_id_user]);
+            $stmt->execute([$_matricule_user, $_email_user, $_name_user, $_lastname_user, $_phone, $_isAdmin_user, $_id_user]);
             $con->commit();
         }catch(PDOException $e)
         {
@@ -210,11 +215,9 @@ class UserAdmin extends User
     {
         $cpt_array = 0;
         foreach($this->_borrowList as $borrow):
-            echo 'JE SUIS DANS LA FOR';
             var_dump($borrow);
             if($borrow->getIdBorrow() == $id_borrow_toDel )
             {
-                echo 'JE SUIS DANS LA BOUCLE';
                 $borrow->stopBorrow();
                 unset($this->_borrowList[$cpt_array]);
                 break;

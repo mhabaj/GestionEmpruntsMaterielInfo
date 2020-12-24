@@ -75,6 +75,5 @@ require "Model/Equipment.php";
 
     }
     ?>
-
     </body>
 </html>
