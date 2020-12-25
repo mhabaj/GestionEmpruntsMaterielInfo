@@ -46,7 +46,7 @@ if (isset($_POST['startSearching']) && $_POST['UserToSearch']!=null && $_POST['U
 }
 else{
     ?>
-    <label>Veuillez remplir le champ de recherche avant d'appuyer sur le bouton de .</label>
+    <label>Veuillez remplir le champ de recherche avant d'appuyer sur le bouton.</label>
     <?php
 }
 ?>
