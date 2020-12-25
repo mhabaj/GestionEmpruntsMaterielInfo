@@ -15,6 +15,37 @@ require "Controller/DataBase.php";
 
 <?php
 
+if (isset($_POST['startSearching']) && $_POST['EquipmentToSearch']!=null && $_POST['EquipmentToSearch']!=" ") {
+    $bdd = new DataBase();
+    $con = $bdd->getCon();
+    $EquipToSearch = trim($_POST['EquipmentToSearch']);
+
+    $queryEquipments = "SELECT * FROM equipment WHERE name_equip LIKE ?;";
+    $myStatement = $con->prepare($queryEquipments);
+    $myStatement->execute([$EquipToSearch."%"]);
+
+    if($myStatement->rowCount() > 0)
+    {
+        while ($donnees = $myStatement->fetch()) { ?>
+            <a href="DetailEquipement.php?ref_equip=<?php echo $donnees['ref_equip'] ?>">
+                <div>
+                    <strong> Type </strong> : <?php echo $donnees['type_equip']; ?> <br/>
+                    <strong> Matériel </strong> : <?php echo $donnees['brand_equip'] . " " . $donnees['name_equip']; ?> <br/>
+                    <strong> Version </strong> : <?php echo $donnees['version_equip']; ?> <br/> <br/>
+                </div>
+            </a>
+            <?php
+        }
+        $myStatement->closeCursor();
+    }
+    else{
+        ?>
+        <label>Aucun document ne correspond aux termes de recherche spécifiés.</label>
+        <?php
+    }
+    $myStatement->closeCursor();
+}
+
 if (isset($_GET['type'])) {
     $bdd = new DataBase();
     $con = $bdd->getCon();
@@ -53,6 +84,7 @@ if (isset($_GET['type'])) {
     $myStatement->closeCursor();
 
 }
+
 ?>
 
 </body>
