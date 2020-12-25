@@ -9,6 +9,8 @@ class Equipment
     private $_name_equip;
     private $_brand_equip;
     private $_version_equip;
+    private $_photoArray = array();
+
 
     /**
      * Equipment constructor.
@@ -29,12 +31,24 @@ class Equipment
 
     public function howMuchAvailable()
     {
-        $bdd= new DataBase();
-        $con= $bdd->getCon();
+        $bdd = new DataBase();
+        $con = $bdd->getCon();
         $query = "select count(*) as 'somme' from device INNER JOIN equipment on device.ref_equip Like equipment.ref_equip where device.ref_equip like ? and isAvailable = 1; ";
-        $stmt=$con->prepare($query);
+        $stmt = $con->prepare($query);
         $stmt->execute([$this->_ref_equip]);
-        $result=$stmt->fetch();
+        $result = $stmt->fetch();
+        $bdd->closeCon();
+        return $result['somme'];
+    }
+
+    public function howMuchTotal()
+    {
+        $bdd = new DataBase();
+        $con = $bdd->getCon();
+        $query = "select count(*) as 'somme' from device INNER JOIN equipment on device.ref_equip Like equipment.ref_equip where device.ref_equip like ? ; ";
+        $stmt = $con->prepare($query);
+        $stmt->execute([$this->_ref_equip]);
+        $result = $stmt->fetch();
         $bdd->closeCon();
         return $result['somme'];
     }
@@ -65,6 +79,22 @@ class Equipment
     }
 
     /**
+     * @param array $photoArray
+     */
+    public function setPhotoArray(array $photoArray): void
+    {
+        $this->_photoArray = $photoArray;
+    }
+
+    /**
+     * @return array
+     */
+    public function getPhotoArray(): array
+    {
+        return $this->_photoArray;
+    }
+
+    /**
      * @param $type_equip
      */
     public function setTypeEquip($type_equip)
@@ -86,11 +116,11 @@ class Equipment
             $bdd = new DataBase();
             $con = $bdd->getCon();
             $query = ("select count(*) as 'somme' from equipment where ref_equip like ? ;");
-            $stmt=$con->prepare($query);
+            $stmt = $con->prepare($query);
             $stmt->execute([$this->_ref_equip]);
-            $result=$stmt->fetch();
+            $result = $stmt->fetch();
             $bdd->closeCon();
-            if($result['somme'] > 0){
+            if ($result['somme'] > 0) {
                 return true;
             }
 
