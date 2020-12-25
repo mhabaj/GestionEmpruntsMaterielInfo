@@ -10,6 +10,10 @@ require "Controller/DataBase.php";
     <h1>Catalogue</h1>
     <label>Rechercher équipement:</label>
     <input type="search" placeholder="Inserer l'équipement" name="EquipmentToSearch">
+    <input type="radio" name="radio_recherche" id="radio_name" value="radio_name" checked>
+    <label for="radio_name">par nom</label>
+    <input type="radio" name="radio_recherche" id="radio_ref" value="radio_ref">
+    <label for="radio_ref">par référence</label>
     <button type="submit" name="startSearching">Rechercher</button>
 </form>
 
@@ -20,7 +24,11 @@ if (isset($_POST['startSearching']) && $_POST['EquipmentToSearch']!=null && $_PO
     $con = $bdd->getCon();
     $EquipToSearch = trim($_POST['EquipmentToSearch']);
 
-    $queryEquipments = "SELECT * FROM equipment WHERE name_equip LIKE ?;";
+    if($_POST['radio_recherche'] == "radio_name")
+        $queryEquipments = "SELECT * FROM equipment WHERE name_equip LIKE ?;";
+    elseif ($_POST['radio_recherche'] == "radio_ref")
+        $queryEquipments = "SELECT * FROM equipment WHERE ref_equip LIKE ?;";
+
     $myStatement = $con->prepare($queryEquipments);
     $myStatement->execute([$EquipToSearch."%"]);
 
