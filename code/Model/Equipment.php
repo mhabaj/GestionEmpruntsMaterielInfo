@@ -51,7 +51,7 @@ class Equipment
     /**
      * @param String $ref_equip
      */
-    public function setRefEquip($ref_equip)
+    public function setRefEquip(string $ref_equip)
     {
         $this->_ref_equip = $ref_equip;
     }
@@ -59,7 +59,7 @@ class Equipment
     /**
      * @return String type_equip
      */
-    public function getTypeEquip()
+    public function getTypeEquip(): string
     {
         return $this->_type_equip;
     }
@@ -75,12 +75,12 @@ class Equipment
     /**
      * @return String NameEquip
      */
-    public function getNameEquip()
+    public function getNameEquip(): string
     {
         return $this->_name_equip;
     }
 
-    public function isRefEquipValid()
+    public function isRefEquipValid(): bool
     {
         if (strlen($this->_ref_equip)) {
             $bdd = new DataBase();
@@ -110,7 +110,7 @@ class Equipment
     /**
      * @return String BrandEquip
      */
-    public function getBrandEquip()
+    public function getBrandEquip(): string
     {
         return $this->_brand_equip;
     }
@@ -126,7 +126,7 @@ class Equipment
     /**
      * @return String VersionEquip
      */
-    public function getVersionEquip()
+    public function getVersionEquip(): string
     {
         return $this->_version_equip;
     }

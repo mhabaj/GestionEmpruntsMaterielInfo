@@ -97,10 +97,7 @@ class UserAdmin extends User
             }
 
         }
-        else
-        {
-            //rien à changer
-        }
+
     }
     /* A PAS UTILISER */
     public function deleteEquipment($_ref_equipDel)
