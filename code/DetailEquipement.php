@@ -1,9 +1,9 @@
 <?php
 require_once("Controller/control-session.php");
 
-require "Controller/DataBase.php";
-require "Model/Equipment.php";
-require "Model/UserRegular.php";
+require_once "Controller/DataBase.php";
+require_once "Model/Equipment.php";
+require_once "Model/UserRegular.php";
 
 ?>
 <html>
@@ -89,7 +89,7 @@ if (isset($_GET['ref_equip']) && $_GET['ref_equip'] != null) {
 
                 <?php
                 if (isset($_POST["modifierEquipement"])) {
-                    header("Location: ModifierEquipement.php?ref_equip=".$currentEquipement->getRefEquip());
+                    header("Location: ModifierEquipement.php?ref_equip=" . $currentEquipement->getRefEquip());
 
                 }
 
