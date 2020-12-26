@@ -9,6 +9,8 @@ class Equipment
     private $_name_equip;
     private $_brand_equip;
     private $_version_equip;
+    private $_photoArray = array();
+
 
     /**
      * Equipment constructor.
@@ -27,69 +29,28 @@ class Equipment
         $this->_version_equip = $_version_equip;
     }
 
-    /* PRECONDITION ON NE PEUT PAS DELETE DES DEVICES DONT LE CHAMP isAVAILABLE EST FALSE, $desiredQuantity ne peut pas etre < 0, */
-    public function updateDeviceCount($_ref_equip,$desiredQuantity)
+    public function howMuchAvailable()
     {
         $bdd = new DataBase();
         $con = $bdd->getCon();
+        $query = "select count(*) as 'somme' from device INNER JOIN equipment on device.ref_equip Like equipment.ref_equip where device.ref_equip like ? and isAvailable = 1; ";
+        $stmt = $con->prepare($query);
+        $stmt->execute([$this->_ref_equip]);
+        $result = $stmt->fetch();
+        $bdd->closeCon();
+        return $result['somme'];
+    }
 
-        $requestCount = "SELECT COUNT(*) FROM DEVICE WHERE ref_equip = '$_ref_equip';";
-        $answerCount = $con->query($requestCount);
-        $resultCount = $answerCount->fetch();
-        $numberOfDevices = $resultCount['COUNT(*)'];
-
-        if ($numberOfDevices > $desiredQuantity)
-        {
-            $indexOf = 0;
-            echo $numberOfDevices;
-            echo $desiredQuantity;
-            echo "avant";
-            while($indexOf < ($numberOfDevices - $desiredQuantity))
-            {
-                echo $indexOf;
-                $con->beginTransaction();
-                try
-                {
-                    $requestDelete = "DELETE FROM device WHERE ref_equip = ? AND isAvailable = 1 LIMIT 1;";
-                    $myStatement = $con->prepare($requestDelete);
-                    $myStatement->execute([$_ref_equip]);
-                    $con->commit();
-                }
-                catch(PDOException $e)
-                {
-                    $con->rollback();
-                    throw new PDOException('Erreur update device count');
-                }
-                $indexOf++;
-            }
-
-        }
-        elseif ($numberOfDevices < $desiredQuantity)
-        {
-            $indexOf = 0;
-            while($indexOf < ($desiredQuantity - $numberOfDevices))
-            {
-                $con->beginTransaction();
-                try
-                {
-                    $requestDelete = "INSERT INTO device(isAvailable,ref_equip) VALUES (1, ? ); ";
-                    $myStatement = $con->prepare($requestDelete);
-                    $myStatement->execute([$_ref_equip]);
-                    $con->commit();
-                }
-                catch(PDOException $e)
-                {
-                    $con->rollback();
-                    throw new PDOException('Erreur update device count');
-                }
-                $indexOf++;
-            }
-
-        }
-        else
-        {
-            //rien à changer
-        }
+    public function howMuchTotal()
+    {
+        $bdd = new DataBase();
+        $con = $bdd->getCon();
+        $query = "select count(*) as 'somme' from device INNER JOIN equipment on device.ref_equip Like equipment.ref_equip where device.ref_equip like ? ; ";
+        $stmt = $con->prepare($query);
+        $stmt->execute([$this->_ref_equip]);
+        $result = $stmt->fetch();
+        $bdd->closeCon();
+        return $result['somme'];
     }
 
 
@@ -102,9 +63,9 @@ class Equipment
     }
 
     /**
-     * @param $ref_equip
+     * @param String $ref_equip
      */
-    public function setRefEquip($ref_equip)
+    public function setRefEquip(string $ref_equip)
     {
         $this->_ref_equip = $ref_equip;
     }
@@ -112,9 +73,25 @@ class Equipment
     /**
      * @return String type_equip
      */
-    public function getTypeEquip()
+    public function getTypeEquip(): string
     {
         return $this->_type_equip;
+    }
+
+    /**
+     * @param array $photoArray
+     */
+    public function setPhotoArray(array $photoArray): void
+    {
+        $this->_photoArray = $photoArray;
+    }
+
+    /**
+     * @return array
+     */
+    public function getPhotoArray(): array
+    {
+        return $this->_photoArray;
     }
 
     /**
@@ -128,10 +105,29 @@ class Equipment
     /**
      * @return String NameEquip
      */
-    public function getNameEquip()
+    public function getNameEquip(): string
     {
         return $this->_name_equip;
     }
+
+    public function isRefEquipValid(): bool
+    {
+        if (strlen($this->_ref_equip)) {
+            $bdd = new DataBase();
+            $con = $bdd->getCon();
+            $query = ("select count(*) as 'somme' from equipment where ref_equip like ? ;");
+            $stmt = $con->prepare($query);
+            $stmt->execute([$this->_ref_equip]);
+            $result = $stmt->fetch();
+            $bdd->closeCon();
+            if ($result['somme'] > 0) {
+                return true;
+            }
+
+        }
+        return false;
+    }
+
 
     /**
      * @param $name_equip
@@ -144,7 +140,7 @@ class Equipment
     /**
      * @return String BrandEquip
      */
-    public function getBrandEquip()
+    public function getBrandEquip(): string
     {
         return $this->_brand_equip;
     }
@@ -160,7 +156,7 @@ class Equipment
     /**
      * @return String VersionEquip
      */
-    public function getVersionEquip()
+    public function getVersionEquip(): string
     {
         return $this->_version_equip;
     }

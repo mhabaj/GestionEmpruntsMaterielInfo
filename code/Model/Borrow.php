@@ -27,15 +27,16 @@ class Borrow
         $bdd = new DataBase();
         $con = $bdd->getCon();
 
-        $con->beginTransaction();
         try
         {
+
             date_default_timezone_set('Europe/Paris');
             $currentDateTime = date('Y/m/d');
             $this->_start_date = $currentDateTime;
 
             $bdd = new DataBase();
             $con = $bdd->getCon();
+            $con->beginTransaction();
 
             $requestSelect = "SELECT id_device FROM DEVICE WHERE isAvailable = TRUE AND ref_equip = '$this->_ref_equip';";
             $answerSelect = $con->query($requestSelect);
