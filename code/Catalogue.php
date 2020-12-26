@@ -1,9 +1,20 @@
 <?php
-require_once("Controller/control-session.php");
 
-require "Controller/DataBase.php";
+require_once("Controller/control-session.php");
+require_once "Controller/DataBase.php";
+require_once "Model/Equipment.php";
+require_once "Model/UserRegular.php";
+require_once "Model/UserAdmin.php";
+require_once "Controller/Functions.php";
+require_once "Controller/EquipmentController.php";
+
+class CatalogueController{
+
+}
+
 
 ?>
+
 <html>
 <body>
 <form method="POST" enctype="multipart/form-data">
@@ -55,5 +66,27 @@ if (isset($_GET['type'])) {
 }
 ?>
 
+<?php
+if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1) {
+    $currentUser = new UserAdmin();
+    $currentUser->loadUser();
+    if ($currentUser->getPrivilege() == 1) {
+        ?>
+
+        <form method="POST" enctype="multipart/form-data">
+            <label>Espace Admin: </label>
+            <button type="submit" name="addEquip">Ajouter un nouvel Equipement</button>
+        </form>
+
+        <?php
+        if (isset($_POST['addEquip'])) {
+            header("Location: creationEquipement.php");
+        }
+
+
+    }
+}
+
+?>
 </body>
 </html>

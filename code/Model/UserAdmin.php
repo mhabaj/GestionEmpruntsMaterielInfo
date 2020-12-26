@@ -91,18 +91,15 @@ class UserAdmin extends User
                 catch(PDOException $e)
                 {
                     $con->rollback();
-                    throw new PDOException('Erreur update device count');
+                    throw new PDOException('Erreur update device count ');
                 }
                 $indexOf++;
             }
 
         }
-        else
-        {
-            //rien à changer
-        }
+
     }
-    /* */
+    /* A PAS UTILISER */
     public function deleteEquipment($_ref_equipDel)
     {
         $bdd = new DataBase();
@@ -122,8 +119,8 @@ class UserAdmin extends User
         }
         $bdd->closeCon();
     }
-    /*PREC $_ref_equipUpdate != any existent ref*/
-    public function modifyEquipment($_ref_equipUpdate, $type_equipUpd, $brand_equipUpd,$name_equipUpd, $version_equipUpd)
+    /* PREC $_ref_equipUpdate != any existent ref*/
+    public function modifyEquipment($ref_equipToUpdate,$ref_equipUpd, $type_equipUpd, $brand_equipUpd,$name_equipUpd, $version_equipUpd)
     {
         $bdd = new DataBase();
         $con = $bdd->getCon();
@@ -131,15 +128,15 @@ class UserAdmin extends User
 
         try
         {
-            $requestUpdate = "UPDATE EQUIPMENT SET type_equip =?, brand_equip =?, name_equip =?, version_equip =? where ref_equip like ? ;";
+            $requestUpdate = "UPDATE EQUIPMENT SET ref_equip=?, type_equip =?, brand_equip =?, name_equip =?, version_equip =? where ref_equip like ? ;";
             $myStatement = $con->prepare($requestUpdate);
-            $myStatement->execute([$_ref_equipUpdate, $type_equipUpd, $brand_equipUpd, $name_equipUpd, $version_equipUpd, $_ref_equipUpdate]);
+            $myStatement->execute([$ref_equipUpd, $type_equipUpd, $brand_equipUpd, $name_equipUpd, $version_equipUpd, $ref_equipToUpdate]);
             $con->commit();
         }
         catch(PDOException $e)
         {
             $con->rollback();
-            print "Error!: " . $e->getMessage() . "</br>";
+            throw new Exception("Error ModifyEquipment() : " . $e->getMessage());
         }
         $bdd->closeCon();
     }
