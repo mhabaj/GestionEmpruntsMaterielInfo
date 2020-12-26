@@ -33,16 +33,16 @@
     ?>
 
     <form method="POST" enctype="multipart/form-data">
-        <label> <b>Reserver cette équipement
-                (Dispo/Total: <?php if (isset($EquipmentController) && $EquipmentController != null && isset($currentEquipement) && $currentEquipement != null) echo $currentEquipement->howMuchAvailable() . "/" . $currentEquipement->howMuchTotal(); ?>
-                ): </b></label>
-        <br>
+        <label> <b>----- Reserver cet équipement ----- </b></label>
+
+
         <p>Date fin de reservation: </p>
 
         <input type="date" placeholder="Date fin de reservation" name="dateRes">
-        <br>
-        <p>Quantité souhaité: </p>
-        <input type="number" placeholder="Quantité souhaité" name="quantiteNumber" min="0"
+        <p> Quantite du materiel souhaité <b>(Disponible / Occupé / Total présent:
+                <mark><?php if (isset($EquipmentController) && $EquipmentController != null && isset($currentEquipement) && $currentEquipement != null) echo $currentEquipement->howMuchAvailable() . "/" . ($currentEquipement->howMuchAvailable() - $currentEquipement->howMuchTotal()) * -1 . "/" . $currentEquipement->howMuchTotal(); ?></mark>): </b></p>
+
+        <input type="number" placeholder="Quantité souhaité" name="quantiteNumber" min="1" value="1"
                max="<?php if (isset($EquipmentController) && $EquipmentController != null && isset($currentEquipement) && $currentEquipement != null) echo $currentEquipement->howMuchAvailable() ?>">
         <input type="submit" value="Reserver l'équipement" placeholder="Reserver l'équipement"
                name="reserveEquipment">
@@ -50,25 +50,27 @@
     <?php
 
     if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1) { ?>
-    <label> <b> ESPACE ADMINISTRATEUR: </b> </label>
-    <form method="POST" enctype="multipart/form-data">
-        <input type="submit" value="Modifier cet équipement" placeholder="Modifier cet équipement"
-               name="modifierEquipement">
-    </form>
+            <p>---------------------------------------------</p>
+        <label> <b> ESPACE ADMINISTRATEUR: </b> </label>
+        <form method="POST" enctype="multipart/form-data">
+            <input type="submit" value="Modifier cet équipement" placeholder="Modifier cet équipement"
+                   name="modifierEquipement">
+        </form>
 
+
+        <?php
+        if (isset($_POST["modifierEquipement"])) {
+            header("Location: ModifierEquipement.php?ref_equip=" . $currentEquipement->getRefEquip());
+
+        }
+
+    }
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ?>
 </div>
 
 </body>
 </html>
-<?php
-if (isset($_POST["modifierEquipement"])) {
-    header("Location: ModifierEquipement.php?ref_equip=" . $currentEquipement->getRefEquip());
-
-}
-
-}
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-?>

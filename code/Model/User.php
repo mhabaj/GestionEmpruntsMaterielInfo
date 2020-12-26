@@ -12,6 +12,23 @@ abstract class User
     protected $_name;
     protected $_lastName;
     protected $_phone;
+    protected $_privilege;
+
+    /**
+     * @return mixed
+     */
+    public function getPrivilege()
+    {
+        return $this->_privilege;
+    }
+
+    /**
+     * @param mixed $privilege
+     */
+    public function setPrivilege($privilege): void
+    {
+        $this->_privilege = $privilege;
+    }
     protected $_borrowList = array();
 
     /**
@@ -57,8 +74,7 @@ abstract class User
 
     public function loadUser()
     {
-        //$id = connect();
-        //$this->setIdUser(1);
+
         $this->_idUser = $_SESSION['id_user'];
 
         $bdd = new DataBase();
@@ -73,6 +89,7 @@ abstract class User
         $this->setName($result['name_user']);
         $this->setLastName($result['lastname_user']);
         $this->setPhone($result['phone_user']);
+        $this->setPrivilege($result['isAdmin_user']);
 
         $myQuery = "SELECT borrow_info.id_borrow,startdate_borrow,enddate_borrow,isActive, borrow.id_device, device.ref_equip FROM borrow_info 
                     INNER JOIN borrow INNER JOIN device ON borrow.id_borrow= borrow_info.id_borrow AND borrow.id_device= device.id_device
