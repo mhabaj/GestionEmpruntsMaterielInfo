@@ -16,7 +16,8 @@ if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1) {
 
 
         try {
-            $EquipmentController = new EquipmentController($_GET['ref_equip']);
+            $EquipmentController = new EquipmentController();
+            $EquipmentController->initEquipmentController($_GET['ref_equip']);
             $currentEquipement = $EquipmentController->getEquipment();
 
             ?>

@@ -7,6 +7,7 @@ class EquipmentController
 {
 
     private $_equipment;
+
     private $photosArray = array();
 
     /**
@@ -63,9 +64,10 @@ class EquipmentController
     {
         try {
             if (Functions::checkReservationDate($dateFinBorrow) && Functions::checkQuantityEquipment($quantite_equip)) {
+                $currentUser = new UserRegular();
+                $currentUser->loadUser();
                 if ($this->_equipment->howMuchAvailable() >= $quantite_equip && $quantite_equip > 0) {
-                    $currentUser = new UserRegular();
-                    $currentUser->loadUser();
+
                     if ($currentUser->borrowEquipement($this->_equipment->getRefEquip(), $dateFinBorrow, $quantite_equip)) {
                         echo "<p> Reservation effectuée </p>";
                         header("Refresh:1");
@@ -89,10 +91,10 @@ class EquipmentController
             if (Functions::checkRefEquip($ref_equip) && $this->isRefEquipUsed($ref_equip) == false && Functions::checkNameMateriel($nom_equip)
                 && Functions::checkBrandEquip($marque_equip) && Functions::checkTypeEquip($type_equip)
                 && Functions::checkVersionMateriel($version_equip) && Functions::checkQuantityEquipment($quantite_equip)) {
-
+                $currentUser = new UserAdmin();
+                $currentUser->loadUser();
                 if ($this->_equipment->howMuchAvailable() != $quantite_equip) {
-                    $currentUser = new UserAdmin();
-                    $currentUser->loadUser();
+
                     $currentUser->updateDeviceCount($this->_equipment->getRefEquip(), $quantite_equip);
                 }
 
@@ -106,11 +108,23 @@ class EquipmentController
         }
     }
 
-    public function createNewEquipment($currentUser)
+    public function createNewEquipment($ref_equip, $type_equip, $marque_equip, $nom_equip, $version_equip, $quantite_equip)
     {
-        $currentUser = new UserAdmin();
-        $currentUser->loadUser();
-        $currentUser->createEquipment($this->ref, $this->type, $this->brand, $this->name, $this->version, $this->quantity);
+
+        try {
+            if (Functions::checkRefEquip($ref_equip) && $this->isNewRefEquipUsed($ref_equip) == false && Functions::checkNameMateriel($nom_equip)
+                && Functions::checkBrandEquip($marque_equip) && Functions::checkTypeEquip($type_equip)
+                && Functions::checkVersionMateriel($version_equip) && Functions::checkQuantityEquipment($quantite_equip)) {
+                $currentUser = new UserAdmin();
+                $currentUser->loadUser();
+                $currentUser->createEquipment($ref_equip, $type_equip, $marque_equip, $nom_equip, $version_equip, $quantite_equip);
+            }
+        } catch (Exception | PDOException $e) {
+            throw new Exception($e->getMessage());
+
+        }
+
+
     }
 
     public function isRefEquipUsed($ref): bool
@@ -135,6 +149,24 @@ class EquipmentController
         return false;
     }
 
+    public function isNewRefEquipUsed($ref): bool
+    {
+        $bdd = new DataBase();
+        $con = $bdd->getCon();
+        $query = "select count(*) as 'somme' from equipment where ref_equip like ? ;";
+        $stmt = $con->prepare($query);
+        $stmt->execute([$ref]);
+        $result = $stmt->fetch();
+        $bdd->closeCon();
+
+        if ($result['somme'] >= 1) {
+            throw new Exception("Ref equipment is already used");
+        }
+
+
+        return false;
+    }
+
     /**
      * @return Equipment
      */
@@ -151,4 +183,19 @@ class EquipmentController
         return $this->photosArray;
     }
 
+    /**
+     * @param mixed $equipment
+     */
+    public function setEquipment($equipment): void
+    {
+        $this->_equipment = $equipment;
+    }
+
+    /**
+     * @param array $photosArray
+     */
+    public function setPhotosArray(array $photosArray): void
+    {
+        $this->photosArray = $photosArray;
+    }
 }
