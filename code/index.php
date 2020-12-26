@@ -89,7 +89,6 @@
     <div class="footer2">
         <div class="container">
             <div class="row">
-
                 <div class="col-md-6 widget">
                     <div class="widget-body">
                         <p class="simplenav">
@@ -108,7 +107,6 @@
                         </p>
                     </div>
                 </div>
-
             </div> <!-- /row of widgets -->
         </div>
     </div>
