@@ -1,6 +1,6 @@
 <html>
 <body>
-<form method="GET" enctype="multipart/form-data">
+<form method="POST" enctype="multipart/form-data">
     <h1>Création matériel</h1>
 
     <label><b>Référence</b></label>
@@ -36,6 +36,15 @@
     <input type="number" placeholder="Quantité matériel" name="quantity"
            value="<?php if (isset($EquipmentController) && $EquipmentController != null && isset($currentEquipement) && $currentEquipement != null)
                if (isset($quantity) && $quantity != null) echo $quantity; ?>" required>
+
+
+    <br/><label><b>Images: </b></label>
+    <input type="image" max="1024" value="" name="photo">
+    <input type="hidden" name="MAX_FILE_SIZE" value="8388608">
+    <label for="photo"> Photo (JPG, JPEG, PNG or GIF | max.8 Mo) :</label><br/>
+    <input type="file" id="photo" name="photo"/><br/>
+
+
 
     <br/>
     <button type="submit" name="submitEquipment">Create Equipment</button>

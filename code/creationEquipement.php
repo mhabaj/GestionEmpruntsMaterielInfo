@@ -18,11 +18,11 @@ if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1) {
 
             $currentEquipement = null;
             $quantity = 1;
-            if (!isset($_GET['submitEquipment'])) {
+            if (!isset($_POST['submitEquipment'])) {
                 $currentEquipement = new Equipment("", "", "", "", "");
             } else {
-                $currentEquipement = new Equipment($_GET["ref"], $_GET["type"], $_GET["name"], $_GET["brand"], $_GET["version"]);
-                $quantity = $_GET['quantity'];
+                $currentEquipement = new Equipment($_POST["ref"], $_POST["type"], $_POST["name"], $_POST["brand"], $_POST["version"]);
+                $quantity = $_POST['quantity'];
             }
             $EquipmentController->setEquipment($currentEquipement);
             ?>
@@ -38,27 +38,30 @@ if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1) {
 
             <?php
 
-            if (isset($_GET['submitEquipment'])) {
-                if (isset($_GET['ref']) && isset($_GET['type']) && isset($_GET['name']) && isset($_GET['brand']) && isset($_GET['version']) && isset($_GET['quantity'])) {
+            if (isset($_POST['submitEquipment'])) {
+                if (isset($_POST['ref']) && isset($_POST['type']) && isset($_POST['name']) && isset($_POST['brand']) && isset($_POST['version']) && isset($_POST['quantity'])) {
 
-                    $currentEquipement->setRefEquip($_GET['ref']);
-                    $currentEquipement->setTypeEquip($_GET['type']);
-                    $currentEquipement->setBrandEquip($_GET['brand']);
-                    $currentEquipement->setNameEquip($_GET['name']);
-                    $currentEquipement->setVersionEquip($_GET['version']);
-                    $quantity = $_GET['quantity'];
+                    $currentEquipement->setRefEquip($_POST['ref']);
+                    $currentEquipement->setTypeEquip($_POST['type']);
+                    $currentEquipement->setBrandEquip($_POST['brand']);
+                    $currentEquipement->setNameEquip($_POST['name']);
+                    $currentEquipement->setVersionEquip($_POST['version']);
+                    $quantity = $_POST['quantity'];
 
-                    $ref_equip = $_GET['ref'];
-                    $type_equip = $_GET['type'];
-                    $nom_equip = $_GET['name'];
-                    $marque_equip = $_GET['brand'];
-                    $version_equip = $_GET['version'];
-                    $quantite_equip = $_GET['quantity'];
+                    $ref_equip = $_POST['ref'];
+                    $type_equip = $_POST['type'];
+                    $nom_equip = $_POST['name'];
+                    $marque_equip = $_POST['brand'];
+                    $version_equip = $_POST['version'];
+                    $quantite_equip = $_POST['quantity'];
 
 
                     try {
                         if ($currentUser->getPrivilege() == 1) {
+                            $photo = Functions::uploadImage($type_equip);
+
                             $EquipmentController->createNewEquipment($ref_equip, $type_equip, $marque_equip, $nom_equip, $version_equip, $quantite_equip);
+
                             unset($currentEquipement);
                             unset($EquipmentController);
                             header("Location: DetailEquipement.php?ref_equip=" . $ref_equip);
