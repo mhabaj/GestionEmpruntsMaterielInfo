@@ -151,7 +151,7 @@
                     <div class="col-md-6 widget">
                         <div class="widget-body">
                             <p class="simplenav">
-                                <a href="#">Home</a> |
+                                <a href="index.php">Home</a> |
                                 <a href="about.php">About</a> |
                                 <a href="contact.php">Contact</a> |
                                 <b><a href="Authentification.php">Sign in</a></b>
