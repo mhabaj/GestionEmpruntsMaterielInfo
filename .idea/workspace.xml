@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="fdd4312c-8052-4318-bbcb-899411b64446" name="Default Changelist" comment="control Session marche" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings">
+    <execution />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1l9weXopiSKckA19JnnQRbyVsNW" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="DatabaseDriversLRU" value="mysql" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="com.jetbrains.php.phpunit.codeGeneration.PhpNewTestDialog.defaultLibrary" value="PHPUnit" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/code/tests" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\wamp64\www\GestionEmpruntsMaterielInfo\code" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="DataBase.php" type="PhpLocalRunConfigurationType" factoryName="PHP Console" temporary="true" path="$PROJECT_DIR$/code/Controller/DataBase.php">
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="PHP Script.DataBase.php" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="fdd4312c-8052-4318-bbcb-899411b64446" name="Default Changelist" comment="" />
+      <created>1607022711918</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1607022711918</updated>
+      <workItem from="1607022713928" duration="21377000" />
+      <workItem from="1607051693473" duration="7104000" />
+      <workItem from="1607117732273" duration="144000" />
+      <workItem from="1607117946284" duration="8090000" />
+      <workItem from="1607185276469" duration="7901000" />
+      <workItem from="1607205679398" duration="3620000" />
+      <workItem from="1607268725258" duration="3151000" />
+      <workItem from="1607272047886" duration="2879000" />
+      <workItem from="1607441215386" duration="7173000" />
+      <workItem from="1608717541661" duration="253000" />
+      <workItem from="1608717867279" duration="28925000" />
+      <workItem from="1608817130906" duration="13371000" />
+      <workItem from="1608893836006" duration="669000" />
+      <workItem from="1608894522507" duration="19942000" />
+      <workItem from="1608920857187" duration="29385000" />
+    </task>
+    <task id="LOCAL-00001" summary="classe DataBase  fait">
+      <created>1607024620308</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1607024620308</updated>
+    </task>
+    <task id="LOCAL-00002" summary="maj bdd">
+      <created>1607035911670</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1607035911670</updated>
+    </task>
+    <task id="LOCAL-00003" summary="connexion in progress">
+      <created>1607037920396</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1607037920396</updated>
+    </task>
+    <task id="LOCAL-00004" summary="connexion deco marche et maj">
+      <created>1607042915246</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1607042915246</updated>
+    </task>
+    <task id="LOCAL-00005" summary="connexion deco marche et maj">
+      <created>1607048309292</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1607048309292</updated>
+    </task>
+    <task id="LOCAL-00006" summary="User borrow and end borrow marche sur papier">
+      <created>1607059659440</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1607059659440</updated>
+    </task>
+    <task id="LOCAL-00007" summary="User borrow and end borrow marche sur papier">
+      <created>1607059686665</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1607059686665</updated>
+    </task>
+    <task id="LOCAL-00008" summary="controller auth en cours">
+      <created>1607185339780</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1607185339780</updated>
+    </task>
+    <task id="LOCAL-00009" summary="merge avec adrien">
+      <created>1607270107461</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1607270107461</updated>
+    </task>
+    <task id="LOCAL-00010" summary="merge avec adrien">
+      <created>1607277554519</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1607277554519</updated>
+    </task>
+    <task id="LOCAL-00011" summary="CONNEXION MARCHE">
+      <created>1607443242329</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1607443242329</updated>
+    </task>
+    <task id="LOCAL-00012" summary="control Session marche">
+      <created>1607448157618</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1607448157618</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Modifier et detail equipement FINI">
+      <created>1608904861797</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1608904861797</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Modifier et detail equipement FINI">
+      <created>1608905001327</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1608905001327</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Separatin en View Controller de Authentification.php et DetailEquipement.php">
+      <created>1608916245949</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1608916245949</updated>
+    </task>
+    <task id="LOCAL-00016" summary="details et edit equip 100% fini.&#10;&#10;Doing now: integraion ajout equipement.&#10;---&gt; je viens de changer le constructeur de EquipmentController !!">
+      <created>1608952482481</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1608952482481</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Integration AJOUTER NOUVELLE EQUIP FINI.&#10;AJOUT BUTTON ADMIN DANS CATALOGUE.&#10;&#10;A FAIRE: INTEGER TOUT LE RESTE EN MODE MVC.">
+      <created>1608956220937</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1608956220937</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="classe DataBase  fait" />
+    <MESSAGE value="maj bdd" />
+    <MESSAGE value="connexion in progress" />
+    <MESSAGE value="connexion deco marche" />
+    <MESSAGE value="connexion deco marche et maj" />
+    <MESSAGE value="User borrow and end borrow marche sur papier" />
+    <MESSAGE value="controller auth en cours" />
+    <MESSAGE value="merge avec adrien" />
+    <MESSAGE value="CONNEXION MARCHE" />
+    <MESSAGE value="control Session marche" />
+    <MESSAGE value="Modifier et detail equipement FINI" />
+    <MESSAGE value="Separatin en View Controller de Authentification.php et DetailEquipement.php" />
+    <MESSAGE value="details et edit equip 100% fini.&#10;&#10;Doing now: integraion ajout equipement.&#10;---&gt; je viens de changer le constructeur de EquipmentController !!" />
+    <MESSAGE value="Integration AJOUTER NOUVELLE EQUIP FINI.&#10;AJOUT BUTTON ADMIN DANS CATALOGUE.&#10;&#10;A FAIRE: INTEGER TOUT LE RESTE EN MODE MVC." />
+    <option name="LAST_COMMIT_MESSAGE" value="Integration AJOUTER NOUVELLE EQUIP FINI.&#10;AJOUT BUTTON ADMIN DANS CATALOGUE.&#10;&#10;A FAIRE: INTEGER TOUT LE RESTE EN MODE MVC." />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>
