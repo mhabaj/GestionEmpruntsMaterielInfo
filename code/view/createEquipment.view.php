@@ -1,0 +1,44 @@
+<html>
+<body>
+<form method="GET" enctype="multipart/form-data">
+    <h1>Création matériel</h1>
+
+    <label><b>Référence</b></label>
+    <input type="text" placeholder="Référence matériel" name="ref"
+           value="<?php if (isset($EquipmentController) && $EquipmentController != null && isset($currentEquipement) && $currentEquipement != null)
+               echo $currentEquipement->getRefEquip(); ?>"
+           required>
+
+    <br/><label><b>Type</b></label>
+    <input type="text" placeholder="Type matériel" name="type"
+           value="<?php if (isset($EquipmentController) && $EquipmentController != null && isset($currentEquipement) && $currentEquipement != null)
+               echo $currentEquipement->getTypeEquip(); ?>"
+           required>
+
+    <br/><label><b>Marque</b></label>
+    <input type="text" placeholder="Marque matériel" name="brand"
+           value="<?php if (isset($EquipmentController) && $EquipmentController != null && isset($currentEquipement) && $currentEquipement != null)
+               echo $currentEquipement->getBrandEquip(); ?>"
+           required>
+
+    <br/><label><b>Nom</b></label>
+    <input type="text" placeholder="Nom matériel" name="name"
+           value="<?php if (isset($EquipmentController) && $EquipmentController != null && isset($currentEquipement) && $currentEquipement != null)
+               echo $currentEquipement->getNameEquip(); ?>"
+           required>
+
+    <br/><label><b>Version</b></label>
+    <input type="text" placeholder="Version matériel" name="version"
+           value="<?php if (isset($EquipmentController) && $EquipmentController != null && isset($currentEquipement) && $currentEquipement != null)
+               echo $currentEquipement->getVersionEquip(); ?>" required>
+
+    <br/><label><b>Quantité</b></label>
+    <input type="number" placeholder="Quantité matériel" name="quantity"
+           value="<?php if (isset($EquipmentController) && $EquipmentController != null && isset($currentEquipement) && $currentEquipement != null)
+               if (isset($quantity) && $quantity != null) echo $quantity; ?>" required>
+
+    <br/>
+    <button type="submit" name="submitEquipment">Create Equipment</button>
+</form>
+</body>
+</html>
