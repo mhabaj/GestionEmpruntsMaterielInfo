@@ -5,9 +5,7 @@
  */
 class EquipmentController
 {
-
     private $_equipment;
-
     private $photosArray = array();
 
     /**
@@ -31,7 +29,8 @@ class EquipmentController
         $myStatement->execute([$refEquipment]);
 
         $donnees = $myStatement->fetch();
-        if ($donnees['ref_equip'] != null) {
+        if ($donnees['ref_equip'] != null)
+        {
             $equipment = new Equipment($donnees['ref_equip'], $donnees['type_equip'], $donnees['name_equip'], $donnees['brand_equip'], $donnees['version_equip']);
             $queryPhotos = "SELECT link_photo FROM stock_photo WHERE ref_equip LIKE ?; ";
             $myStatement1 = $con->prepare($queryPhotos);

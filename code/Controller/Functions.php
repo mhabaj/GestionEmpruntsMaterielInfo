@@ -127,8 +127,7 @@ class Functions
 
         $ph = basename($_FILES['photo']['name']);
 
-
-        $photo = $sousdossier . $Type . $ph;
+        $photo = $sousdossier . $ph;
 
         // UPLOAD DE L'IMAGE
         $fichier = basename($_FILES['photo']['name']);
@@ -139,55 +138,38 @@ class Functions
 
             $taille_maxi = 8388608;
             $taille = filesize($_FILES['photo']['tmp_name']);
-            $extensions = array('.PNG', '.png', '.jpg', '.JPG', '.jpeg', '.JPEG', 'gif', 'GIF');
+            $extensions = array('.PNG', '.png', '.jpg', '.JPG', '.jpeg', '.JPEG');
             $extension = strrchr($_FILES['photo']['name'], '.');
             //Début des vérifications de sécurité...
             if (!in_array($extension, $extensions)) //Si l'extension n'est pas dans le tableau
             {
-                $erreur = "Seulement les photos de type png, jpg, jpeg et gif sont acceptes";
+                $erreur = "<script> triggerMessageBox('error','Seulement les photos de type png, jpg, jpeg!') </script>";
 
             }
 
             if ($taille > $taille_maxi) {
-                $erreur = "Photo trop grande ";
+                $erreur = "<script> triggerMessageBox('error','Photo trop grande ') </script>";
+
+
             }
 
             if (empty($erreur)) //S'il n'y a pas d'erreur, on upload
             {
                 //On formate le nom du fichier ici...
-                $table = array(
-                    'Š' => 'S', 'š' => 's', 'Đ' => 'Dj', 'đ' => 'dj', 'Ž' => 'Z', 'ž' => 'z', 'Č' => 'C', 'č' => 'c', 'Ć' => 'C', 'ć' => 'c',
-                    'À' => 'A', 'Á' => 'A', 'Â' => 'A', 'Ã' => 'A', 'Ä' => 'A', 'Å' => 'A', 'Æ' => 'A', 'Ç' => 'C', 'È' => 'E', 'É' => 'E',
-                    'Ê' => 'E', 'Ë' => 'E', 'Ì' => 'I', 'Í' => 'I', 'Î' => 'I', 'Ï' => 'I', 'Ñ' => 'N', 'Ò' => 'O', 'Ó' => 'O', 'Ô' => 'O',
-                    'Õ' => 'O', 'Ö' => 'O', 'Ø' => 'O', 'Ù' => 'U', 'Ú' => 'U', 'Û' => 'U', 'Ü' => 'U', 'Ý' => 'Y', 'Þ' => 'B', 'ß' => 'Ss',
-                    'à' => 'a', 'á' => 'a', 'â' => 'a', 'ã' => 'a', 'ä' => 'a', 'å' => 'a', 'æ' => 'a', 'ç' => 'c', 'è' => 'e', 'é' => 'e',
-                    'ê' => 'e', 'ë' => 'e', 'ì' => 'i', 'í' => 'i', 'î' => 'i', 'ï' => 'i', 'ð' => 'o', 'ñ' => 'n', 'ò' => 'o', 'ó' => 'o',
-                    'ô' => 'o', 'õ' => 'o', 'ö' => 'o', 'ø' => 'o', 'ù' => 'u', 'ú' => 'u', 'û' => 'u', 'ý' => 'y', 'ý' => 'y', 'þ' => 'b',
-                    'ÿ' => 'y', 'Ŕ' => 'R', 'ŕ' => 'r',
-                );
-                $fichier = strtr($fichier, $table);
+                $fichier = strtr($fichier,
+                    'ÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÒÓÔÕÖÙÚÛÜÝàáâãäåçèéêëìíîïðòóôõöùúûüýÿ',
+                    'AAAAAACEEEEIIIIOOOOOUUUUYaaaaaaceeeeiiiioooooouuuuyy');
                 $fichier = preg_replace('/([^.a-zA-Z0-9]+)/i', '-', $fichier);
-
-
-                $fichierSplit = explode(".", $fichier);
-                $fichierOrig = $fichierSplit[0];
-                $fichierOrigbackupName = $fichierSplit[0];
-                $num = 0;
-                $filenameFULL = $fichier;
-                while (file_exists($sousdossier . $fichierOrig . "." . $fichierSplit[1])) {
-                    $fichierOrig = (string)$fichierOrigbackupName . "(" . $num . ")";
-                    $filenameFULL = $fichierOrig . "." . $fichierSplit[1];
-                    $num++;
-                }
-
-                if (move_uploaded_file($_FILES['photo']['tmp_name'], $sousdossier . $filenameFULL)) {
-                    return $sousdossier . $filenameFULL;
-                } else {
-                    throw new Exception("Erreur Interne Upload Image");
+                if (move_uploaded_file($_FILES['photo']['tmp_name'], $sousdossier . $fichier)) {
+                    return $photo;
+                } else //Sinon (la fonction renvoie FALSE).
+                {
+                    echo "<script> triggerMessageBox('error','Erreur interne, image non traité') </script>";
+                    $photo = '';
+                    return $photo;
                 }
             } else {
-                throw new Exception($erreur);
-
+                echo $erreur;
             }
 
 

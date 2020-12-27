@@ -2,7 +2,6 @@
 
 
 require_once("Model/User.php");
-require_once("Controller/Functions.php");
 
 class UserAdmin extends User
 {
@@ -143,57 +142,12 @@ class UserAdmin extends User
                 $myStatement2 = $con->prepare($requestCreate2);
                 $myStatement2->execute([$_ref_equipNew]);
             }
-
-
             $con->commit();
         } catch (PDOException $e) {
             $con->rollback();
             print "Error!: " . $e->getMessage() . "</br>";
         }
         $bdd->closeCon();
-    }
-
-    public function addImageToEquipment(string $photo, string $refEquip)
-    {
-
-        $bdd = new DataBase();
-        $con = $bdd->getCon();
-        $con->beginTransaction();
-
-        try {
-            $requestCreate = "INSERT INTO `stock_photo` (`link_photo`, `ref_equip`) VALUES ( ?, ?);";
-            $myStatement = $con->prepare($requestCreate);
-            $myStatement->execute([$photo, $refEquip]);
-            $con->commit();
-        } catch (PDOException $e) {
-            $con->rollback();
-            throw new Exception($e->getMessage());
-        }
-        $bdd->closeCon();
-
-
-    }
-
-    public function updateImageToEquipment(string $photo, string $refEquip)
-    {
-
-        $bdd = new DataBase();
-        $con = $bdd->getCon();
-        $con->beginTransaction();
-
-        try {
-            $requestCreate = "UPDATE `stock_photo` SET `link_photo` = ? WHERE `stock_photo`.ref_equip like  ?;";
-
-            $myStatement = $con->prepare($requestCreate);
-            $myStatement->execute([$photo, $refEquip]);
-            $con->commit();
-        } catch (PDOException $e) {
-            $con->rollback();
-            throw new Exception($e->getMessage());
-        }
-        $bdd->closeCon();
-
-
     }
 
     /* PREC l'utilistauer existe dans la bdd */
@@ -232,32 +186,34 @@ class UserAdmin extends User
     /**
      * @param $id_borrow_toDel
      */
-    public function endborrow($id_borrow_toDel)
+    public function endBorrow($id_borrow_toDel)
     {
         $cpt_array = 0;
         foreach ($this->_borrowList as $borrow):
-            var_dump($borrow);
-            if ($borrow->getIdBorrow() == $id_borrow_toDel) {
+            if ($borrow->getIdBorrow() == $id_borrow_toDel)
+            {
                 $borrow->stopBorrow();
                 unset($this->_borrowList[$cpt_array]);
                 break;
             }
             $cpt_array += 1;
         endforeach;
+
+        print_r ($this->_borrowList);
     }
 
 }
-
-//$admin = new UserAdmin();
-//$admin->identification('admin','12345');
-
+/*
+$admin = new UserAdmin();
+$admin->identification('admin12','admin');
+$admin->endborrow(5);*/
 //$admin->loadUser();
 //$admin->createEquipment('AX151','Smartphone','Iphone','9','9.0',6);
 //$admin->createEquipment('XX157','Smartphone','HUWEI','11','15.0',5);
 //$admin->createEquipment('XX283','Smartphone','HUWEI','11','15.0',5);
 //$admin->borrowEquipement('XX157','2021/12/05',1);
 //$admin->borrowEquipement('AX156','2021/07/15',1);
-//$admin->borrowEquipement('AX156','2021/11/12',1);
+
 
 //$admin->updateDeviceCount('XX157',3);
 
