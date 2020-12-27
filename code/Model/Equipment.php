@@ -9,6 +9,8 @@ class Equipment
     private $_name_equip;
     private $_brand_equip;
     private $_version_equip;
+    private $_photoArray = array();
+
 
     /**
      * Equipment constructor.
@@ -29,12 +31,24 @@ class Equipment
 
     public function howMuchAvailable()
     {
-        $bdd= new DataBase();
-        $con= $bdd->getCon();
+        $bdd = new DataBase();
+        $con = $bdd->getCon();
         $query = "select count(*) as 'somme' from device INNER JOIN equipment on device.ref_equip Like equipment.ref_equip where device.ref_equip like ? and isAvailable = 1; ";
-        $stmt=$con->prepare($query);
+        $stmt = $con->prepare($query);
         $stmt->execute([$this->_ref_equip]);
-        $result=$stmt->fetch();
+        $result = $stmt->fetch();
+        $bdd->closeCon();
+        return $result['somme'];
+    }
+
+    public function howMuchTotal()
+    {
+        $bdd = new DataBase();
+        $con = $bdd->getCon();
+        $query = "select count(*) as 'somme' from device INNER JOIN equipment on device.ref_equip Like equipment.ref_equip where device.ref_equip like ? ; ";
+        $stmt = $con->prepare($query);
+        $stmt->execute([$this->_ref_equip]);
+        $result = $stmt->fetch();
         $bdd->closeCon();
         return $result['somme'];
     }
@@ -51,7 +65,7 @@ class Equipment
     /**
      * @param String $ref_equip
      */
-    public function setRefEquip($ref_equip)
+    public function setRefEquip(string $ref_equip)
     {
         $this->_ref_equip = $ref_equip;
     }
@@ -59,9 +73,25 @@ class Equipment
     /**
      * @return String type_equip
      */
-    public function getTypeEquip()
+    public function getTypeEquip(): string
     {
         return $this->_type_equip;
+    }
+
+    /**
+     * @param array $photoArray
+     */
+    public function setPhotoArray(array $photoArray): void
+    {
+        $this->_photoArray = $photoArray;
+    }
+
+    /**
+     * @return array
+     */
+    public function getPhotoArray(): array
+    {
+        return $this->_photoArray;
     }
 
     /**
@@ -75,21 +105,25 @@ class Equipment
     /**
      * @return String NameEquip
      */
-    public function getNameEquip()
+    public function getNameEquip(): string
     {
         return $this->_name_equip;
     }
 
-    public function isRefEquipValid()
+    public function isRefEquipValid(): bool
     {
         if (strlen($this->_ref_equip)) {
             $bdd = new DataBase();
             $con = $bdd->getCon();
-            $query = ("select count(*) from equipment where ref_equip like " . $this->_ref_equip . " ;");
+            $query = ("select count(*) as 'somme' from equipment where ref_equip like ? ;");
+            $stmt = $con->prepare($query);
+            $stmt->execute([$this->_ref_equip]);
+            $result = $stmt->fetch();
             $bdd->closeCon();
-            $answerCount = $con->query($query);
-            $resultCount = $answerCount->fetch();
-            return $resultCount['COUNT(*)'];
+            if ($result['somme'] > 0) {
+                return true;
+            }
+
         }
         return false;
     }
@@ -106,7 +140,7 @@ class Equipment
     /**
      * @return String BrandEquip
      */
-    public function getBrandEquip()
+    public function getBrandEquip(): string
     {
         return $this->_brand_equip;
     }
@@ -122,7 +156,7 @@ class Equipment
     /**
      * @return String VersionEquip
      */
-    public function getVersionEquip()
+    public function getVersionEquip(): string
     {
         return $this->_version_equip;
     }

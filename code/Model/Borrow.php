@@ -14,7 +14,7 @@ class Borrow
      * @param $_ref_equip
      * @param $_end_date
      */
-    public function __construct($_ref_equip,$_end_date)
+    public function __construct($_ref_equip, $_end_date)
     {
 
         $this->_ref_equip = $_ref_equip;
@@ -24,18 +24,17 @@ class Borrow
 
     public function startBorrow()
     {
-        $bdd = new DataBase();
-        $con = $bdd->getCon();
 
-        $con->beginTransaction();
-        try
-        {
+
+        try {
+
             date_default_timezone_set('Europe/Paris');
             $currentDateTime = date('Y/m/d');
             $this->_start_date = $currentDateTime;
 
             $bdd = new DataBase();
             $con = $bdd->getCon();
+            $con->beginTransaction();
 
             $requestSelect = "SELECT id_device FROM DEVICE WHERE isAvailable = TRUE AND ref_equip = '$this->_ref_equip';";
             $answerSelect = $con->query($requestSelect);
@@ -57,9 +56,7 @@ class Borrow
 
             $con->commit();
             return TRUE;
-        }
-        catch(PDOException $e)
-        {
+        } catch (PDOException $e) {
             $con->rollback();
             throw new PDOException('Erreur start Borrow');
         }
@@ -67,7 +64,6 @@ class Borrow
 
     public function stopBorrow()
     {
-        echo 'END BORROW';
         date_default_timezone_set('Europe/Paris');
         $currentDateTime = date('Y/m/d');
         $this->_end_date = $currentDateTime;
@@ -76,8 +72,7 @@ class Borrow
         $con = $bdd->getCon();
 
         $con->beginTransaction();
-        try
-        {
+        try {
             $requestUpdate = "UPDATE DEVICE SET isAvailable = 1 WHERE id_device = '$this->_device_id';";
             $con->query($requestUpdate);
 
@@ -85,9 +80,7 @@ class Borrow
             $con->query($requestUpdate2);
             $con->commit();
             return TRUE;
-        }
-        catch(Exception $e)
-        {
+        } catch (Exception $e) {
             $con->rollback();
             print "Error!: " . $e->getMessage() . "</br>";
             return FALSE;
@@ -173,7 +166,6 @@ class Borrow
     {
         $this->_id_borrow = $id_borrow;
     }
-
 
 
 }

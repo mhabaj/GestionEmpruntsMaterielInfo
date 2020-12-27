@@ -12,11 +12,13 @@ abstract class User
     protected $_name;
     protected $_lastName;
     protected $_phone;
+    protected $_privilege;
+
+
     protected $_borrowList = array();
 
     /**
      * User constructor.
-
      */
     public function __construct()
     {
@@ -29,38 +31,77 @@ abstract class User
      */
     public function addBorrowToList($BorrowItem)
     {
-        array_push($this->_borrowList,$BorrowItem);
+        array_push($this->_borrowList, $BorrowItem);
     }
 
     /**
      * @param $ref_equip_toBorrow
      * @param $dateFin
+     * @param $quantity
      * @return bool Object, else null
      * PREC : quantity > 0
      */
     public function borrowEquipement($ref_equip_toBorrow, $dateFin, $quantity)
     {
-        try
-        {
-            for($indexOf =0 ; $indexOf < $quantity ; $indexOf++)
-            {
+        try {
+            $indexOf = 0;
+            while ($indexOf < $quantity) {
                 $newBorrow = new Borrow($ref_equip_toBorrow, $dateFin);
+                $newBorrow->startBorrow();
+                $this->addBorrowToList($newBorrow);
+                $indexOf += 1;
             }
-            $newBorrow->startBorrow();
-            $this->addBorrowToList($newBorrow);
-            return TRUE;
+            return true;
+        } catch (Exception $e) {
+            throw new Exception("Exception User: couldn't borrow Equipment\n");
         }
-        catch (Exception $e)
-        {
-            return FALSE;
+    }
+
+    /* initalise all user attributes that has id_userToLoad */
+    public function loadingUser($id_userToLoad)
+    {
+        $bdd = new DataBase();
+        $con = $bdd->getCon();
+        $query = "SELECT * FROM users WHERE id_user = ? ;";
+        $stmt = $con->prepare($query);
+        $stmt->execute([$id_userToLoad]);
+
+        $result = $stmt->fetch();
+        $this->setIdUser($result['id_user']);
+        $this->setEmail($result['email_user']);
+        $this->setMatriculeUser($result['matricule_user']);
+        $this->setPassword($result['password_user']);
+        $this->setName($result['name_user']);
+        $this->setLastName($result['lastname_user']);
+        $this->setPhone($result['phone_user']);
+        $this->setPrivilege($result['isAdmin_user']);
+
+
+        $myQuery = "SELECT borrow_info.id_borrow,startdate_borrow,enddate_borrow,isActive, borrow.id_device, device.ref_equip FROM borrow_info
+                    INNER JOIN borrow INNER JOIN device ON borrow.id_borrow= borrow_info.id_borrow AND borrow.id_device= device.id_device
+                    WHERE borrow.id_user = '$this->_idUser' and borrow_info.isActive = 1;";
+        $myStatement = $con->query($myQuery);
+        $result = $myStatement->rowCount();
+        $borrowLignes = $myStatement->fetchAll();
+
+        if ($result == 0)
+            $this->_borrowList = array();
+        else {
+            foreach ($borrowLignes as $borrow) {
+                $BorrowItem = new Borrow($borrow['ref_equip'], $borrow['enddate_borrow']);
+                $BorrowItem->setStartDate($borrow['startdate_borrow']);
+                $BorrowItem->setDeviceId($borrow['id_device']);
+                $BorrowItem->setIdBorrow($borrow['id_borrow']);
+                array_push($this->_borrowList, $BorrowItem);
+            }
         }
+        $bdd->closeCon();
     }
 
 
     public function loadUser()
     {
-        //$id = connect();
-        //$this->setIdUser(1);
+
         $this->_idUser = $_SESSION['id_user'];
 
         $bdd = new DataBase();
@@ -75,31 +116,31 @@ abstract class User
         $this->setName($result['name_user']);
         $this->setLastName($result['lastname_user']);
         $this->setPhone($result['phone_user']);
+        $this->setPrivilege($result['isAdmin_user']);
 
         $myQuery = "SELECT borrow_info.id_borrow,startdate_borrow,enddate_borrow,isActive, borrow.id_device, device.ref_equip FROM borrow_info 
                     INNER JOIN borrow INNER JOIN device ON borrow.id_borrow= borrow_info.id_borrow AND borrow.id_device= device.id_device
-                    WHERE borrow.id_user = '$this->_idUser';";
+                    WHERE borrow.id_user = '$this->_idUser' and borrow_info.isActive = 1;";
         $myStatement = $con->query($myQuery);
         $result = $myStatement->rowCount();
         $borrowLignes = $myStatement->fetchAll();
 
         if ($result == 0)
             $this->_borrowList = array();
-        else
-        {
-            foreach($borrowLignes as $borrow)
-            {
-                $BorrowItem = new Borrow($borrow['ref_equip'],$borrow['enddate_borrow']);
+        else {
+            foreach ($borrowLignes as $borrow) {
+                $BorrowItem = new Borrow($borrow['ref_equip'], $borrow['enddate_borrow']);
                 $BorrowItem->setStartDate($borrow['startdate_borrow']);
                 $BorrowItem->setDeviceId($borrow['id_device']);
                 $BorrowItem->setIdBorrow($borrow['id_borrow']);
-                array_push($this->_borrowList,$BorrowItem);
+                array_push($this->_borrowList, $BorrowItem);
             }
         }
         $bdd->closeCon();
     }
 
-    public function connect() {
+    public function connect()
+    {
 
         $bdd = new DataBase();
         $con = $bdd->getCon();
@@ -113,7 +154,7 @@ abstract class User
         $stmt->execute([$this->_matriculeUser, $hash_mdp]);
         $result = $stmt->rowCount();
 
-        if($result == 1) {
+        if ($result == 1) {
             session_start();
             $infoUser = $stmt->fetch();
             $_SESSION['id_user'] = $infoUser['id_user'];
@@ -126,12 +167,13 @@ abstract class User
             return FALSE;
         }
     }
-    public function disconnect() {
+
+    public function disconnect()
+    {
         session_unset();
         session_destroy();
         return TRUE;
     }
-
 
 
     /**
@@ -262,6 +304,21 @@ abstract class User
         $this->_borrowList = $borrowList;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getPrivilege()
+    {
+        return $this->_privilege;
+    }
+
+    /**
+     * @param mixed $privilege
+     */
+    public function setPrivilege($privilege): void
+    {
+        $this->_privilege = $privilege;
+    }
 }
 /*
 $user = new User();
