@@ -72,7 +72,7 @@ abstract class User
         }
     }
 
-    /* initalise all user attributes that has id_userToLoad */
+    /* initialise all user attributes that has id_userToLoad */
     public function loadingUser($id_userToLoad)
     {
         $bdd = new DataBase();
@@ -182,6 +182,7 @@ abstract class User
             return FALSE;
         }
     }
+
 
     public function disconnect()
     {

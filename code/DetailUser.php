@@ -42,6 +42,15 @@ if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1 || $_GET[
             <?php
         }
         /* l'utilisateur et l'admin peuvent acceder à l'historique */
+        ?>
+        <form method="POST" enctype="multipart/form-data" action="HistoryUser.php?id_user_toDisplay=<?php if(isset($_GET['id_user_toDisplay'])) echo $_GET['id_user_toDisplay'] ?>">
+            <input type="submit" value="Historique de l'utilisateur" name ="History"/>
+        </form>
+        <br>
+        </body>
+        </html>
+        <?php
+
 
         /* seulement l'admin peut acceder à la modification de user */
         if ($_SESSION['isAdmin_user'] == 1) {
