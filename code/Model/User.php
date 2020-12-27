@@ -14,21 +14,6 @@ abstract class User
     protected $_phone;
     protected $_privilege;
 
-    /**
-     * @return mixed
-     */
-    public function getPrivilege()
-    {
-        return $this->_privilege;
-    }
-
-    /**
-     * @param mixed $privilege
-     */
-    public function setPrivilege($privilege): void
-    {
-        $this->_privilege = $privilege;
-    }
 
     protected $_borrowList = array();
 
@@ -94,7 +79,7 @@ abstract class User
 
         $myQuery = "SELECT borrow_info.id_borrow,startdate_borrow,enddate_borrow,isActive, borrow.id_device, device.ref_equip FROM borrow_info
                     INNER JOIN borrow INNER JOIN device ON borrow.id_borrow= borrow_info.id_borrow AND borrow.id_device= device.id_device
-                    WHERE borrow.id_user = '$this->_idUser';";
+                    WHERE borrow.id_user = '$this->_idUser' and borrow_info.isActive = 1;";
         $myStatement = $con->query($myQuery);
         $result = $myStatement->rowCount();
         $borrowLignes = $myStatement->fetchAll();
@@ -135,7 +120,7 @@ abstract class User
 
         $myQuery = "SELECT borrow_info.id_borrow,startdate_borrow,enddate_borrow,isActive, borrow.id_device, device.ref_equip FROM borrow_info 
                     INNER JOIN borrow INNER JOIN device ON borrow.id_borrow= borrow_info.id_borrow AND borrow.id_device= device.id_device
-                    WHERE borrow.id_user = '$this->_idUser';";
+                    WHERE borrow.id_user = '$this->_idUser' and borrow_info.isActive = 1;";
         $myStatement = $con->query($myQuery);
         $result = $myStatement->rowCount();
         $borrowLignes = $myStatement->fetchAll();
@@ -319,6 +304,21 @@ abstract class User
         $this->_borrowList = $borrowList;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getPrivilege()
+    {
+        return $this->_privilege;
+    }
+
+    /**
+     * @param mixed $privilege
+     */
+    public function setPrivilege($privilege): void
+    {
+        $this->_privilege = $privilege;
+    }
 }
 /*
 $user = new User();

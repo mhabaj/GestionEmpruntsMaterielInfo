@@ -68,4 +68,13 @@ class CatalogueController
             $myStatement->closeCursor();
         }
     }
+
+
+
+
+
+
+
+
+
 }
