@@ -2,6 +2,7 @@
 
 
 require_once("Model/User.php");
+require_once("Controller/Functions.php");
 
 class UserAdmin extends User
 {
@@ -142,12 +143,57 @@ class UserAdmin extends User
                 $myStatement2 = $con->prepare($requestCreate2);
                 $myStatement2->execute([$_ref_equipNew]);
             }
+
+
             $con->commit();
         } catch (PDOException $e) {
             $con->rollback();
             print "Error!: " . $e->getMessage() . "</br>";
         }
         $bdd->closeCon();
+    }
+
+    public function addImageToEquipment(string $photo, string $refEquip)
+    {
+
+        $bdd = new DataBase();
+        $con = $bdd->getCon();
+        $con->beginTransaction();
+
+        try {
+            $requestCreate = "INSERT INTO `stock_photo` (`link_photo`, `ref_equip`) VALUES ( ?, ?);";
+            $myStatement = $con->prepare($requestCreate);
+            $myStatement->execute([$photo, $refEquip]);
+            $con->commit();
+        } catch (PDOException $e) {
+            $con->rollback();
+            throw new Exception($e->getMessage());
+        }
+        $bdd->closeCon();
+
+
+    }
+
+    public function updateImageToEquipment(string $photo, string $refEquip)
+    {
+
+        $bdd = new DataBase();
+        $con = $bdd->getCon();
+        $con->beginTransaction();
+
+        try {
+            $requestCreate = "UPDATE `stock_photo` SET `link_photo` = ? WHERE `stock_photo`.ref_equip like  ?;";
+
+            $myStatement = $con->prepare($requestCreate);
+            $myStatement->execute([$photo, $refEquip]);
+            $con->commit();
+        } catch (PDOException $e) {
+            $con->rollback();
+            throw new Exception($e->getMessage());
+        }
+        $bdd->closeCon();
+
+
     }
 
     /* PREC l'utilistauer existe dans la bdd */

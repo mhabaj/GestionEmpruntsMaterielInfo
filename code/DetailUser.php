@@ -34,7 +34,7 @@ if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1 || $_GET[
             ?>
             <p> Emprunt numero : <?php echo $borrowedItem->getIdBorrow(); ?></p>
             <p> Reference de l'équipement emprunté : <?php echo $borrowedItem->getRefEquip(); ?> </p>
-            <p> Id du matériel physique preté : <?php echo $borrowedItem->getDeviceId(); ?>
+            <p> Id du matériel physique preté : <?php echo $borrowedItem->getDeviceId(); ?> </p>
             <p> Date de debut de l'emprunt : <?php echo $borrowedItem->getStartDate(); ?> </p>
             <p> Date de fin de l'emprunt : <?php echo $borrowedItem->getEndDate(); ?></p>
             <br/>
