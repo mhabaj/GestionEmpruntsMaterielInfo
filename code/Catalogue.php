@@ -23,6 +23,11 @@ require_once "Controller/CatalogueController.php";
     <button type="submit" name="startSearching">Rechercher</button>
 </form>
 
+<form method="get" action="DetailUser.php">
+    <button type="submit" value="<?php echo $_SESSION['id_user']?>" name = "id_user_toDisplay">Mon compte </button>
+</form>
+
+
 <?php
 if (isset($_POST['startSearching']) && $_POST['EquipmentToSearch'] != null && $_POST['EquipmentToSearch'] != " ") {
     $bdd = new DataBase();
@@ -82,9 +87,16 @@ if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1) {
 
 
     }
-}
 
-?>
+}?>
+
+
+
+
+
+
+
+
 
 </body>
 </html>

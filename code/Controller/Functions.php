@@ -60,7 +60,9 @@ class Functions
     {
         if (preg_match('/^([A-Z]|[a-z]){1,30}$/', $nom)) {
             return true;
-        } else {
+        }
+        else
+        {
             throw new Exception("Le Nom que vous avez entré est invalide");
         }
     }

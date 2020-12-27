@@ -6,20 +6,20 @@
             <hr>
 
             <label><b>Nom d'utilisateur</b></label>
-            <input type="text" value="<?php echo $currentUser->getMatriculeUser() ?>" name="matricule" >
+            <input type="text" value="<?php if (isset($userController) && $userController != null && isset($currentUser) && $currentUser != null) echo $currentUser->getMatriculeUser() ?>" name="matricule" >
             <br><br>
 
             <label><b>Email</b></label>
-            <input type="email" value="<?php echo $currentUser->getEmail() ?>" name="email" >
+            <input type="email" value="<?php if (isset($userController) && $userController != null && isset($currentUser) && $currentUser != null) echo $currentUser->getEmail() ?>" name="email" >
             <br><br>
             <label><b>Nom de famille</b></label>
-            <input type="text" value="<?php echo $currentUser->getLastName() ?>" name="lastname" >
+            <input type="text" value="<?php if (isset($userController) && $userController != null && isset($currentUser) && $currentUser != null) echo $currentUser->getLastName() ?>" name="lastname" >
 
             <label><b>Prénom</b></label>
-            <input type="text" value="<?php echo $currentUser->getName() ?>" name="name" >
+            <input type="text" value="<?php if (isset($userController) && $userController != null && isset($currentUser) && $currentUser != null) echo $currentUser->getName() ?>" name="name" >
             <br><br>
             <label><b>Numéro de téléphone</b></label>
-            <input type="tel" pattern="[0-9]{10}" value="<?php echo $currentUser->getPhone() ?>" name="phone" >
+            <input type="tel" pattern="[0-9]{10}" value="<?php if (isset($userController) && $userController != null && isset($currentUser) && $currentUser != null) echo $currentUser->getPhone() ?>" name="phone" >
             <br><br>
             <label><b>Modifer les droits de l'utilisateur</b></label>
             <label>

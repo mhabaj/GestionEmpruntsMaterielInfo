@@ -52,5 +52,9 @@
             <form method="POST" enctype="multipart/form-data" action="ModifyUser.php?id_user_toDisplay=<?php if(isset($_GET['id_user_toDisplay'])) echo $_GET['id_user_toDisplay'] ?>">
                 <input type="submit" value="Modify password" name="modifyPassword" />
             </form>
+
+            <form method="POST" enctype="multipart/form-data" action="HistoryUser.php?id_user_toDisplay=<?php if(isset($_GET['id_user_toDisplay'])) echo $_GET['id_user_toDisplay'] ?>">
+                <input type="submit" value="Historique de l'utilisateur" name ="History"/>
+            </form>
     </body>
 </html>

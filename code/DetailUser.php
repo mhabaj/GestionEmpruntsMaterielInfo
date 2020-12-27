@@ -7,6 +7,7 @@ require_once("Model/UserRegular.php");
 require_once("Model/UserAdmin.php");
 require_once("Controller/UserController.php");
 
+echo("1");
 if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1 && isset($_GET['id_user_toDisplay']) || isset($_GET['id_user_toDisplay']) && $_GET['id_user_toDisplay'] == $_SESSION['id_user'] )
 {
     $userController = new UserController();
@@ -18,7 +19,9 @@ if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1 && isset(
     catch (Exception $e)
     {
         echo $e->getMessage();
-        header('Location: Catalogue.php');
+        echo $_GET['id_user_toDisplay'];
+
+        //header('Location: Catalogue.php');
     }
 
     $currentUser = $userController->getUser();
@@ -40,10 +43,12 @@ if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1 && isset(
     }
     else
     {
-        header('Location: Catalogue.php');
+        echo $_GET['id_user_toDisplay'];
+        //header('Location: Catalogue.php');
     }
 }
 else
 {
-    header('Location: Catalogue.php');
+    echo $_GET['id_user_toDisplay'];
+    //header('Location: Catalogue.php');
 }
