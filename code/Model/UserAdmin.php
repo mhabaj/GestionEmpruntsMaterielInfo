@@ -1,5 +1,6 @@
 <?php
 
+
 require_once("Model/User.php");
 
 class UserAdmin extends User
@@ -12,32 +13,28 @@ class UserAdmin extends User
         $this->connect();
     }
 
-    /* add fonction que MATRICULE USER N EST PAS DEJA UTILISE  */
-    public function createUser($_matricule_user,$_email_user,$_password_user,$_name_user,$_lastname_user,$_phone,$_isAdmin_user)
+
+    public function createUser($_matricule_user, $_email_user, $_password_user, $_name_user, $_lastname_user, $_phone, $_isAdmin_user)
     {
-        $bdd= new DataBase();
-        $con= $bdd->getCon();
+        $bdd = new DataBase();
+        $con = $bdd->getCon();
+        try {
 
-        $con->beginTransaction();
+            $con->beginTransaction();
 
-        try
-        {
-            $query="INSERT INTO users (matricule_user,email_user,password_user,name_user,lastname_user,phone_user,isAdmin_user) VALUES (?,?,?,?,?,?,?);";
-            $stmt=$con->prepare($query);
-            $stmt->execute([$_matricule_user,$_email_user,$_password_user,$_name_user,$_lastname_user,$_phone,$_isAdmin_user]);
+            $query = "INSERT INTO users (matricule_user,email_user,password_user,name_user,lastname_user,phone_user,isAdmin_user) VALUES (?,?,?,?,?,?,?);";
+            $stmt = $con->prepare($query);
+            $stmt->execute([$_matricule_user, $_email_user, $_password_user, $_name_user, $_lastname_user, $_phone, $_isAdmin_user]);
             $con->commit();
-        }
-        catch(PDOException $e)
-        {
+        } catch (PDOException $e) {
             $con->rollback();
             throw new Exception("<p> Could not create the user, invalid user input </p> ");
         }
         $bdd->closeCon();
     }
-    /* PRECONDITION ON NE PEUT PAS DELETE DES DEVICES DONT LE CHAMP isAVAILABLE EST FALSE, $desiredQuantity ne peut pas etre < 0,
-        Cette fonction ne s'occupe des devices dont le champ isAVAILABLE es TRUE */
 
-    public function updateDeviceCount($_ref_equip,$desiredQuantity)
+    /* PRECONDITION ON NE PEUT PAS DELETE DES DEVICES DONT LE CHAMP isAVAILABLE EST FALSE, $desiredQuantity ne peut pas etre < 0, */
+    public function updateDeviceCount($_ref_equip, $desiredQuantity)
     {
         $bdd = new DataBase();
         $con = $bdd->getCon();
@@ -47,124 +44,106 @@ class UserAdmin extends User
         $resultCount = $answerCount->fetch();
         $numberOfDevices = $resultCount['COUNT(*)'];
 
-        if ($numberOfDevices > $desiredQuantity)
-        {
+        if ($numberOfDevices > $desiredQuantity) {
             $indexOf = 0;
             echo $numberOfDevices;
             echo $desiredQuantity;
             echo "avant";
-            while($indexOf < ($numberOfDevices - $desiredQuantity))
-            {
+            while ($indexOf < ($numberOfDevices - $desiredQuantity)) {
                 echo $indexOf;
                 $con->beginTransaction();
-                try
-                {
+                try {
                     $requestDelete = "DELETE FROM device WHERE ref_equip = ? AND isAvailable = 1 LIMIT 1;";
                     $myStatement = $con->prepare($requestDelete);
                     $myStatement->execute([$_ref_equip]);
                     $con->commit();
-                }
-                catch(PDOException $e)
-                {
+                } catch (PDOException $e) {
                     $con->rollback();
                     throw new PDOException('Erreur update device count');
                 }
                 $indexOf++;
             }
-        }
-        elseif ($numberOfDevices < $desiredQuantity)
-        {
+
+        } elseif ($numberOfDevices < $desiredQuantity) {
             $indexOf = 0;
-            while($indexOf < ($desiredQuantity - $numberOfDevices))
-            {
+            while ($indexOf < ($desiredQuantity - $numberOfDevices)) {
                 $con->beginTransaction();
-                try
-                {
+                try {
                     $requestDelete = "INSERT INTO device(isAvailable,ref_equip) VALUES (1, ? ); ";
                     $myStatement = $con->prepare($requestDelete);
                     $myStatement->execute([$_ref_equip]);
                     $con->commit();
-                }
-                catch(PDOException $e)
-                {
+                } catch (PDOException $e) {
                     $con->rollback();
-                    throw new PDOException('Erreur update device count');
+                    throw new PDOException('Erreur update device count ');
                 }
                 $indexOf++;
             }
+
         }
-        else
-        {
-            //rien à changer
-        }
+
     }
-    /* */
+
+    /* A PAS UTILISER */
     public function deleteEquipment($_ref_equipDel)
     {
         $bdd = new DataBase();
         $con = $bdd->getCon();
-        $con->beginTransaction();
+        try {
 
-        try
-        {
+            $con->beginTransaction();
+
             $requestDelete = " DELETE FROM device WHERE isAvailable = TRUE AND ref_equip = ? ; ";
             $myStatement = $con->prepare($requestDelete);
             $myStatement->execute([$_ref_equipDel]);
             $con->commit();
-        }
-        catch(PDOException $e)
-        {
+        } catch (PDOException $e) {
             $con->rollback();
             print "Error!: " . $e->getMessage() . "</br>";
         }
         $bdd->closeCon();
     }
-    /*PREC $_ref_equipUpdate != any existent ref*/
-    public function modifyEquipment($_ref_equipUpdate, $type_equipUpd, $brand_equipUpd,$name_equipUpd, $version_equipUpd)
+
+    /* PREC $_ref_equipUpdate != any existent ref*/
+    public function modifyEquipment($ref_equipToUpdate, $ref_equipUpd, $type_equipUpd, $brand_equipUpd, $name_equipUpd, $version_equipUpd)
     {
         $bdd = new DataBase();
         $con = $bdd->getCon();
-        $con->beginTransaction();
 
-        try
-        {
-            $requestUpdate = "UPDATE EQUIPMENT SET type_equip =?, brand_equip =?, name_equip =?, version_equip =? where ref_equip like ? ;";
+        try {
+
+            $con->beginTransaction();
+            $requestUpdate = "UPDATE EQUIPMENT SET ref_equip=?, type_equip =?, brand_equip =?, name_equip =?, version_equip =? where ref_equip like ? ;";
             $myStatement = $con->prepare($requestUpdate);
-            $myStatement->execute([$_ref_equipUpdate, $type_equipUpd, $brand_equipUpd, $name_equipUpd, $version_equipUpd, $_ref_equipUpdate]);
+            $myStatement->execute([$ref_equipUpd, $type_equipUpd, $brand_equipUpd, $name_equipUpd, $version_equipUpd, $ref_equipToUpdate]);
             $con->commit();
-        }
-        catch(PDOException $e)
-        {
+        } catch (PDOException $e) {
             $con->rollback();
-            print "Error!: " . $e->getMessage() . "</br>";
+            throw new Exception("Error ModifyEquipment() : " . $e->getMessage());
         }
         $bdd->closeCon();
     }
 
     /* prec le ref equipement ne doit pas deja etre dans la bdd et quantity >0   */
-    public function createEquipment($_ref_equipNew, $type_equipNew, $brand_equipNew,$name_equipNew, $version_equipNew,$quantity)
+    public function createEquipment($_ref_equipNew, $type_equipNew, $brand_equipNew, $name_equipNew, $version_equipNew, $quantity)
     {
         $bdd = new DataBase();
         $con = $bdd->getCon();
         $con->beginTransaction();
 
-        try
-        {
+        try {
             $requestCreate = " INSERT INTO equipment (ref_equip, type_equip, brand_equip, name_equip,version_equip) VALUES 
             (?, ?, ?,?,?) ;";
             $myStatement = $con->prepare($requestCreate);
-            $myStatement->execute([$_ref_equipNew,$type_equipNew,$brand_equipNew,$name_equipNew,$version_equipNew]);
+            $myStatement->execute([$_ref_equipNew, $type_equipNew, $brand_equipNew, $name_equipNew, $version_equipNew]);
 
-            for($indexOf =0 ; $indexOf < $quantity ; $indexOf++)
-            {
+            for ($indexOf = 0; $indexOf < $quantity; $indexOf++) {
                 $requestCreate2 = " INSERT INTO device (isAvailable, ref_equip) VALUES ( 1, ?) ;";
                 $myStatement2 = $con->prepare($requestCreate2);
                 $myStatement2->execute([$_ref_equipNew]);
             }
             $con->commit();
-        }
-        catch(PDOException $e)
-        {
+        } catch (PDOException $e) {
             $con->rollback();
             print "Error!: " . $e->getMessage() . "</br>";
         }
@@ -172,37 +151,33 @@ class UserAdmin extends User
     }
 
     /* PREC l'utilistauer existe dans la bdd */
-    public function modifyRole($_id_user,$_new_isAdmin_user)
+    public function modifyRole($_id_user, $_new_isAdmin_user)
     {
-        $bdd= new DataBase();
-        $con= $bdd->getCon();
-        $query="UPDATE users SET isAdmin_user=? WHERE id_user=?;";
-        $stmt=$con->prepare($query);
-        $stmt->execute([$_new_isAdmin_user,$_id_user]);
+        $bdd = new DataBase();
+        $con = $bdd->getCon();
+        $query = "UPDATE users SET isAdmin_user=? WHERE id_user=?;";
+        $stmt = $con->prepare($query);
+        $stmt->execute([$_new_isAdmin_user, $_id_user]);
         $bdd->closeCon();
 
     }
-    /* PREC l'utilistauer existe dans la bdd + rajouter methode update password*/
-    public function modifyAnyProfile($_id_user,$_matricule_user,$_email_user,$_name_user,$_lastname_user,$_phone,$_isAdmin_user)
+
+    /* PREC l'utilistauer existe dans la bdd + AJOUTE FONCTION UPDATEPASSWORD */
+    public function modifyAnyProfile($_id_user, $_matricule_user, $_email_user, $_name_user, $_lastname_user, $_phone, $_isAdmin_user)
     {
-        if($_matricule_user != 7)
-        {
-            throw new Exception("Matricule de taille incorrecte");
-        }
+        $bdd = new DataBase();
+        $con = $bdd->getCon();
+        try {
 
-        $bdd= new DataBase();
-        $con= $bdd->getCon();
-        $con->beginTransaction();
+            $con->beginTransaction();
 
-        try
-        {
             $query = "UPDATE users SET matricule_user=?,email_user=?,name_user=?,lastname_user=?,phone_user=?,isAdmin_user=? where users.id_user = ?  ;";
             $stmt = $con->prepare($query);
             $stmt->execute([$_matricule_user, $_email_user, $_name_user, $_lastname_user, $_phone, $_isAdmin_user, $_id_user]);
             $con->commit();
-        }catch(PDOException $e)
-        {
-            $con->rollback();
+
+        } catch (PDOException $e) {
+            $con->roleback();
             throw new PDOException("Error!: " . $e->getMessage());
         }
         $bdd->closeCon();
@@ -211,33 +186,34 @@ class UserAdmin extends User
     /**
      * @param $id_borrow_toDel
      */
-    public function endborrow($id_borrow_toDel)
+    public function endBorrow($id_borrow_toDel)
     {
         $cpt_array = 0;
-        foreach($this->_borrowList as $borrow):
-            var_dump($borrow);
-            if($borrow->getIdBorrow() == $id_borrow_toDel )
+        foreach ($this->_borrowList as $borrow):
+            if ($borrow->getIdBorrow() == $id_borrow_toDel)
             {
                 $borrow->stopBorrow();
                 unset($this->_borrowList[$cpt_array]);
                 break;
             }
-            $cpt_array+=1;
+            $cpt_array += 1;
         endforeach;
+
+        print_r ($this->_borrowList);
     }
 
 }
-
-//$admin = new UserAdmin();
-//$admin->identification('admin','12345');
-
+/*
+$admin = new UserAdmin();
+$admin->identification('admin12','admin');
+$admin->endborrow(5);*/
 //$admin->loadUser();
 //$admin->createEquipment('AX151','Smartphone','Iphone','9','9.0',6);
 //$admin->createEquipment('XX157','Smartphone','HUWEI','11','15.0',5);
 //$admin->createEquipment('XX283','Smartphone','HUWEI','11','15.0',5);
 //$admin->borrowEquipement('XX157','2021/12/05',1);
 //$admin->borrowEquipement('AX156','2021/07/15',1);
-//$admin->borrowEquipement('AX156','2021/11/12',1);
+
 
 //$admin->updateDeviceCount('XX157',3);
 

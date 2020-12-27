@@ -4,14 +4,14 @@ require_once("Controller/control-session.php");
 require "Controller/DataBase.php";
 
 ?>
-    <html>
-    <body>
-    <form method="POST" enctype="multipart/form-data">
-        <h1>Recherche utilisateur</h1>
-        <label>Rechercher utilisateur:</label>
-        <input type="search" placeholder="Matricule de l'utilisateur" name="UserToSearch">
-        <button type="submit" name="startSearching">Rechercher</button>
-    </form>
+<html>
+<body>
+<form method="POST" enctype="multipart/form-data">
+    <h1>Recherche utilisateur</h1>
+    <label>Rechercher utilisateur:</label>
+    <input type="search" placeholder="Matricule de l'utilisateur" name="UserToSearch">
+    <button type="submit" name="startSearching">Rechercher</button>
+</form>
 <?php
 
 if (isset($_POST['startSearching']) && $_POST['UserToSearch']!=null && $_POST['UserToSearch']!=" ") {
@@ -46,7 +46,7 @@ if (isset($_POST['startSearching']) && $_POST['UserToSearch']!=null && $_POST['U
 }
 else{
     ?>
-    <label>Veuillez remplir le champ de recherche avant d'appuyer sur le bouton de .</label>
+    <label>Veuillez remplir le champ de recherche avant d'appuyer sur le bouton.</label>
     <?php
 }
 ?>

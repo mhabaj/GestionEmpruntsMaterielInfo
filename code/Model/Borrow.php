@@ -14,7 +14,7 @@ class Borrow
      * @param $_ref_equip
      * @param $_end_date
      */
-    public function __construct($_ref_equip,$_end_date)
+    public function __construct($_ref_equip, $_end_date)
     {
         $this->_ref_equip = $_ref_equip;
         $this->_end_date = $_end_date;
@@ -23,18 +23,15 @@ class Borrow
 
     public function startBorrow()
     {
-        $bdd = new DataBase();
-        $con = $bdd->getCon();
+        try {
 
-        $con->beginTransaction();
-        try
-        {
             date_default_timezone_set('Europe/Paris');
             $currentDateTime = date('Y/m/d');
             $this->_start_date = $currentDateTime;
 
             $bdd = new DataBase();
             $con = $bdd->getCon();
+            $con->beginTransaction();
 
             $requestSelect = "SELECT id_device FROM DEVICE WHERE isAvailable = TRUE AND ref_equip = '$this->_ref_equip';";
             $answerSelect = $con->query($requestSelect);
@@ -56,9 +53,7 @@ class Borrow
 
             $con->commit();
             return TRUE;
-        }
-        catch(PDOException $e)
-        {
+        } catch (PDOException $e) {
             $con->rollback();
             throw new PDOException('Erreur start Borrow');
         }
@@ -84,8 +79,7 @@ class Borrow
             $con->commit();
             return TRUE;
         }
-        catch(Exception $e)
-        {
+        catch (Exception $e) {
             $con->rollback();
             print "Error!: " . $e->getMessage() . "</br>";
             return FALSE;
@@ -171,7 +165,6 @@ class Borrow
     {
         $this->_id_borrow = $id_borrow;
     }
-
 
 
 }

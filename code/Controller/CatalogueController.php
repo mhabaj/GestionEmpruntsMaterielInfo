@@ -25,7 +25,7 @@ class CatalogueController
 
                 while($donnees = $myStatement->fetch())
                 { ?>
-                    <a href="DetailEquipment.php?ref_equip=<?php echo $donnees['ref_equip']?>">
+                    <a href="DetailEquipement.php?ref_equip=<?php echo $donnees['ref_equip']?>">
                         <div>
                             <strong> Type </strong> : <?php echo $donnees['type_equip'];?> <br/>
                             <strong> Matériel </strong> : <?php echo $donnees['brand_equip']." ".$donnees['name_equip'];?> <br/>
