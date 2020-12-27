@@ -40,8 +40,11 @@ if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1) {
                     try {
                         if ($currentUser->getPrivilege() == 1) {
                             $EquipmentController->modifyEquipment($ref_equip, $type_equip, $nom_equip, $marque_equip, $version_equip, $quantite_equip, $currentUser->getIdUser());
+                            $photo = Functions::uploadImage($type_equip);
+                            if ($photo != null && $photo != "") {
+                                $currentUser->updateImageToEquipment($photo, $ref_equip);
+                            }
                             unset($currentEquipement);
-
                             unset($EquipmentController);
                             header("Location: DetailEquipement.php?ref_equip=" . $ref_equip);
 
