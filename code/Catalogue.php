@@ -8,6 +8,12 @@ require "Controller/DataBase.php";
 <body>
 <form method="POST" enctype="multipart/form-data">
     <h1>Catalogue</h1>
+    <?php if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1)
+        ?><a href="RechercheUser.php">
+            <strong> Recherche d'utilisateur </strong><br/><br/>
+        </a><?php
+    ?>
+
     <label>Rechercher équipement:</label>
     <input type="search" placeholder="Inserer l'équipement" name="EquipmentToSearch">
     <input type="radio" name="radio_recherche" id="radio_name" value="radio_name" checked>
