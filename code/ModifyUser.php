@@ -38,15 +38,17 @@ if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1  && isset
         /* Traitement de la page modifier utilisateur */
         if (isset($_POST['submitModification']))
         {
-            if($userController->modifyUser($_GET['id_user_toDisplay'],$_POST['matricule'],$_POST['email'],$_POST['lastname'],$_POST['name'],$_POST['phone'],$_POST['administrateur']) == true)
-                header('Location: DetailUser.php?id_user_toDisplay='.$currentUser->getIdUser());
-            else
+            try
             {
+                if($userController->modifyUser($_GET['id_user_toDisplay'],$_POST['matricule'],$_POST['email'],$_POST['lastname'],$_POST['name'],$_POST['phone'],$_POST['administrateur']) == true)
+                    header('Location: DetailUser.php?id_user_toDisplay='.$currentUser->getIdUser());
+            }
+            catch(Exception $e)
+            {
+                echo $e->getMessage();
                 $url = 'DetailUser.php?id_user_toDisplay='.$currentUser->getIdUser();
-                echo" Il doit contenir 7 caracteres, vous allez être redirigé";
                 header( "refresh:2;url=$url");
             }
-
         }
 
         if(isset($_POST['cancelbtn']))

@@ -13,7 +13,7 @@ class Functions
 
     public static function checkMail($mail): bool
     {
-        if (preg_match('/[-0-9a-zA-Z.+_]+@[-0-9a-zA-Z.+_]+.[a-zA-Z]{2,4}/igm', $mail)) {
+        if (preg_match('/^([-0-9a-zA-Z.+_])+@[-0-9a-zA-Z.+_]+.[a-zA-Z]{2,4}$/', $mail)) {
             return true;
         } else {
             throw new Exception("Le mail que vous avez entré est invalide");
@@ -22,7 +22,8 @@ class Functions
 
     public static function checkPhoneNumber($phoneNumber): bool
     {
-        if (preg_match('/((\+)33|0|0033)[1-9](\d{2}){4}/igm', $phoneNumber)) {
+        if (preg_match('/(0|(\\+33)|(0033))[1-9][0-9]{8}/', $phoneNumber))
+        {
             return true;
         } else {
             throw new Exception("Le numéro de telephone que vous avez entré est invalide");
@@ -33,8 +34,9 @@ class Functions
     {
         if (preg_match('/^([A-Z]|[a-z]|[0-9]){7}$/', $matricule)) {
             return true;
-        } else {
-            throw new Exception("Votre identifiant de connexion est invalide");
+        } else
+            {
+            throw new Exception("Votre identifiant de connexion est invalide, il doit comporter 7 caracteres");
         }
     }
 

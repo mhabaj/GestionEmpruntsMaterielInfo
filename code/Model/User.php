@@ -13,23 +13,6 @@ abstract class User
     protected $_lastName;
     protected $_phone;
     protected $_privilege;
-
-    /**
-     * @return mixed
-     */
-    public function getPrivilege()
-    {
-        return $this->_privilege;
-    }
-
-    /**
-     * @param mixed $privilege
-     */
-    public function setPrivilege($privilege): void
-    {
-        $this->_privilege = $privilege;
-    }
-
     protected $_borrowList = array();
 
     /**
@@ -342,6 +325,21 @@ abstract class User
     public function setBorrowList($borrowList)
     {
         $this->_borrowList = $borrowList;
+    }
+    /**
+     * @return mixed
+     */
+    public function getPrivilege()
+    {
+        return $this->_privilege;
+    }
+
+    /**
+     * @param mixed $privilege
+     */
+    public function setPrivilege($privilege): void
+    {
+        $this->_privilege = $privilege;
     }
 
 }
