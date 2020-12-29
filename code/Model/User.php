@@ -13,22 +13,6 @@ abstract class User
     protected $_lastName;
     protected $_phone;
     protected $_privilege;
-
-    /**
-     * @return mixed
-     */
-    public function getPrivilege()
-    {
-        return $this->_privilege;
-    }
-
-    /**
-     * @param mixed $privilege
-     */
-    public function setPrivilege($privilege): void
-    {
-        $this->_privilege = $privilege;
-    }
     protected $_borrowList = array();
 
     /**
@@ -71,10 +55,52 @@ abstract class User
         }
     }
 
+    /* initalise all user attributes that has id_userToLoad */
+    public function loadingUser($id_userToLoad)
+    {
+        $bdd = new DataBase();
+        $con = $bdd->getCon();
+
+        $query = "SELECT * FROM users WHERE id_user = ? ;";
+        $stmt = $con->prepare($query);
+        $stmt->execute([$id_userToLoad]);
+
+        $result = $stmt->fetch();
+        $this->setIdUser($result['id_user']);
+        $this->setEmail($result['email_user']);
+        $this->setMatriculeUser($result['matricule_user']);
+        $this->setPassword($result['password_user']);
+        $this->setName($result['name_user']);
+        $this->setLastName($result['lastname_user']);
+        $this->setPhone($result['phone_user']);
+        $this->setPrivilege($result['isAdmin_user']);
+
+
+        $myQuery = "SELECT borrow_info.id_borrow,startdate_borrow,enddate_borrow,isActive, borrow.id_device, device.ref_equip FROM borrow_info
+                    INNER JOIN borrow INNER JOIN device ON borrow.id_borrow= borrow_info.id_borrow AND borrow.id_device= device.id_device
+                    WHERE borrow.id_user = '$this->_idUser' AND borrow_info.isActive=1;";
+
+        $myStatement = $con->query($myQuery);
+        $result = $myStatement->rowCount();
+        $borrowLignes = $myStatement->fetchAll();
+
+        if ($result == 0)
+            $this->_borrowList = array();
+        else {
+            foreach ($borrowLignes as $borrow) {
+                $BorrowItem = new Borrow($borrow['ref_equip'], $borrow['enddate_borrow']);
+                $BorrowItem->setStartDate($borrow['startdate_borrow']);
+                $BorrowItem->setDeviceId($borrow['id_device']);
+                $BorrowItem->setIdBorrow($borrow['id_borrow']);
+                array_push($this->_borrowList, $BorrowItem);
+            }
+        }
+        $bdd->closeCon();
+    }
+
 
     public function loadUser()
     {
-
         $this->_idUser = $_SESSION['id_user'];
 
         $bdd = new DataBase();
@@ -93,7 +119,7 @@ abstract class User
 
         $myQuery = "SELECT borrow_info.id_borrow,startdate_borrow,enddate_borrow,isActive, borrow.id_device, device.ref_equip FROM borrow_info 
                     INNER JOIN borrow INNER JOIN device ON borrow.id_borrow= borrow_info.id_borrow AND borrow.id_device= device.id_device
-                    WHERE borrow.id_user = '$this->_idUser';";
+                    WHERE borrow.id_user = '$this->_idUser'AND borrow_info.isActive=1;";
         $myStatement = $con->query($myQuery);
         $result = $myStatement->rowCount();
         $borrowLignes = $myStatement->fetchAll();
@@ -135,10 +161,34 @@ abstract class User
             $this->loadUser();
             $bdd->closeCon();
             return TRUE;
-        } else {
+        }
+        else
+        {
             $bdd->closeCon();
             return FALSE;
         }
+    }
+
+    public function changePassword($newPassword)
+    {
+        $bdd = new DataBase();
+        $con = $bdd->getCon();
+        $con->beginTransaction();
+        $hashedNewPassword= sha1($newPassword);
+
+        try
+        {
+            $requete = "UPDATE USERS SET password_user= ? WHERE id_user = ?;";
+            $stmt = $con->prepare($requete);
+            $stmt->execute([$hashedNewPassword,$this->_idUser]);
+            $con->commit();
+        }
+        catch (Exception $e)
+        {
+            $con->rollback();
+            throw new Exception("Could not update password");
+        }
+
     }
 
     public function disconnect()
@@ -275,6 +325,21 @@ abstract class User
     public function setBorrowList($borrowList)
     {
         $this->_borrowList = $borrowList;
+    }
+    /**
+     * @return mixed
+     */
+    public function getPrivilege()
+    {
+        return $this->_privilege;
+    }
+
+    /**
+     * @param mixed $privilege
+     */
+    public function setPrivilege($privilege): void
+    {
+        $this->_privilege = $privilege;
     }
 
 }

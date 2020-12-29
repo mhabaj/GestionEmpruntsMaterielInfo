@@ -25,7 +25,26 @@
     <input type="number" placeholder="Quantite de l'équipement" name="quantite_equip" required
            min="<?php if (isset($EquipmentController) && $EquipmentController != null && isset($currentEquipement) && $currentEquipement != null) echo($currentEquipement->howMuchTotal() - $currentEquipement->howMuchAvailable()); ?>"
            value="<?php if (isset($EquipmentController) && $EquipmentController != null && isset($currentEquipement) && $currentEquipement != null) echo $currentEquipement->howMuchTotal(); ?>">
+    <br>
+    <p><label><b>Images: </label></p>
 
-    <input type="submit" value="Modifier Valeur" placeholder="Modifier l'équipement"
-           name="modifierEquipment">
+    <?php
+    if (isset($EquipmentController) && $EquipmentController != null && isset($currentEquipement) && $currentEquipement != null) {
+        $arrayPhotos = $currentEquipement->getPhotoArray();
+        foreach ($arrayPhotos as $photoURL) {
+            ?>
+            <img src="<?php echo $photoURL ?>" alt="Photo Device" width="200" height="150">
+            <?php
+        }
+    }
+    ?>
+
+    <input type="image" max="1024" value="" name="photo">
+    <input type="hidden" name="MAX_FILE_SIZE" value="8388608">
+    <p><label for="photo"> Photo (JPG, JPEG, PNG or GIF | max.8 Mo) :</label><br/></p>
+    <input type="file" id="photo" name="photo"/><br/>
+
+
+   <p> <input type="submit" value="Modifier l'equipement" placeholder="Modifier l'équipement"
+              name="modifierEquipment"> </p>
 </form>
