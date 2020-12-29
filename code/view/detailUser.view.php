@@ -45,8 +45,9 @@
 
             /* seulement l'admin ou l'utilisateur (pour son profil) peut acceder à la modification de user */
             ?>
+
             <form method="POST" enctype="multipart/form-data" action="ModifyUser.php?id_user_toDisplay=<?php if(isset($_GET['id_user_toDisplay'])) echo $_GET['id_user_toDisplay'] ?>">
-                <input type="submit" value="Modify User" name ="modifyUser"/>
+                <input type="submit" value="Modify User" name ="modifyUsers"/>
             </form>
 
             <form method="POST" enctype="multipart/form-data" action="ModifyUser.php?id_user_toDisplay=<?php if(isset($_GET['id_user_toDisplay'])) echo $_GET['id_user_toDisplay'] ?>">

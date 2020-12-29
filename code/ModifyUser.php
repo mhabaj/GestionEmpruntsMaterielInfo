@@ -9,6 +9,7 @@ require_once("Controller/UserController.php");
 
 if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1  && isset($_GET['id_user_toDisplay']) || $_GET['id_user_toDisplay'] == $_SESSION['id_user'] && isset($_GET['id_user_toDisplay']))
 {
+
     $userController = new UserController();
     try
     {
@@ -21,7 +22,7 @@ if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1  && isset
     }
 
     $currentUser = $userController->getUser();
-
+    echo($_POST['modifyUsers']);
     /* si l'utilisateur a cliqué sur modifier utilisateur */
     if(isset($_POST['modifyUsers']) && isset($_GET['id_user_toDisplay']) && (isset($userController) && $userController != null && isset($currentUser) && $currentUser != null) )
     {
@@ -30,6 +31,7 @@ if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1  && isset
         <?php
             //include modifyUser.view
             require_once('view/modifyUser.view.php');
+
         ?>
 
 

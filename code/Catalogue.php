@@ -28,6 +28,7 @@ require_once "Controller/CatalogueController.php";
 </form>
 
 
+
 <?php
 if (isset($_POST['startSearching']) && $_POST['EquipmentToSearch'] != null && $_POST['EquipmentToSearch'] != " ") {
     $bdd = new DataBase();
@@ -78,6 +79,11 @@ if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1) {
         <form method="POST" enctype="multipart/form-data">
             <label>Espace Admin: </label>
             <button type="submit" name="addEquip">Ajouter un nouvel Equipement</button>
+        </form>
+
+        <form method="POST" action="Inscription.php">
+            <label>Espace Admin: </label>
+            <button type="submit" name = "inscription">Créer un compte </button>
         </form>
 
         <?php
