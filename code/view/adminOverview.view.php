@@ -39,7 +39,7 @@ if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1) {
         <form method="POST" enctype="multipart/form-data">
             <label>Rechercher utilisateur:</label>
             <input type="search" placeholder="Matricule de l'utilisateur" name="UserToSearch">
-            <button type="submit" name="startSearchingUser">Rechercher</button>
+            <button class="btn btn-primary" type="submit" name="startSearchingUser">Rechercher</button>
         </form>
     </div>
 
