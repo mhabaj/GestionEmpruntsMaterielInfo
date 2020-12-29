@@ -12,7 +12,7 @@ if(isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1)
 {
 
     //on include inscriptions.view
-    require_once('view/inscriptions.view.php');
+    require_once('view/inscripition.view.php');
     ?>
 
     <?php
@@ -43,7 +43,7 @@ if(isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1)
         catch(Exception $e)
         {
             echo $e->getMessage();
-            header( "refresh:4;url=Inscription.php");
+            header( "refresh:3;url=Inscription.php");
         }
 
     }
