@@ -26,9 +26,7 @@ class UserAdmin extends User
             $stmt = $con->prepare($query);
             $stmt->execute([$_matricule_user, $_email_user, $_password_user, $_name_user, $_lastname_user, $_phone, $_isAdmin_user]);
             $con->commit();
-        }
-        catch (PDOException $e)
-        {
+        } catch (PDOException $e) {
             $con->rollback();
             throw new Exception("<p> Could not create the user, invalid user input </p> ");
         }
