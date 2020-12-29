@@ -58,44 +58,41 @@
     </div>
 
 
-<footer id="footer" class="top-space">
-    <div class="footer1">
-        <div class="container">
-            <div class="row">
+    <footer id="footer" class="top-space">
+        <div class="footer1">
+            <div class="container">
+                <div class="row">
 
-                <div class="col-md-3 widget">
-                    <h3 class="widget-title">Contact</h3>
-                    <div class="widget-body">
-                        <p>numéro de téléphone au hasard<br>
-                            <a href="mailto:#">unemail@email.com</a><br>
-                            <br>
-                            Polytech'Tours
-                        </p>
+                    <div class="col-md-3 widget">
+                        <h3 class="widget-title">Contact</h3>
+                        <div class="widget-body">
+                            <p>numéro de téléphone au hasard<br>
+                                <a href="mailto:#">unemail@email.com</a><br>
+                                <br>
+                                Polytech'Tours
+                            </p>
+                        </div>
                     </div>
-                </div>
-            </div> <!-- /row of widgets -->
+                </div> <!-- /row of widgets -->
+            </div>
         </div>
-    </div>
 
-    <div class="footer2">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6 widget">
-                    <div class="widget-body">
-                        <p class="text-right">
-                            Copyright &copy; 2020, DI4 Groupe 5, Qualité logiciel.
-                        </p>
+        <div class="footer2">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 widget">
+                        <div class="widget-body">
+                            <p class="text-right">
+                                Copyright &copy; 2020, DI4 Groupe 5, Qualité logiciel.
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
 
-</footer>
-
-
-
+    </footer>
 
 
     <!-- JavaScript libs are placed at the end of the document so the pages load faster -->
