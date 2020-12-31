@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="" tests="1" assertions="1" errors="0" warnings="0" failures="0" skipped="0" time="0.000112">
+    <testsuite name="Test suite" tests="1" assertions="1" errors="0" warnings="0" failures="0" skipped="0" time="0.000112">
+      <testsuite name="AuthentificationControllerTest" file="C:\wamp64\www\GestionEmpruntsMaterielInfo\code\tests\AuthentificationControllerTest.php" tests="1" assertions="1" errors="0" warnings="0" failures="0" skipped="0" time="0.000112">
+        <testcase name="someTesting" class="AuthentificationControllerTest" classname="AuthentificationControllerTest" file="C:\wamp64\www\GestionEmpruntsMaterielInfo\code\tests\AuthentificationControllerTest.php" line="9" assertions="1" time="0.000112"/>
+      </testsuite>
+    </testsuite>
+  </testsuite>
+</testsuites>
