@@ -13,8 +13,6 @@ abstract class User
     protected $_lastName;
     protected $_phone;
     protected $_privilege;
-
-
     protected $_borrowList = array();
 
     /**
@@ -62,6 +60,7 @@ abstract class User
     {
         $bdd = new DataBase();
         $con = $bdd->getCon();
+
         $query = "SELECT * FROM users WHERE id_user = ? ;";
         $stmt = $con->prepare($query);
         $stmt->execute([$id_userToLoad]);
@@ -79,7 +78,8 @@ abstract class User
 
         $myQuery = "SELECT borrow_info.id_borrow,startdate_borrow,enddate_borrow,isActive, borrow.id_device, device.ref_equip FROM borrow_info
                     INNER JOIN borrow INNER JOIN device ON borrow.id_borrow= borrow_info.id_borrow AND borrow.id_device= device.id_device
-                    WHERE borrow.id_user = '$this->_idUser' and borrow_info.isActive = 1;";
+                    WHERE borrow.id_user = '$this->_idUser' AND borrow_info.isActive=1;";
+
         $myStatement = $con->query($myQuery);
         $result = $myStatement->rowCount();
         $borrowLignes = $myStatement->fetchAll();
@@ -101,7 +101,6 @@ abstract class User
 
     public function loadUser()
     {
-
         $this->_idUser = $_SESSION['id_user'];
 
         $bdd = new DataBase();
@@ -120,7 +119,7 @@ abstract class User
 
         $myQuery = "SELECT borrow_info.id_borrow,startdate_borrow,enddate_borrow,isActive, borrow.id_device, device.ref_equip FROM borrow_info 
                     INNER JOIN borrow INNER JOIN device ON borrow.id_borrow= borrow_info.id_borrow AND borrow.id_device= device.id_device
-                    WHERE borrow.id_user = '$this->_idUser' and borrow_info.isActive = 1;";
+                    WHERE borrow.id_user = '$this->_idUser'AND borrow_info.isActive=1;";
         $myStatement = $con->query($myQuery);
         $result = $myStatement->rowCount();
         $borrowLignes = $myStatement->fetchAll();
@@ -162,10 +161,34 @@ abstract class User
             $this->loadUser();
             $bdd->closeCon();
             return TRUE;
-        } else {
+        }
+        else
+        {
             $bdd->closeCon();
             return FALSE;
         }
+    }
+
+    public function changePassword($newPassword)
+    {
+        $bdd = new DataBase();
+        $con = $bdd->getCon();
+        $con->beginTransaction();
+        $hashedNewPassword= sha1($newPassword);
+
+        try
+        {
+            $requete = "UPDATE USERS SET password_user= ? WHERE id_user = ?;";
+            $stmt = $con->prepare($requete);
+            $stmt->execute([$hashedNewPassword,$this->_idUser]);
+            $con->commit();
+        }
+        catch (Exception $e)
+        {
+            $con->rollback();
+            throw new Exception("Could not update password");
+        }
+
     }
 
     public function disconnect()
@@ -303,7 +326,6 @@ abstract class User
     {
         $this->_borrowList = $borrowList;
     }
-
     /**
      * @return mixed
      */
@@ -319,6 +341,7 @@ abstract class User
     {
         $this->_privilege = $privilege;
     }
+
 }
 /*
 $user = new User();
