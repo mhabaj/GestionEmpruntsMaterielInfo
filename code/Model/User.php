@@ -14,6 +14,8 @@ abstract class User
     protected $_lastName;
     protected $_phone;
     protected $_privilege;
+
+
     protected $_borrowList = array();
 
     /**
@@ -34,8 +36,127 @@ abstract class User
 
     public function delBorrowToList($idToDel)
     {
+<<<<<<< HEAD
         unset($this->_borrowList[$idToDel]);
     }
+=======
+        $bdd = new DataBase();
+        $con = $bdd->getCon();
+        $query = "SELECT * FROM users WHERE id_user = ? ;";
+        $stmt = $con->prepare($query);
+        $stmt->execute([$id_userToLoad]);
+
+        $result = $stmt->fetch();
+        $this->setIdUser($result['id_user']);
+        $this->setEmail($result['email_user']);
+        $this->setMatriculeUser($result['matricule_user']);
+        $this->setPassword($result['password_user']);
+        $this->setName($result['name_user']);
+        $this->setLastName($result['lastname_user']);
+        $this->setPhone($result['phone_user']);
+        $this->setPrivilege($result['isAdmin_user']);
+
+
+        $myQuery = "SELECT borrow_info.id_borrow,startdate_borrow,enddate_borrow,isActive, borrow.id_device, device.ref_equip FROM borrow_info
+                    INNER JOIN borrow INNER JOIN device ON borrow.id_borrow= borrow_info.id_borrow AND borrow.id_device= device.id_device
+                    WHERE borrow.id_user = '$this->_idUser' and borrow_info.isActive = 1;";
+        $myStatement = $con->query($myQuery);
+        $result = $myStatement->rowCount();
+        $borrowLignes = $myStatement->fetchAll();
+
+        if ($result == 0)
+            $this->_borrowList = array();
+        else {
+            foreach ($borrowLignes as $borrow) {
+                $BorrowItem = new Borrow($borrow['ref_equip'], $borrow['enddate_borrow']);
+                $BorrowItem->setStartDate($borrow['startdate_borrow']);
+                $BorrowItem->setDeviceId($borrow['id_device']);
+                $BorrowItem->setIdBorrow($borrow['id_borrow']);
+                array_push($this->_borrowList, $BorrowItem);
+            }
+        }
+        $bdd->closeCon();
+    }
+
+
+    public function loadUser()
+    {
+
+        $this->_idUser = $_SESSION['id_user'];
+
+        $bdd = new DataBase();
+        $con = $bdd->getCon();
+        $query = "SELECT * FROM users WHERE id_user = ? ;";
+        $stmt = $con->prepare($query);
+        $stmt->execute([$this->_idUser]);
+        $result = $stmt->fetch();
+        $this->setEmail($result['email_user']);
+        $this->setMatriculeUser($result['matricule_user']);
+        $this->setPassword($result['password_user']);
+        $this->setName($result['name_user']);
+        $this->setLastName($result['lastname_user']);
+        $this->setPhone($result['phone_user']);
+        $this->setPrivilege($result['isAdmin_user']);
+
+        $myQuery = "SELECT borrow_info.id_borrow,startdate_borrow,enddate_borrow,isActive, borrow.id_device, device.ref_equip FROM borrow_info 
+                    INNER JOIN borrow INNER JOIN device ON borrow.id_borrow= borrow_info.id_borrow AND borrow.id_device= device.id_device
+                    WHERE borrow.id_user = '$this->_idUser' and borrow_info.isActive = 1;";
+        $myStatement = $con->query($myQuery);
+        $result = $myStatement->rowCount();
+        $borrowLignes = $myStatement->fetchAll();
+
+        if ($result == 0)
+            $this->_borrowList = array();
+        else {
+            foreach ($borrowLignes as $borrow) {
+                $BorrowItem = new Borrow($borrow['ref_equip'], $borrow['enddate_borrow']);
+                $BorrowItem->setStartDate($borrow['startdate_borrow']);
+                $BorrowItem->setDeviceId($borrow['id_device']);
+                $BorrowItem->setIdBorrow($borrow['id_borrow']);
+                array_push($this->_borrowList, $BorrowItem);
+            }
+        }
+        $bdd->closeCon();
+    }
+
+    public function connect()
+    {
+
+        $bdd = new DataBase();
+        $con = $bdd->getCon();
+
+        //Hashage du mdp
+        $hash_mdp = sha1($this->_password);
+
+        //Inserer valeurs
+        $requete = "SELECT * FROM users WHERE matricule_user = ? AND password_user= ? ;";
+        $stmt = $con->prepare($requete);
+        $stmt->execute([$this->_matriculeUser, $hash_mdp]);
+        $result = $stmt->rowCount();
+
+        if ($result == 1) {
+            session_start();
+            $infoUser = $stmt->fetch();
+            $_SESSION['id_user'] = $infoUser['id_user'];
+            $this->_idUser = $infoUser['id_user'];
+            $this->loadUser();
+            $bdd->closeCon();
+            return TRUE;
+        } else {
+            $bdd->closeCon();
+            return FALSE;
+        }
+    }
+
+    public function disconnect()
+    {
+        session_unset();
+        session_destroy();
+        return TRUE;
+    }
+
+
+>>>>>>> parent of 730364f... MERGE AVEC ADRIEN ET ALEX
     /**
      * @return mixed
      */
@@ -163,6 +284,7 @@ abstract class User
     {
         $this->_borrowList = $borrowList;
     }
+
     /**
      * @return mixed
      */
@@ -178,8 +300,11 @@ abstract class User
     {
         $this->_privilege = $privilege;
     }
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> parent of 730364f... MERGE AVEC ADRIEN ET ALEX
 }
 /*
 $user = new User();
