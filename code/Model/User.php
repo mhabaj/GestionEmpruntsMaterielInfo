@@ -301,8 +301,11 @@ abstract class User
         $this->_privilege = $privilege;
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> parent of 730364f... MERGE AVEC ADRIEN ET ALEX
 =======
 >>>>>>> parent of 730364f... MERGE AVEC ADRIEN ET ALEX
 }
