@@ -45,6 +45,7 @@ class AuthentificationController
                 $newUserAdmin->setPassword($this->_password);
                 if ($newUserAdmin->connect() == true) {
                     $newUserAdmin->loadUser();
+                    $_SESSION['User'] = $newUserAdmin;
                     $_SESSION['isAdmin_user'] = 1;
                     header('Location: Catalogue.php');
                 }
@@ -54,6 +55,7 @@ class AuthentificationController
                 $newUserRegular->setPassword($this->_password);
                 if ($newUserRegular->connect() == true) {
                     $newUserRegular->loadUser();
+                    $_SESSION['User'] = $newUserRegular;
                     $_SESSION['isAdmin_user'] = 0;
                     header('Location: Catalogue.php');
                 }

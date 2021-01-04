@@ -35,10 +35,11 @@ class Functions
         if (preg_match('/^([A-Z]|[a-z]|[0-9]){7}$/', $matricule)) {
             return true;
         } else
-        {
+            {
             throw new Exception("Votre identifiant de connexion est invalide, il doit comporter 7 caracteres");
         }
     }
+
     public static function checkNameMateriel($nom)
     {
         if (preg_match('/[A-Za-z0-9-._,;:#()"]{1,30}/', $nom)) {

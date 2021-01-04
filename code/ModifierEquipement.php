@@ -9,7 +9,7 @@ require_once "Controller/Functions.php";
 require_once "Controller/EquipmentController.php";
 
 
-if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1) {
+if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1 && isset($_GET['ref_equip'])) {
     $currentUser = new UserAdmin();
     $currentUser->loadUser();
     if ($currentUser->getPrivilege() == 1) {
@@ -69,6 +69,13 @@ if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1) {
 
 
         }
+    } else {
+        header("refresh:3;url=Catalogue.php");
+        echo "L'equipement que vous essayer de consulter est invalide";
+        echo "<p> Redirection dans 3 secondes.. </p>";
     }
-
+} else {
+    header("refresh:3;url=Catalogue.php");
+    echo "L'equipement que vous essayer de consulter est invalide";
+    echo "<p> Redirection dans 3 secondes.. </p>";
 }
