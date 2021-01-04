@@ -236,6 +236,7 @@ class UserAdmin extends User
     {
         $cpt_array = 0;
         foreach ($this->_borrowList as $borrow):
+            var_dump($borrow);
             if ($borrow->getIdBorrow() == $id_borrow_toDel) {
                 $borrow->stopBorrow();
                 unset($this->_borrowList[$cpt_array]);
