@@ -46,9 +46,7 @@ if(isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1)
             echo "<p> Erreur, le matricule doit comporter 7 caracteres et/ou les mots de passe entrés ne correspondent pas <p/>";
         }
     }
-    if(isset($_POST['cancelbtn'])){
-        header('Location: Catalogue');
-    }
+
 
     ?>
 
