@@ -29,11 +29,11 @@ if (!isset($_SESSION['id_user']))
             {
                 $authCont = new AuthentificationController($matricule, $password);
                 $authCont->identification();
-                header('Location: Catalogue.php');
+                header('Location:Catalogue.php');
             }
 
         } else {
-            header('Location: Catalogue.php');
+            header('Location:Catalogue.php');
         }
     }
 } else {

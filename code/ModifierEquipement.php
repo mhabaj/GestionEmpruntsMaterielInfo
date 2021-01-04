@@ -12,8 +12,8 @@ require_once "Controller/EquipmentController.php";
 if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1  && isset($_GET['ref_equip']))
 {
     $currentUser = MainDAO::getUser($_SESSION['id_user']);
-    if ($currentUser->getPrivilege() == 1)
-    {
+    if ($currentUser->getPrivilege() == 1) {
+
 
         try {
             $EquipmentController = new EquipmentController();
@@ -40,11 +40,16 @@ if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1  && isset
                     try {
                         if ($currentUser->getPrivilege() == 1)
                         {
-                            $EquipmentController->modifyEquipment($ref_equip, $type_equip, $nom_equip, $marque_equip, $version_equip, $quantite_equip);
+                            $EquipmentController->modifyEquipment($ref_equip, $type_equip, $nom_equip, $marque_equip, $version_equip, $quantite_equip, $currentUser->getIdUser());
+                            $photo = Functions::uploadImage($type_equip);
+                            if ($photo != null && $photo != "") {
+                                $currentUser->updateImageToEquipment($photo, $ref_equip);
+                            }
                             unset($currentEquipement);
-
                             unset($EquipmentController);
                             header("Location: DetailEquipement.php?ref_equip=" . $ref_equip);
+
+
                         }
 
                     } catch (Exception $e) {
@@ -62,12 +67,9 @@ if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1  && isset
             header("refresh:3;url=Catalogue.php");
             echo $e->getMessage();
             echo "<p> Redirection dans 3 secondes.. </p>";
+
+
         }
     }
-}
-else
-{
-    header("refresh:3;url=Catalogue.php");
-    echo "L'equipement que vous essayer de consulter est invalide";
-    echo "<p> Redirection dans 3 secondes.. </p>";
+
 }

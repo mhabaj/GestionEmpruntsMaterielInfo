@@ -77,7 +77,8 @@ class CatalogueController
         $myStatement->execute([$EquipToSearch . "%"]);
 
         if ($myStatement->rowCount() > 0) {
-            while ($donnees = $myStatement->fetch()) {
+            while ($donnees = $myStatement->fetch())
+            {
                 require "view/resultSearchEquipment.view.php";
             }
             $myStatement->closeCursor();

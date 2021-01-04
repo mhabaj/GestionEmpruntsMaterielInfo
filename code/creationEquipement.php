@@ -9,8 +9,10 @@ require_once "Controller/Functions.php";
 require_once "Controller/EquipmentController.php";
 
 
-if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1) {
+if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1)
+{
     $currentUser = MainDAO::getUser($_SESSION['id_user']);
+
     if ($currentUser->getPrivilege() == 1) {
         try {
             $EquipmentController = new EquipmentController();
