@@ -30,8 +30,7 @@ class InscriptionController
                 else
                     $isAdmin = 0;
 
-                $UserAdmin = new UserAdmin();
-                $UserAdmin->createUser($matricule,$email,$password,$name,$lastname,$phone,$isAdmin);
+                MainDAO::createUser($matricule,$email,$password,$name,$lastname,$phone,$isAdmin);
                 return true;
             }
             else

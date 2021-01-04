@@ -17,10 +17,11 @@ if (!isset($_SESSION['id_user']))
 
     <?php
 
+    if (isset($_POST['submitLogin']))
+    {
 
-    if (isset($_POST['submitLogin'])) {
-
-        if (!isset($_SESSION['id_user'])) {
+        if (!isset($_SESSION['id_user']))
+        {
             $matricule = $_POST['matricule'];
             $password = $_POST['password'];
 
@@ -28,6 +29,7 @@ if (!isset($_SESSION['id_user']))
             {
                 $authCont = new AuthentificationController($matricule, $password);
                 $authCont->identification();
+                header('Location: Catalogue.php');
             }
 
         } else {
@@ -35,7 +37,7 @@ if (!isset($_SESSION['id_user']))
         }
     }
 } else {
-    header('Location: Catalogue.php');
+    echo("invalid username or password");
 }
 
 ?>

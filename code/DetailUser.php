@@ -35,20 +35,20 @@ if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1 && isset(
         ?>
 
         <?php
-        if(isset($_POST['endBorrow']) && $_SESSION['isAdmin_user'] == 1 && isset($_POST['idBorrow']) && is_numeric($_POST['idBorrow']))
+        if(isset($_POST['endBorrow']) && $_SESSION['isAdmin_user'] == 1 && isset($_POST['idBorrow']) && is_numeric($_POST['idBorrow']) && isset($_POST['idDevice']))
         {
-            $userController->returnBorrow($_SESSION['id_user'],$_POST['idBorrow']);
+            $userController->returnBorrow($_SESSION['id_user'],$_POST['idBorrow'],$_POST['idDevice']);
             header("Refresh:0");
         }
     }
     else
     {
-        echo $_GET['id_user_toDisplay'];
-        //header('Location: Catalogue.php');
+        header('Location: Catalogue.php');
     }
 }
 else
 {
-    echo $_GET['id_user_toDisplay'];
-    //header('Location: Catalogue.php');
+    echo "Vous n'avez pas accès à cette page";
+    header("refresh:3;url=Catalogue.php");
+    echo "<p> Redirection dans 3 secondes.. </p>";
 }

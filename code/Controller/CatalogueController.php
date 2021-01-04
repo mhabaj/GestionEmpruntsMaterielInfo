@@ -24,15 +24,8 @@ class CatalogueController
 
 
                 while($donnees = $myStatement->fetch())
-                { ?>
-                    <a href="DetailEquipement.php?ref_equip=<?php echo $donnees['ref_equip']?>">
-                        <div>
-                            <strong> Type </strong> : <?php echo $donnees['type_equip'];?> <br/>
-                            <strong> Matériel </strong> : <?php echo $donnees['brand_equip']." ".$donnees['name_equip'];?> <br/>
-                            <strong> Version  </strong> : <?php echo $donnees['version_equip'];?> <br/> <br/>
-                        </div>
-                    </a>
-                    <?php
+                {
+                    require "view/resultSearchEquipment.view.php";
                 }
             }
             catch(PDOException $e)
@@ -68,4 +61,56 @@ class CatalogueController
             $myStatement->closeCursor();
         }
     }
+
+    public function searchEquipment()
+    {
+        $bdd = new DataBase();
+        $con = $bdd->getCon();
+        $EquipToSearch = trim($_POST['EquipmentToSearch']);
+
+        if ($_POST['radio_recherche'] == "radio_name")
+            $queryEquipments = "SELECT * FROM equipment WHERE name_equip LIKE ?;";
+        elseif ($_POST['radio_recherche'] == "radio_ref")
+            $queryEquipments = "SELECT * FROM equipment WHERE ref_equip LIKE ?;";
+
+        $myStatement = $con->prepare($queryEquipments);
+        $myStatement->execute([$EquipToSearch . "%"]);
+
+        if ($myStatement->rowCount() > 0) {
+            while ($donnees = $myStatement->fetch()) {
+                require "view/resultSearchEquipment.view.php";
+            }
+            $myStatement->closeCursor();
+        } else {
+            ?>
+            <label>Aucun document ne correspond aux termes de recherche spécifiés.</label>
+            <?php
+        }
+        $myStatement->closeCursor();
+    }
+
+    public function searchUser()
+    {
+        $bdd = new DataBase();
+        $con = $bdd->getCon();
+        $UserToSearch = trim($_POST['UserToSearch']);
+
+        $queryEquipments = "SELECT * FROM users WHERE matricule_user LIKE ?;";
+        $myStatement = $con->prepare($queryEquipments);
+        $myStatement->execute([$UserToSearch."%"]);
+
+        if($myStatement->rowCount() > 0)
+        {
+            while ($donnees = $myStatement->fetch()) {
+                require "view/resultSearchUser.view.php";
+            }
+        }
+        else{
+            ?>
+            <label>Aucun document ne correspond aux termes de recherche spécifiés.</label>
+            <?php
+        }
+        $myStatement->closeCursor();
+    }
+
 }

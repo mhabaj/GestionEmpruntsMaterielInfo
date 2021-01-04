@@ -11,11 +11,9 @@ require_once "Controller/EquipmentController.php";
 
 if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1  && isset($_GET['ref_equip']))
 {
-    $currentUser = new UserAdmin();
-    $currentUser->loadUser();
+    $currentUser = MainDAO::getUser($_SESSION['id_user']);
     if ($currentUser->getPrivilege() == 1)
     {
-
 
         try {
             $EquipmentController = new EquipmentController();
@@ -40,8 +38,9 @@ if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1  && isset
                     $version_equip = $_POST['version_equip'];
                     $quantite_equip = $_POST['quantite_equip'];
                     try {
-                        if ($currentUser->getPrivilege() == 1) {
-                            $EquipmentController->modifyEquipment($ref_equip, $type_equip, $nom_equip, $marque_equip, $version_equip, $quantite_equip, $currentUser->getIdUser());
+                        if ($currentUser->getPrivilege() == 1)
+                        {
+                            $EquipmentController->modifyEquipment($ref_equip, $type_equip, $nom_equip, $marque_equip, $version_equip, $quantite_equip);
                             unset($currentEquipement);
 
                             unset($EquipmentController);

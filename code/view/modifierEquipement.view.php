@@ -20,11 +20,11 @@
     <input type="text" placeholder="Version de l'équipement" name="version_equip" required
            value="<?php if (isset($EquipmentController) && $EquipmentController != null && isset($currentEquipement) && $currentEquipement != null) echo $currentEquipement->getVersionEquip(); ?>">
     <p> Quantité totale du materiel <b>(Disponible à modifier/ Occupé / Total présent:
-            <mark><?php if (isset($EquipmentController) && $EquipmentController != null && isset($currentEquipement) && $currentEquipement != null) echo $currentEquipement->howMuchAvailable() . "/" . ($currentEquipement->howMuchAvailable() - $currentEquipement->howMuchTotal()) * -1 . "/" . $currentEquipement->howMuchTotal(); ?></mark>
+            <mark><?php if (isset($EquipmentController) && $EquipmentController != null && isset($currentEquipement) && $currentEquipement != null) echo MainDAO::howMuchAvailable($currentEquipement->getRefEquip()) . "/" . (MainDAO::howMuchAvailable($currentEquipement->getRefEquip()) - MainDAO::howMuchTotal($currentEquipement->getRefEquip())) * -1 . "/" . MainDAO::howMuchTotal($currentEquipement->getRefEquip()); ?></mark>
             ): </b></p>
     <input type="number" placeholder="Quantite de l'équipement" name="quantite_equip" required
-           min="<?php if (isset($EquipmentController) && $EquipmentController != null && isset($currentEquipement) && $currentEquipement != null) echo($currentEquipement->howMuchTotal() - $currentEquipement->howMuchAvailable()); ?>"
-           value="<?php if (isset($EquipmentController) && $EquipmentController != null && isset($currentEquipement) && $currentEquipement != null) echo $currentEquipement->howMuchTotal(); ?>">
+           min="<?php if (isset($EquipmentController) && $EquipmentController != null && isset($currentEquipement) && $currentEquipement != null) echo(MainDAO::howMuchTotal($currentEquipement->getRefEquip()) - MainDAO::howMuchAvailable($currentEquipement->getRefEquip())); ?>"
+           value="<?php if (isset($EquipmentController) && $EquipmentController != null && isset($currentEquipement) && $currentEquipement != null) echo MainDAO::howMuchTotal($currentEquipement->getRefEquip()); ?>">
 
     <input type="submit" value="Modifier Valeur" placeholder="Modifier l'équipement"
            name="modifierEquipment">

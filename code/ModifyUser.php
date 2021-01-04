@@ -22,7 +22,7 @@ if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1  && isset
     }
 
     $currentUser = $userController->getUser();
-    echo($_POST['modifyUsers']);
+
     /* si l'utilisateur a cliqué sur modifier utilisateur */
     if(isset($_POST['modifyUsers']) && isset($_GET['id_user_toDisplay']) && (isset($userController) && $userController != null && isset($currentUser) && $currentUser != null) )
     {
@@ -80,25 +80,26 @@ if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1  && isset
                 if($userController->modifyPassword($_POST['password'], $_POST['passwordrepeat']) == false)
                 {
                     echo ("<p> Les deux mots de passe ne correspondent pas <p/>");
-                    $url = 'DetailUser.php?id_user_toDisplay='. $currentUser->getIdUser();
+                    $url= 'Location: DetailUser.php?id_user_toDisplay='.$_GET['id_user_toDisplay'];
                     header( "refresh:2;url=.$url");
                 }
                 else
                 {
-                    header('Location: DetailUser.php?id_user_toDisplay='.$currentUser->getIdUser());
+                    header('Location: DetailUser.php?id_user_toDisplay='.$_GET['id_user_toDisplay']);
                 }
             }
 
         }
 
-        if(isset($_POST['cancelMdp']))
-        {
-            header('Location: Catalogue');
-        }
+    if(isset($_POST['cancelbtn']))
+    {
+        header('Location: Catalogue');
+    }
 }
 else
 {
     echo "Vous n'avez pas accès à cette page";
-    header('Location: Catalogue.php');
+    header("refresh:3;url=Catalogue.php");
+    echo "<p> Redirection dans 3 secondes.. </p>";
 }
 ?>

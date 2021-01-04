@@ -35,6 +35,7 @@
                         ?>
                         <form method="POST" enctype="multipart/form-data">
                         <input type="hidden" value="<?php echo $borrowedItem->getIdBorrow() ?>" name="idBorrow" />
+                        <input type="hidden" value="<?php echo $borrowedItem->getDeviceId() ?>" name="idDevice" />
                         <input type="submit" value="Cliquez pour terminer un emprunt" name ="endBorrow" />
                         </form>
                         <?php

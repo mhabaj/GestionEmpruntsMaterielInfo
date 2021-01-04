@@ -21,15 +21,25 @@
             <label><b>Numéro de téléphone</b></label>
             <input type="tel" pattern="[0-9]{10}" value="<?php if (isset($userController) && $userController != null && isset($currentUser) && $currentUser != null) echo $currentUser->getPhone() ?>" name="phone" >
             <br><br>
+
+            <?php if (MainDAO::isUserAdmin(MainDAO::getUser($_SESSION['id_user'])) == true)
+            {
+                ?>
             <label><b>Modifer les droits de l'utilisateur</b></label>
             <label>
                 <input type="checkbox" checked="checked" name="administrateur"  value ="ok" style="margin-bottom:15px">Administrateur
             </label>
-
+            <?php
+            }
+                ?>
             <hr>
-            <button type="button" name="cancelbtn">Annuler les modifications</button>
             <button type="submit" name="submitModification">Confirmer les modifications </button>
 
         </form>
+
+        <form method="Post">
+            <button type="submit"  name="cancelbtn">Annuler l'inscription </button>
+        </form>
+
     </body>
 </html>
