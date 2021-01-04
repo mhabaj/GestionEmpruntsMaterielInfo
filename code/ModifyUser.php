@@ -9,6 +9,7 @@ require_once("Controller/UserController.php");
 
 if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1  && isset($_GET['id_user_toDisplay']) || $_GET['id_user_toDisplay'] == $_SESSION['id_user'] && isset($_GET['id_user_toDisplay']))
 {
+
     $userController = new UserController();
     try
     {
@@ -25,69 +26,72 @@ if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1  && isset
     /* si l'utilisateur a cliqué sur modifier utilisateur */
     if(isset($_POST['modifyUsers']) && isset($_GET['id_user_toDisplay']) && (isset($userController) && $userController != null && isset($currentUser) && $currentUser != null) )
     {
-        ?>
+    ?>
 
         <?php
-        //include modifyUser.view
-        require_once('view/modifyUser.view.php');
+            //include modifyUser.view
+            require_once('view/modifyUser.view.php');
+
         ?>
 
 
-        <?php
+    <?php
     }
-    /* Traitement de la page modifier utilisateur */
-    if (isset($_POST['submitModification']))
-    {
-        if($userController->modifyUser($_GET['id_user_toDisplay'],$_POST['matricule'],$_POST['email'],$_POST['lastname'],$_POST['name'],$_POST['phone'],$_POST['administrateur']) == true)
-            header('Location: DetailUser.php?id_user_toDisplay='.$currentUser->getIdUser());
-        else
+        /* Traitement de la page modifier utilisateur */
+        if (isset($_POST['submitModification']))
         {
-            $url = 'DetailUser.php?id_user_toDisplay='.$currentUser->getIdUser();
-            echo" Il doit contenir 7 caracteres, vous allez être redirigé";
-            header( "refresh:2;url=$url");
+            try
+            {
+                if($userController->modifyUser($_GET['id_user_toDisplay'],$_POST['matricule'],$_POST['email'],$_POST['lastname'],$_POST['name'],$_POST['phone'],$_POST['administrateur']) == true)
+                    header('Location: DetailUser.php?id_user_toDisplay='.$currentUser->getIdUser());
+            }
+            catch(Exception $e)
+            {
+                echo $e->getMessage();
+                $url = 'DetailUser.php?id_user_toDisplay='.$currentUser->getIdUser();
+                header( "refresh:2;url=$url");
+            }
         }
 
-    }
-
-    if(isset($_POST['cancelbtn']))
-    {
-        header('Location: DetailUser.php?id_user_toDisplay='.$currentUser->getIdUser());
-    }
+        if(isset($_POST['cancelbtn']))
+        {
+            header('Location: DetailUser.php?id_user_toDisplay='.$currentUser->getIdUser());
+        }
 
     /* si l'utilisateur a cliqué sur modifier password */
     if (isset($_GET['id_user_toDisplay']) && isset($_POST['modifyPassword']) && (isset($userController) && $userController != null && isset($currentUser) && $currentUser != null))
     {
-        ?>
+    ?>
 
 
         <?php
-        //include modifyPassword.view
-        require_once('view/modifyPassword.view.php');
+            //include modifyPassword.view
+            require_once('view/modifyPassword.view.php');
         ?>
 
 
-        <?php
+    <?php
     }
-    /* Traitement de la page modifier password  */
-    if (isset($_POST['submitModificationMdp']))
-    {
-        if (isset($_POST['password']) && isset($_POST['passwordrepeat']))
+        /* Traitement de la page modifier password  */
+        if (isset($_POST['submitModificationMdp']))
         {
-            if($userController->modifyPassword($_POST['password'], $_POST['passwordrepeat']) == false)
+            if (isset($_POST['password']) && isset($_POST['passwordrepeat']))
             {
-                echo ("<p> Les deux mots de passe ne correspondent pas <p/>");
-                $url = 'DetailUser.php?id_user_toDisplay='. $currentUser->getIdUser();
-                header( "refresh:2;url=.$url");
+                if($userController->modifyPassword($_POST['password'], $_POST['passwordrepeat']) == false)
+                {
+                    echo ("<p> Les deux mots de passe ne correspondent pas <p/>");
+                    $url= 'Location: DetailUser.php?id_user_toDisplay='.$_GET['id_user_toDisplay'];
+                    header( "refresh:2;url=.$url");
+                }
+                else
+                {
+                    header('Location: DetailUser.php?id_user_toDisplay='.$_GET['id_user_toDisplay']);
+                }
             }
-            else
-            {
-                header('Location: DetailUser.php?id_user_toDisplay='.$currentUser->getIdUser());
-            }
+
         }
 
-    }
-
-    if(isset($_POST['cancelMdp']))
+    if(isset($_POST['cancelbtn']))
     {
         header('Location: Catalogue');
     }
@@ -95,6 +99,7 @@ if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1  && isset
 else
 {
     echo "Vous n'avez pas accès à cette page";
-    header('Location: Catalogue.php');
+    header("refresh:3;url=Catalogue.php");
+    echo "<p> Redirection dans 3 secondes.. </p>";
 }
 ?>
