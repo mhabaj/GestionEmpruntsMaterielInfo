@@ -11,26 +11,22 @@ require_once "Controller/CatalogueController.php";
 
 $myCatalogueController = new CatalogueController();
 
-/*****************************************************************************************************************************************/
-?>
-<html>
-<body>
+/*********************************************************************************************************************/
 
-
-<?php
+require_once "view/buttondetailUser.view.php";
 require_once "view/searchEquipment.view.php";
 if (isset($_POST['startSearching']) && $_POST['EquipmentToSearch'] != null && $_POST['EquipmentToSearch'] != " ") {
     $myCatalogueController->searchEquipment();
 }
 
-/*****************************************************************************************************************************************/
+/********************************************************************************************************************/
 $myCatalogueController->getEquipmentList();
 ?>
 
 <?php
 if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1) {
-    $currentUser = new UserAdmin();
-    $currentUser->loadUser();
+    $currentUser = MainDAO::getUser($_SESSION['id_user']);
+
     require_once "view/adminOverview.view.php";
     if ($currentUser->getPrivilege() == 1) {
         if (isset($_POST['addEquip'])) {
@@ -38,16 +34,11 @@ if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1) {
         }
     }
     /*****************************************************************************************************************************************/
-    if (isset($_POST['startSearchingUser']) && $_POST['UserToSearch']!=null && $_POST['UserToSearch']!=" ") {
+    if (isset($_POST['startSearchingUser']) && $_POST['UserToSearch'] != null && $_POST['UserToSearch'] != " ") {
         $myCatalogueController->searchUser();
     }
 }
 /*****************************************************************************************************************************************/
+
 ?>
 
-</body>
-</html>
-
-
-</body>
-</html>

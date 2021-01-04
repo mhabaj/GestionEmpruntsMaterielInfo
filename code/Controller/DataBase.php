@@ -30,7 +30,8 @@ class DataBase
                 $this->_con = new PDO($dsn, $this->_config['username'], $this->_config['password']);
                 $this->_con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-            } catch (PDOException $e) {
+            } catch (PDOException $e)
+            {
                 die("Erreur connexion bdd : " . $e->getMessage());
             }
         }
