@@ -2,11 +2,10 @@
 
 
 require_once("Model/User.php");
+require_once("Controller/Functions.php");
 
 class UserAdmin extends User
 {
-<<<<<<< HEAD
-=======
     // dans le controller
     public function identification($_matriculeUser, $_password)
     {
@@ -237,7 +236,6 @@ class UserAdmin extends User
     {
         $cpt_array = 0;
         foreach ($this->_borrowList as $borrow):
-            var_dump($borrow);
             if ($borrow->getIdBorrow() == $id_borrow_toDel) {
                 $borrow->stopBorrow();
                 unset($this->_borrowList[$cpt_array]);
@@ -246,20 +244,19 @@ class UserAdmin extends User
             $cpt_array += 1;
         endforeach;
     }
->>>>>>> parent of 730364f... MERGE AVEC ADRIEN ET ALEX
 
 }
-/*
-$admin = new UserAdmin();
-$admin->identification('admin12','admin');
-$admin->endborrow(5);*/
+
+//$admin = new UserAdmin();
+//$admin->identification('admin','12345');
+
 //$admin->loadUser();
 //$admin->createEquipment('AX151','Smartphone','Iphone','9','9.0',6);
 //$admin->createEquipment('XX157','Smartphone','HUWEI','11','15.0',5);
 //$admin->createEquipment('XX283','Smartphone','HUWEI','11','15.0',5);
 //$admin->borrowEquipement('XX157','2021/12/05',1);
 //$admin->borrowEquipement('AX156','2021/07/15',1);
-
+//$admin->borrowEquipement('AX156','2021/11/12',1);
 
 //$admin->updateDeviceCount('XX157',3);
 

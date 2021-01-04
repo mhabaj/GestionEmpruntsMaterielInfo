@@ -25,8 +25,8 @@ $myCatalogueController->getEquipmentList();
 
 <?php
 if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1) {
-    $currentUser = MainDAO::getUser($_SESSION['id_user']);
-
+    $currentUser = new UserAdmin();
+    $currentUser->loadUser();
     require_once "view/adminOverview.view.php";
     if ($currentUser->getPrivilege() == 1) {
         if (isset($_POST['addEquip'])) {
@@ -40,5 +40,10 @@ if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1) {
 }
 /*****************************************************************************************************************************************/
 
+
+echo gettype($_SESSION['User']);
 ?>
 
+
+</body>
+</html>

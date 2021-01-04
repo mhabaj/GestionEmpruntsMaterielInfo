@@ -113,4 +113,8 @@ class CatalogueController
         $myStatement->closeCursor();
     }
 
+
+
+
+
 }

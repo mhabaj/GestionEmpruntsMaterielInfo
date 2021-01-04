@@ -10,7 +10,8 @@ require_once "Controller/EquipmentController.php";
 
 
 if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1) {
-    $currentUser = MainDAO::getUser($_SESSION['id_user']);
+    $currentUser = new UserAdmin();
+    $currentUser->loadUser();
     if ($currentUser->getPrivilege() == 1) {
         try {
             $EquipmentController = new EquipmentController();
@@ -57,10 +58,14 @@ if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1) {
 
                     try {
                         if ($currentUser->getPrivilege() == 1) {
-                            $photo = Functions::uploadImage($type_equip);
+
 
                             $EquipmentController->createNewEquipment($ref_equip, $type_equip, $marque_equip, $nom_equip, $version_equip, $quantite_equip);
 
+                            $photo = Functions::uploadImage($type_equip);
+                            if ($photo != null && $photo != "") {
+                                $currentUser->addImageToEquipment($photo, $ref_equip);
+                            }
                             unset($currentEquipement);
                             unset($EquipmentController);
                             header("Location: DetailEquipement.php?ref_equip=" . $ref_equip);
@@ -71,8 +76,6 @@ if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1) {
 
                     }
 
-                } else {
-                    //header("refresh:0");
                 }
             }
 

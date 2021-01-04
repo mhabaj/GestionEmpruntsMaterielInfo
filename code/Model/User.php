@@ -2,7 +2,6 @@
 
 require_once "Controller/DataBase.php";
 require_once "Model/Borrow.php";
-require_once "Controller/MainDAO.php";
 
 abstract class User
 {
@@ -14,8 +13,6 @@ abstract class User
     protected $_lastName;
     protected $_phone;
     protected $_privilege;
-
-
     protected $_borrowList = array();
 
     /**
@@ -26,22 +23,44 @@ abstract class User
 
     }
 
+
     /**
-     * @param $BorrowItem
+     * @param array $borrowList
      */
     public function addBorrowToList($BorrowItem)
     {
         array_push($this->_borrowList, $BorrowItem);
     }
 
-    public function delBorrowToList($idToDel)
+    /**
+     * @param $ref_equip_toBorrow
+     * @param $dateFin
+     * @param $quantity
+     * @return bool Object, else null
+     * PREC : quantity > 0
+     */
+    public function borrowEquipement($ref_equip_toBorrow, $dateFin, $quantity)
     {
-<<<<<<< HEAD
-        unset($this->_borrowList[$idToDel]);
+        try {
+            $indexOf = 0;
+            while ($indexOf < $quantity) {
+                $newBorrow = new Borrow($ref_equip_toBorrow, $dateFin);
+                $newBorrow->startBorrow();
+                $this->addBorrowToList($newBorrow);
+                $indexOf += 1;
+            }
+            return true;
+        } catch (Exception $e) {
+            throw new Exception("Exception User: couldn't borrow Equipment\n");
+        }
     }
-=======
+
+    /* initalise all user attributes that has id_userToLoad */
+    public function loadingUser($id_userToLoad)
+    {
         $bdd = new DataBase();
         $con = $bdd->getCon();
+
         $query = "SELECT * FROM users WHERE id_user = ? ;";
         $stmt = $con->prepare($query);
         $stmt->execute([$id_userToLoad]);
@@ -59,7 +78,8 @@ abstract class User
 
         $myQuery = "SELECT borrow_info.id_borrow,startdate_borrow,enddate_borrow,isActive, borrow.id_device, device.ref_equip FROM borrow_info
                     INNER JOIN borrow INNER JOIN device ON borrow.id_borrow= borrow_info.id_borrow AND borrow.id_device= device.id_device
-                    WHERE borrow.id_user = '$this->_idUser' and borrow_info.isActive = 1;";
+                    WHERE borrow.id_user = '$this->_idUser' AND borrow_info.isActive=1;";
+
         $myStatement = $con->query($myQuery);
         $result = $myStatement->rowCount();
         $borrowLignes = $myStatement->fetchAll();
@@ -81,7 +101,6 @@ abstract class User
 
     public function loadUser()
     {
-
         $this->_idUser = $_SESSION['id_user'];
 
         $bdd = new DataBase();
@@ -100,7 +119,7 @@ abstract class User
 
         $myQuery = "SELECT borrow_info.id_borrow,startdate_borrow,enddate_borrow,isActive, borrow.id_device, device.ref_equip FROM borrow_info 
                     INNER JOIN borrow INNER JOIN device ON borrow.id_borrow= borrow_info.id_borrow AND borrow.id_device= device.id_device
-                    WHERE borrow.id_user = '$this->_idUser' and borrow_info.isActive = 1;";
+                    WHERE borrow.id_user = '$this->_idUser'AND borrow_info.isActive=1;";
         $myStatement = $con->query($myQuery);
         $result = $myStatement->rowCount();
         $borrowLignes = $myStatement->fetchAll();
@@ -142,10 +161,34 @@ abstract class User
             $this->loadUser();
             $bdd->closeCon();
             return TRUE;
-        } else {
+        }
+        else
+        {
             $bdd->closeCon();
             return FALSE;
         }
+    }
+
+    public function changePassword($newPassword)
+    {
+        $bdd = new DataBase();
+        $con = $bdd->getCon();
+        $con->beginTransaction();
+        $hashedNewPassword= sha1($newPassword);
+
+        try
+        {
+            $requete = "UPDATE USERS SET password_user= ? WHERE id_user = ?;";
+            $stmt = $con->prepare($requete);
+            $stmt->execute([$hashedNewPassword,$this->_idUser]);
+            $con->commit();
+        }
+        catch (Exception $e)
+        {
+            $con->rollback();
+            throw new Exception("Could not update password");
+        }
+
     }
 
     public function disconnect()
@@ -156,7 +199,6 @@ abstract class User
     }
 
 
->>>>>>> parent of 730364f... MERGE AVEC ADRIEN ET ALEX
     /**
      * @return mixed
      */
@@ -284,7 +326,6 @@ abstract class User
     {
         $this->_borrowList = $borrowList;
     }
-
     /**
      * @return mixed
      */
@@ -300,14 +341,7 @@ abstract class User
     {
         $this->_privilege = $privilege;
     }
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-
-=======
->>>>>>> parent of 730364f... MERGE AVEC ADRIEN ET ALEX
-=======
->>>>>>> parent of 730364f... MERGE AVEC ADRIEN ET ALEX
 }
 /*
 $user = new User();

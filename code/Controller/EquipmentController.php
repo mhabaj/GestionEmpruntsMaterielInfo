@@ -5,7 +5,9 @@
  */
 class EquipmentController
 {
+
     private $_equipment;
+
     private $photosArray = array();
 
     /**
@@ -27,10 +29,9 @@ class EquipmentController
         $queryEquipments = "SELECT * FROM equipment WHERE equipment.ref_equip LIKE ?;";
         $myStatement = $con->prepare($queryEquipments);
         $myStatement->execute([$refEquipment]);
-        $donnees = $myStatement->fetch();
 
-        if ($donnees['ref_equip'] != null)
-        {
+        $donnees = $myStatement->fetch();
+        if ($donnees['ref_equip'] != null) {
             $equipment = new Equipment($donnees['ref_equip'], $donnees['type_equip'], $donnees['name_equip'], $donnees['brand_equip'], $donnees['version_equip']);
             $queryPhotos = "SELECT link_photo FROM stock_photo WHERE ref_equip LIKE ?; ";
             $myStatement1 = $con->prepare($queryPhotos);
@@ -61,58 +62,45 @@ class EquipmentController
 
     public function reserveEquipment($dateFinBorrow, $quantite_equip)
     {
-        try
-        {
-            if (Functions::checkReservationDate($dateFinBorrow) && Functions::checkQuantityEquipment($quantite_equip))
-            {
-                $currentUser = MainDAO::getUser($_SESSION['id_user']);
-                if (MainDAO::howMuchAvailable($this->_equipment->getRefEquip()) >= $quantite_equip && $quantite_equip > 0)
-                {
-                    date_default_timezone_set('Europe/Paris');
-                    $currentDateTime = date('Y/m/d');
-                    $start_date = $currentDateTime;
+        try {
+            if (Functions::checkReservationDate($dateFinBorrow) && Functions::checkQuantityEquipment($quantite_equip)) {
+                $currentUser = new UserRegular();
+                $currentUser->loadUser();
+                if ($this->_equipment->howMuchAvailable() >= $quantite_equip && $quantite_equip > 0) {
 
-                    $indexOf = 0;
-                    while ($indexOf < $quantite_equip)
-                    {
-                        $newBorrow = new Borrow($this->_equipment->getRefEquip(), $dateFinBorrow);
-                        MainDAO::startBorrow($this->_equipment->getRefEquip(),$start_date,$dateFinBorrow);
+                    if ($currentUser->borrowEquipement($this->_equipment->getRefEquip(), $dateFinBorrow, $quantite_equip)) {
+                        echo "<p> Reservation effectuée </p>";
+                        header("Refresh:1");
 
-                        $currentUser->addBorrowToList($newBorrow);
-                        $indexOf += 1;
+
                     }
-                    echo "<p> Reservation effectuée </p>";
-                    header("Refresh:1");
-                    return true;
-                }
-                else
-                {
+                } else {
                     echo "<p> Quantité demandée indisponible ou invalide </p>";
-                    return false;
                 }
             }
-        }
-        catch (Exception $e)
-        {
+        } catch (Exception $e) {
             echo $e->getMessage();
-            return false;
+
         }
     }
 
-    public function modifyEquipment($ref_equip, $type_equip, $nom_equip, $marque_equip, $version_equip, $quantite_equip)
+    public function modifyEquipment($ref_equip, $type_equip, $nom_equip, $marque_equip, $version_equip, $quantite_equip, $currentUser)
     {
 
         try {
             if (Functions::checkRefEquip($ref_equip) && $this->isRefEquipUsed($ref_equip) == false && Functions::checkNameMateriel($nom_equip)
                 && Functions::checkBrandEquip($marque_equip) && Functions::checkTypeEquip($type_equip)
                 && Functions::checkVersionMateriel($version_equip) && Functions::checkQuantityEquipment($quantite_equip)) {
+                $currentUser = new UserAdmin();
+                $currentUser->loadUser();
+                if ($this->_equipment->howMuchAvailable() != $quantite_equip) {
 
-                if (MainDAO::howMuchAvailable($this->_equipment->getRefEquip()) != $quantite_equip) {
-
-                    MainDAO::updateDeviceCount($this->_equipment->getRefEquip(), $quantite_equip);
+                    $currentUser->updateDeviceCount($this->_equipment->getRefEquip(), $quantite_equip);
                 }
 
-                MainDAO::modifyEquipment($this->_equipment->getRefEquip(), $ref_equip, $type_equip, $marque_equip, $nom_equip, $version_equip);
+                $currentUser->modifyEquipment($this->_equipment->getRefEquip(), $ref_equip, $type_equip, $marque_equip, $nom_equip, $version_equip);
+
+
             }
         } catch (Exception | PDOException $e) {
             throw new Exception($e->getMessage());
@@ -127,8 +115,9 @@ class EquipmentController
             if (Functions::checkRefEquip($ref_equip) && $this->isNewRefEquipUsed($ref_equip) == false && Functions::checkNameMateriel($nom_equip)
                 && Functions::checkBrandEquip($marque_equip) && Functions::checkTypeEquip($type_equip)
                 && Functions::checkVersionMateriel($version_equip) && Functions::checkQuantityEquipment($quantite_equip)) {
-
-                MainDAO::createEquipment($ref_equip, $type_equip, $marque_equip, $nom_equip, $version_equip, $quantite_equip);
+                $currentUser = new UserAdmin();
+                $currentUser->loadUser();
+                $currentUser->createEquipment($ref_equip, $type_equip, $marque_equip, $nom_equip, $version_equip, $quantite_equip);
             }
         } catch (Exception | PDOException $e) {
             throw new Exception($e->getMessage());
@@ -151,12 +140,12 @@ class EquipmentController
 
             if ($result['somme'] >= 1) {
                 throw new Exception("Ref equipment is already used");
-            } else
-            {
+            } else {
                 return false;
             }
 
         }
+
         return false;
     }
 
@@ -173,6 +162,8 @@ class EquipmentController
         if ($result['somme'] >= 1) {
             throw new Exception("Ref equipment is already used");
         }
+
+
         return false;
     }
 

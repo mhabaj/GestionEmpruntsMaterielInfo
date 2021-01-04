@@ -14,47 +14,25 @@ class UserController
     {
         try
         {
-            $currentUser = MainDAO::getUser($id_userDisplay);
+            $currentUser = new UserRegular();
+            $currentUser->loadingUser($id_userDisplay);
             $this->_user = $currentUser;
-
             if($this->_user->getIdUser() == null)
             {
                 throw new Exception('Mauvais ID Utilisateur');
             }
         }
-        catch (Exception $e)
+        catch (PDOException $e)
         {
             throw new Exception("Error!: " . $e->getMessage());
         }
     }
 
-    public function returnBorrow($id_userDisplay,$id_borrow_toDel,$id_device_toDel)
+    public function returnBorrow($id_userDisplay,$idBorrow)
     {
-        try
-        {
-            $userToDisplay = MainDAO::getUser($id_userDisplay);
-
-            date_default_timezone_set('Europe/Paris');
-            $currentDateTime = date('Y/m/d');
-            $end_date = $currentDateTime;
-
-            $cpt_array = 0;
-            foreach ($userToDisplay->getBorrowList() as $borrow):
-                if ($borrow->getIdBorrow() == $id_borrow_toDel)
-                {
-                    MainDAO::stopBorrow($id_borrow_toDel,$id_device_toDel,$end_date);
-                    $userToDisplay->delBorrowToList($cpt_array);
-                    break;
-                }
-                $cpt_array += 1;
-            endforeach;
-            return true;
-        }
-        catch (Exception $e)
-        {
-            echo $e->getMessage();
-            return false;
-        }
+        $currentUserAdmin = new UserAdmin();
+        $currentUserAdmin->loadingUser($id_userDisplay);
+        $currentUserAdmin->endborrow($idBorrow);
     }
 
     public function modifyPassword($password,$passwordRepeat)
@@ -63,7 +41,10 @@ class UserController
         {
             if ($password == $passwordRepeat)
             {
-                MainDAO::changePassword(($_GET['id_user_toDisplay']),$password);
+                $currentUser = new UserRegular();
+                $currentUser->loadingUser($_GET['id_user_toDisplay']);
+                $currentUser->changePassword($password);
+                header('Location: DetailUser.php?id_user_toDisplay='.$currentUser->getIdUser());
                 return true;
             }
             else
@@ -74,7 +55,6 @@ class UserController
         catch(Exception $e)
         {
             echo $e->getMessage();
-            return false;
         }
     }
 
@@ -90,7 +70,9 @@ class UserController
                 else
                     $isAdmin = 0;
 
-                MainDAO::modifyAnyProfile($id, $matricule, $email, $name, $lastname, $phone, $isAdmin);
+                $currentUserAdmin = new UserAdmin();
+                $currentUserAdmin->loadUser();
+                $currentUserAdmin->modifyAnyProfile($id, $matricule, $email, $name, $lastname, $phone, $isAdmin);
                 return true;
             }
             else
@@ -98,7 +80,8 @@ class UserController
         }
         catch (Exception $e)
         {
-            throw new Exception($e->getMessage());
+            echo $e->getMessage();
+            return false;
         }
     }
 
@@ -108,8 +91,7 @@ class UserController
      */
     public function getHistory($id_user_toDisplay)
     {
-        try
-        {
+        try{
             $bdd = new DataBase();
             $con = $bdd->getCon();
             $queryUser="SELECT * FROM borrow_info INNER JOIN borrow ON borrow_info.id_borrow=borrow.id_borrow WHERE borrow.id_user=? AND borrow_info.isActive=0";
@@ -121,7 +103,6 @@ class UserController
         catch(Exception $e)
         {
             echo $e->getMessage();
-            return null;
         }
     }
 
