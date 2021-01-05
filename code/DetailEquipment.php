@@ -1,24 +1,47 @@
 <?php
-    require "Model/Equipment.php";
+require_once("Controller/control-session.php");
 
-    $bdd = new DataBase();
-    $con = $bdd->getCon();
+require_once("Model/Equipment.php");
+require_once("Controller/EquipmentController.php");
+require_once "Controller/Functions.php";
 
-    $queryEquipments = "SELECT * FROM equipment WHERE ref_equip LIKE ?;";
-    $myStatement = $con->prepare($queryEquipments);
-    $myStatement->execute([$_GET['ref_equip']]);
 
-    $donnees = $myStatement->fetch();
+if (isset($_GET['ref_equip']) && $_GET['ref_equip'] != null) {
 
-    $equip = new Equipment($donnees['ref_equip'], $donnees['type_equip'], $donnees['name_equip'], $donnees['brand_equip'], $donnees['version_equip']);
+    try {
+        $EquipmentController = new EquipmentController();
+        $EquipmentController->initEquipmentController($_GET['ref_equip']);
+        $currentEquipement = $EquipmentController->getEquipment();
+        ?>
 
-    $bdd->closeCon();
-?>
+        <?php
+        //INCLUDE VIEW:
 
-<html>
-    <body>
-        <img src="donnée moi de la moulaga" alt="<?php echo $equip->getRefEquip()?>" width="200" height="200">
+        include_once("view/detailEquipment.view.php");
 
-        <p><?php echo $equip->getNameEquip()?></p>
-    </body>
-</html>
+
+        ?>
+
+
+        <?php
+        if (isset($_POST['reserveEquipment']) && isset($_POST['dateRes']) && isset($_POST['quantiteNumber']) && isset($EquipmentController) && $EquipmentController != null) {
+
+            $dateFinBorrow = $_POST['dateRes'];
+            $quantite_equip = $_POST['quantiteNumber'];
+
+            $EquipmentController->reserveEquipment($dateFinBorrow, $quantite_equip);
+
+        }
+
+    } catch (Exception $e) {
+        header("refresh:3;url=DashBoard.php");
+        echo $e->getMessage();
+        echo "<p> Redirection dans 3 secondes.. </p>";
+
+
+    }
+} else {
+    header('Location: DashBoard.php');
+
+}
+

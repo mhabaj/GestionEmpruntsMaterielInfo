@@ -1,6 +1,7 @@
 <?php
 
-include "../Controller/DataBase.php";
+require_once "Controller/DataBase.php";
+require_once "Model/Borrow.php";
 
 class User
 {
@@ -8,9 +9,32 @@ class User
     protected $_matriculeUser;
     protected $_email;
     protected $_password;
-    protected $_name;
+    protected $_firstName;
     protected $_lastName;
     protected $_phone;
+    protected $_borrowList = array();
+
+    /**
+     * User constructor.
+     */
+    public function __construct($id, $email, $matricule, $password, $firstName, $lastName, $phone)
+    {
+        $this->setIdUser($id);
+        $this->setEmail($email);
+        $this->setMatriculeUser($matricule);
+        $this->setPassword($password);
+        $this->setFirstName($firstName);
+        $this->setLastName($lastName);
+        $this->setPhone($phone);
+    }
+
+    /**
+     * @param array $borrowList
+     */
+    public function addBorrowToList($BorrowItem)
+    {
+        array_push($this->_borrowList, $BorrowItem);
+    }
 
     /**
      * @return mixed
@@ -63,17 +87,17 @@ class User
     /**
      * @return mixed
      */
-    public function getName()
+    public function getFirstName()
     {
-        return $this->_name;
+        return $this->_firstName;
     }
 
     /**
      * @param mixed $name
      */
-    public function setName($name)
+    public function setFirstName($name)
     {
-        $this->_name = $name;
+        $this->_firstName = $name;
     }
 
     /**
@@ -124,81 +148,20 @@ class User
         $this->_idUser = $idUser;
     }
 
-    public function __construct(){
-        //$id = connect();
-        $this->setIdUser(1);
-
-        $bdd = new DataBase();
-        $con = $bdd->getCon();
-        $query = "SELECT * FROM users WHERE id_user = ?";
-        $stmt = $con->prepare($query);
-        $stmt->execute([$this->_idUser]);
-        $result = $stmt->fetch();
-
-        $this->setEmail($result['email_user']);
-        $this->setMatriculeUser($result['matricule_user']);
-        $this->setPassword($result['password_user']);
-        $this->setName($result['name_user']);
-        $this->setLastName($result['lastname_user']);
-        $this->setPhone($result['phone_user']);
+    /**
+     * @return mixed
+     */
+    public function getBorrowList()
+    {
+        return $this->_borrowList;
     }
 
-    public function connect() {
-
-        $bdd = new DataBase();
-        $con = $bdd->getCon();
-
-        //Hashage du mdp
-        $hash_mdp = sha1($this->_password);
-
-        //Inserer valeurs
-        $requete = "SELECT * FROM users WHERE matricule_user = ? AND password_user= ?";
-        $stmt = $con->prepare($requete);
-        $stmt->execute([$this->_matriculeUser, $hash_mdp]);
-        $result = $stmt->rowCount();
-
-        if($result == 1) {
-            session_start();
-            $infoUser = $stmt->fetch();
-            $_SESSION['id_user'] = $infoUser['id_user'];
-            $this->_idUser = $infoUser;
-            return TRUE;
-            //redirect('training.php'); A METTRE DANS LE CONTROLLER
-        } else {
-            return FALSE;
-        }
-    }
-    public function disconnect() {
-        session_unset();
-        session_destroy();
-        return TRUE;
+    /**
+     * @param mixed $borrowList
+     */
+    public function setBorrowList($borrowList)
+    {
+        $this->_borrowList = $borrowList;
     }
 
-    public function update(){
-        $bdd = new DataBase();
-        $con = $bdd->getCon();
-        $query = "UPDATE users SET email_user = ?, matricule_user = ?, password_user = ?, name_user = ?, lastname_user = ?, phone_user = ?";
-        try {
-            $con->beginTransaction();
-            $stmt = $con->prepare($query);
-            $stmt->execute([$this->getEmail(), $this->getMatriculeUser(), $this->getPassword(), $this->getName(), $this->getLastName(), $this->getPhone()]);
-            $con->commit();
-        } catch(PDOExecption $e) {
-            $con->rollback();
-            print "Error!: " . $e->getMessage() . "</br>";
-        }
-    }
 }
-
-$user = new User();
-
-echo $user->getName() ." ";
-echo $user->getLastName() ." ";
-echo $user->getEmail() ."</br>";
-
-$user->setName("tom");
-$user->update();
-
-echo $user->getName() ." ";
-echo $user->getLastName() ." ";
-echo $user->getEmail();

@@ -11,13 +11,13 @@ class DataBase
         'username' => 'root',
         'password' => ''
     );
-
+    // test
     public function __construct()
     {
         $this->connect();
     }
 
-    public function __destruct()
+    public function closeCon()
     {
         $this->_con = null;
     }
@@ -42,6 +42,15 @@ class DataBase
     }
 }
 
+//$bdd = new DataBase();
+//$con = $bdd->getCon();
+
+/*$requete = "SELECT * FROM role";
+$reponse = $con->query($requete);
+$donne = $reponse->fetch();
+$nomRole = $donne['nom_role'];
+echo "<p> nome role est $nomRole</p>";
+*/
 
 
 
