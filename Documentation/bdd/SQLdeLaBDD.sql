@@ -1,92 +1,152 @@
-#------------------------------------------------------------
-#        Script MySQL.
-#------------------------------------------------------------
+-- phpMyAdmin SQL Dump
+-- version 5.0.2
+-- https://www.phpmyadmin.net/
+--
+-- Hôte : 127.0.0.1:3306
+-- Généré le : mar. 05 jan. 2021 à 21:32
+-- Version du serveur :  8.0.21
+-- Version de PHP : 7.3.21
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
 
 
-#------------------------------------------------------------
-# Table: users
-#------------------------------------------------------------
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
 
-CREATE TABLE users(
-        id_user        Int  Auto_increment  NOT NULL ,
-        matricule_user Varchar (50) NOT NULL ,
-        email_user     Varchar (50) NOT NULL ,
-        password_user  Varchar (50) NOT NULL ,
-        name_user      Varchar (30) NOT NULL ,
-        lastname_user  Varchar (30) NOT NULL ,
-        phone_user     Int ,
-        isAdmin_user   Bool NOT NULL
-	,CONSTRAINT users_PK PRIMARY KEY (id_user)
-)ENGINE=InnoDB;
+--
+-- Base de données : `bddprojet`
+--
 
+-- --------------------------------------------------------
 
-#------------------------------------------------------------
-# Table: equipment
-#------------------------------------------------------------
+--
+-- Structure de la table `borrow`
+--
 
-CREATE TABLE equipment(
-        ref_equip         Varchar (5) NOT NULL ,
-        type_equip        Varchar (30) NOT NULL ,
-        brand_equip       Varchar (30) NOT NULL ,
-        name_equip        Varchar (30) NOT NULL ,
-        version_equip     Varchar (15) NOT NULL ,
-        description_equip Varchar (50)
-	,CONSTRAINT equipment_PK PRIMARY KEY (ref_equip)
-)ENGINE=InnoDB;
+DROP TABLE IF EXISTS `borrow`;
+CREATE TABLE IF NOT EXISTS `borrow` (
+  `id_user` int NOT NULL,
+  `id_device` int NOT NULL,
+  `id_borrow` int NOT NULL,
+  PRIMARY KEY (`id_user`,`id_device`,`id_borrow`),
+  KEY `borrow_device0_FK` (`id_device`),
+  KEY `borrow_borrow_info1_FK` (`id_borrow`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
-#------------------------------------------------------------
-# Table: device
-#------------------------------------------------------------
 
-CREATE TABLE device(
-        id_device   Int  Auto_increment  NOT NULL ,
-        isAvailable Bool NOT NULL ,
-        ref_equip   Varchar (5) NOT NULL
-	,CONSTRAINT device_PK PRIMARY KEY (id_device)
+-- --------------------------------------------------------
 
-	,CONSTRAINT device_equipment_FK FOREIGN KEY (ref_equip) REFERENCES equipment(ref_equip)
-)ENGINE=InnoDB;
+--
+-- Structure de la table `borrow_info`
+--
 
-
-#------------------------------------------------------------
-# Table: stock_photo
-#------------------------------------------------------------
-
-CREATE TABLE stock_photo(
-        link_photo Varchar (50) NOT NULL ,
-        ref_equip  Varchar (5) NOT NULL
-	,CONSTRAINT stock_photo_PK PRIMARY KEY (link_photo)
-
-	,CONSTRAINT stock_photo_equipment_FK FOREIGN KEY (ref_equip) REFERENCES equipment(ref_equip)
-)ENGINE=InnoDB;
+DROP TABLE IF EXISTS `borrow_info`;
+CREATE TABLE IF NOT EXISTS `borrow_info` (
+  `id_borrow` int NOT NULL AUTO_INCREMENT,
+  `startdate_borrow` date NOT NULL,
+  `enddate_borrow` date NOT NULL,
+  `isActive` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id_borrow`)
+) ENGINE=InnoDB AUTO_INCREMENT=91 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
-#------------------------------------------------------------
-# Table: borrow_info
-#------------------------------------------------------------
+-- --------------------------------------------------------
 
-CREATE TABLE borrow_info(
-        id_borrow        Int  Auto_increment  NOT NULL ,
-        startdate_borrow Date NOT NULL ,
-        enddate_borrow   Date NOT NULL ,
-        isActive         Bool NOT NULL
-	,CONSTRAINT borrow_info_PK PRIMARY KEY (id_borrow)
-)ENGINE=InnoDB;
+--
+-- Structure de la table `device`
+--
+
+DROP TABLE IF EXISTS `device`;
+CREATE TABLE IF NOT EXISTS `device` (
+  `id_device` int NOT NULL AUTO_INCREMENT,
+  `isAvailable` tinyint(1) NOT NULL,
+  `ref_equip` varchar(5) NOT NULL,
+  PRIMARY KEY (`id_device`),
+  KEY `device_equipment_FK` (`ref_equip`)
+) ENGINE=InnoDB AUTO_INCREMENT=815 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
-#------------------------------------------------------------
-# Table: borrow
-#------------------------------------------------------------
 
-CREATE TABLE borrow(
-        id_user   Int NOT NULL ,
-        id_device Int NOT NULL ,
-        id_borrow Int NOT NULL
-	,CONSTRAINT borrow_PK PRIMARY KEY (id_user,id_device,id_borrow)
+-- --------------------------------------------------------
 
-	,CONSTRAINT borrow_users_FK FOREIGN KEY (id_user) REFERENCES users(id_user)
-	,CONSTRAINT borrow_device0_FK FOREIGN KEY (id_device) REFERENCES device(id_device)
-	,CONSTRAINT borrow_borrow_info1_FK FOREIGN KEY (id_borrow) REFERENCES borrow_info(id_borrow)
-)ENGINE=InnoDB;
+--
+-- Structure de la table `equipment`
+--
 
+DROP TABLE IF EXISTS `equipment`;
+CREATE TABLE IF NOT EXISTS `equipment` (
+  `ref_equip` varchar(5) NOT NULL,
+  `type_equip` varchar(30) NOT NULL,
+  `brand_equip` varchar(30) NOT NULL,
+  `name_equip` varchar(30) NOT NULL,
+  `version_equip` varchar(15) NOT NULL,
+  PRIMARY KEY (`ref_equip`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `stock_photo`
+--
+
+DROP TABLE IF EXISTS `stock_photo`;
+CREATE TABLE IF NOT EXISTS `stock_photo` (
+  `link_photo` varchar(700) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `ref_equip` varchar(5) NOT NULL,
+  PRIMARY KEY (`link_photo`),
+  KEY `stock_photo_equipment_FK` (`ref_equip`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `users`
+--
+
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE IF NOT EXISTS `users` (
+  `id_user` int NOT NULL AUTO_INCREMENT,
+  `matricule_user` varchar(50) NOT NULL,
+  `email_user` varchar(50) NOT NULL,
+  `password_user` varchar(50) NOT NULL,
+  `name_user` varchar(30) NOT NULL,
+  `lastname_user` varchar(30) NOT NULL,
+  `phone_user` varchar(13) DEFAULT NULL,
+  `isAdmin_user` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id_user`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+
+--
+-- Contraintes pour la table `borrow`
+--
+ALTER TABLE `borrow`
+  ADD CONSTRAINT `borrow_borrow_info1_FK` FOREIGN KEY (`id_borrow`) REFERENCES `borrow_info` (`id_borrow`),
+  ADD CONSTRAINT `borrow_device0_FK` FOREIGN KEY (`id_device`) REFERENCES `device` (`id_device`),
+  ADD CONSTRAINT `borrow_users_FK` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`);
+
+--
+-- Contraintes pour la table `device`
+--
+ALTER TABLE `device`
+  ADD CONSTRAINT `device_equipment_FK` FOREIGN KEY (`ref_equip`) REFERENCES `equipment` (`ref_equip`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `stock_photo`
+--
+ALTER TABLE `stock_photo`
+  ADD CONSTRAINT `stock_photo_equipment_FK` FOREIGN KEY (`ref_equip`) REFERENCES `equipment` (`ref_equip`) ON DELETE RESTRICT ON UPDATE CASCADE;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
