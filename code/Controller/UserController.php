@@ -17,12 +17,17 @@ class UserController
         return TRUE;
     }
 
-    public function startBorrow($idEquipment)
+    public function endborrow($id_borrow_toDel)
     {
-    }
-
-    public function endBorrow($idEquipment)
-    {
+        $cpt_array = 0;
+        foreach ($this->_user->getBorrowList() as $borrow):
+            if ($borrow->getIdBorrow() == $id_borrow_toDel) {
+                BorrowDAO::stopBorrow($borrow->getIdBorrow(), $borrow->getDeviceId());
+                unset($this->_user->getBorrowList()[$cpt_array]);
+                break;
+            }
+            $cpt_array += 1;
+        endforeach;
     }
 
     /**

@@ -5,36 +5,36 @@
 
     <label><b>Référence</b></label>
     <input type="text" placeholder="Référence matériel" name="ref"
-           value="<?php if (isset($EquipmentController) && $EquipmentController != null && isset($currentEquipement) && $currentEquipement != null)
-               echo $currentEquipement->getRefEquip(); ?>"
+           value="<?php if (isset($EquipmentController) && $EquipmentController != null && isset($currentEquipment) && $currentEquipment != null)
+               echo $currentEquipment->getRefEquip(); ?>"
            required>
 
     <br/><label><b>Type</b></label>
     <input type="text" placeholder="Type matériel" name="type"
-           value="<?php if (isset($EquipmentController) && $EquipmentController != null && isset($currentEquipement) && $currentEquipement != null)
-               echo $currentEquipement->getTypeEquip(); ?>"
+           value="<?php if (isset($EquipmentController) && $EquipmentController != null && isset($currentEquipment) && $currentEquipment != null)
+               echo $currentEquipment->getTypeEquip(); ?>"
            required>
 
     <br/><label><b>Marque</b></label>
     <input type="text" placeholder="Marque matériel" name="brand"
-           value="<?php if (isset($EquipmentController) && $EquipmentController != null && isset($currentEquipement) && $currentEquipement != null)
-               echo $currentEquipement->getBrandEquip(); ?>"
+           value="<?php if (isset($EquipmentController) && $EquipmentController != null && isset($currentEquipment) && $currentEquipment != null)
+               echo $currentEquipment->getBrandEquip(); ?>"
            required>
 
     <br/><label><b>Nom</b></label>
     <input type="text" placeholder="Nom matériel" name="name"
-           value="<?php if (isset($EquipmentController) && $EquipmentController != null && isset($currentEquipement) && $currentEquipement != null)
-               echo $currentEquipement->getNameEquip(); ?>"
+           value="<?php if (isset($EquipmentController) && $EquipmentController != null && isset($currentEquipment) && $currentEquipment != null)
+               echo $currentEquipment->getNameEquip(); ?>"
            required>
 
     <br/><label><b>Version</b></label>
     <input type="text" placeholder="Version matériel" name="version"
-           value="<?php if (isset($EquipmentController) && $EquipmentController != null && isset($currentEquipement) && $currentEquipement != null)
-               echo $currentEquipement->getVersionEquip(); ?>" required>
+           value="<?php if (isset($EquipmentController) && $EquipmentController != null && isset($currentEquipment) && $currentEquipment != null)
+               echo $currentEquipment->getVersionEquip(); ?>" required>
 
     <br/><label><b>Quantité</b></label>
     <input type="number" placeholder="Quantité matériel" name="quantity"
-           value="<?php if (isset($EquipmentController) && $EquipmentController != null && isset($currentEquipement) && $currentEquipement != null)
+           value="<?php if (isset($EquipmentController) && $EquipmentController != null && isset($currentEquipment) && $currentEquipment != null)
                if (isset($quantity) && $quantity != null) echo $quantity; ?>" required>
 
 
