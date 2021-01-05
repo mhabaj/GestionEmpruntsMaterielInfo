@@ -9,9 +9,9 @@ require_once "Controller/Functions.php";
 if (isset($_GET['ref_equip']) && $_GET['ref_equip'] != null) {
 
     try {
-        $EquipmentController = new EquipmentController();
-        $EquipmentController->initEquipmentController($_GET['ref_equip']);
-        $currentEquipement = $EquipmentController->getEquipment();
+        $equipmentController = new EquipmentController();
+        $equipmentController->loadEquipmentFromDDB($_GET['ref_equip']);
+        $currentEquipment = $equipmentController->getEquipment();
         ?>
 
         <?php
@@ -24,12 +24,14 @@ if (isset($_GET['ref_equip']) && $_GET['ref_equip'] != null) {
 
 
         <?php
-        if (isset($_POST['reserveEquipment']) && isset($_POST['dateRes']) && isset($_POST['quantiteNumber']) && isset($EquipmentController) && $EquipmentController != null) {
+        if (isset($_POST['reserveEquipment']) && isset($_POST['dateRes']) && isset($_POST['quantiteNumber']) && isset($equipmentController) && $equipmentController != null) {
 
             $dateFinBorrow = $_POST['dateRes'];
             $quantite_equip = $_POST['quantiteNumber'];
 
-            $EquipmentController->reserveEquipment($dateFinBorrow, $quantite_equip);
+            $userController = new UserController(['id_user']);
+
+            $userController->startBorrow($currentEquipment->getRefEquip(), $dateFinBorrow, $quantite_equip);
 
         }
 

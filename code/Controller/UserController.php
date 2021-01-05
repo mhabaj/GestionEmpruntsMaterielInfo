@@ -17,6 +17,28 @@ class UserController
         return TRUE;
     }
 
+    /**
+     * @param $ref_equip_toBorrow
+     * @param $dateFin
+     * @param $quantity
+     * @return bool Object, else null
+     * PREC : quantity > 0
+     */
+    public function startBorrow($ref_equip_toBorrow, $dateFin, $quantity)
+    {
+        try {
+            $indexOf = 0;
+            while ($indexOf < $quantity) {
+                $newBorrow = BorrowDAO::startBorrow($ref_equip_toBorrow, $dateFin);
+                $this->_user->addBorrowToList($newBorrow);
+                $indexOf += 1;
+            }
+            return true;
+        } catch (Exception $e) {
+            throw new Exception("Exception User: couldn't borrow Equipment\n");
+        }
+    }
+
     public function endborrow($id_borrow_toDel)
     {
         $cpt_array = 0;
@@ -67,8 +89,7 @@ class UserController
                 else
                     $isAdmin = 0;
 
-                $UserAdmin = new UserAdmin();
-                $UserAdmin->createUser($matricule,$email,$password,$name,$lastname,$phone,$isAdmin);
+                UserDAO::createUser($matricule,$email,$password,$name,$lastname,$phone,$isAdmin);
                 return true;
             }
             else

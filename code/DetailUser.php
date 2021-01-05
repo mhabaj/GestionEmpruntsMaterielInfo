@@ -26,7 +26,7 @@ if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1 && isset(
         <?php
         if(isset($_POST['endBorrow']) && $_SESSION['isAdmin_user'] == 1 && isset($_POST['idBorrow']) && is_numeric($_POST['idBorrow']))
         {
-            $userController->endBorrow($_SESSION['id_user'],$_POST['idBorrow']);
+            $userController->endBorrow($_POST['idBorrow']);
             header("Refresh:0");
         }
     }

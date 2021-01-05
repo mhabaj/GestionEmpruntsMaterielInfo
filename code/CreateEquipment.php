@@ -53,7 +53,7 @@ if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1) {
 
                     $photo = Functions::uploadImage($currentEquipment->getTypeEquip());
                     if ($photo != null && $photo != "") {
-                        $currentUser->addImageToEquipment($photo, $currentEquipment->getTypeEquip());
+                        EquipmentDAO::addImageToEquipment($photo, $tempRef);
                     }
                     unset($currentEquipment);
                     unset($equipmentController);

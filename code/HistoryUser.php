@@ -10,7 +10,7 @@ if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1  && isset
     $userController = new UserController($_GET['id_user_toDisplay']);
     try
     {
-        $finalStatement=$userController->getHistory($_GET['id_user_toDisplay']);
+        $finalStatement = $userController->getHistory($_GET['id_user_toDisplay']);
     }
     catch (Exception $e)
     {

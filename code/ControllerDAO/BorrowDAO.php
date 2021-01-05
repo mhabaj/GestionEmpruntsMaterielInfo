@@ -11,7 +11,7 @@ class BorrowDAO
      * @param $endDate
      * @return bool
      */
-    public static function startBorrow($refEquip, $endDate): bool
+    public static function startBorrow($refEquip, $endDate): Borrow
     {
         try {
 
@@ -44,7 +44,7 @@ class BorrowDAO
 
 
             $con->commit();
-            return TRUE;
+            return new Borrow($refEquip, $endDate);
         } catch (PDOException $e) {
             $con->rollback();
             throw new PDOException($e->getMessage());
