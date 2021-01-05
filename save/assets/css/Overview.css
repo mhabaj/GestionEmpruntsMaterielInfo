@@ -1,0 +1,35 @@
+#btnDetails{
+    position: relative;
+    top: 5vw; left: 70vw;
+}
+
+#btnAddEquipment{
+    position: relative;
+    left: 45vw;
+    top : 1vw;
+}
+
+#CatalogueHeader{
+    padding: 40px;
+    text-align: center;
+    background: #32485C;
+    color: white;
+    font-size: 30px;
+}
+
+#searchEquipmentForm{
+    text-align: center;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+h3{
+    font-family:"Open sans", Helvetica, Arial;
+    font-size: 30px;
+    font-weight: bold;
+    margin-top: 10vw;
+    text-align: center;
+    text-shadow: 1px 1px 2px pink;
+}
+
+#searchUserRow{
+    text-align: center;
+}

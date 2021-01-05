@@ -46,7 +46,7 @@ class CatalogueController
 
                 while($donnees = $myStatement->fetch())
                 { ?>
-                    <a href="Catalogue.php?type=<?php echo $donnees['type_equip']?>">
+                    <a href="DashBoard.php?type=<?php echo $donnees['type_equip']?>">
                         <div>
                             <strong> Type </strong> : <?php echo $donnees['type_equip'];?> <br/>
                         </div>

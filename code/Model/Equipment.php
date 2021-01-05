@@ -1,6 +1,5 @@
 <?php
 
-require_once("Controller/Database.php");
 
 class Equipment
 {
@@ -29,35 +28,11 @@ class Equipment
         $this->_version_equip = $_version_equip;
     }
 
-    public function howMuchAvailable()
-    {
-        $bdd = new DataBase();
-        $con = $bdd->getCon();
-        $query = "select count(*) as 'somme' from device INNER JOIN equipment on device.ref_equip Like equipment.ref_equip where device.ref_equip like ? and isAvailable = 1; ";
-        $stmt = $con->prepare($query);
-        $stmt->execute([$this->_ref_equip]);
-        $result = $stmt->fetch();
-        $bdd->closeCon();
-        return $result['somme'];
-    }
-
-    public function howMuchTotal()
-    {
-        $bdd = new DataBase();
-        $con = $bdd->getCon();
-        $query = "select count(*) as 'somme' from device INNER JOIN equipment on device.ref_equip Like equipment.ref_equip where device.ref_equip like ? ; ";
-        $stmt = $con->prepare($query);
-        $stmt->execute([$this->_ref_equip]);
-        $result = $stmt->fetch();
-        $bdd->closeCon();
-        return $result['somme'];
-    }
-
 
     /**
      * @return String RefEquip
      */
-    public function getRefEquip()
+    public function getRefEquip(): string
     {
         return $this->_ref_equip;
     }
@@ -110,24 +85,6 @@ class Equipment
         return $this->_name_equip;
     }
 
-    public function isRefEquipValid(): bool
-    {
-        if (strlen($this->_ref_equip)) {
-            $bdd = new DataBase();
-            $con = $bdd->getCon();
-            $query = ("select count(*) as 'somme' from equipment where ref_equip like ? ;");
-            $stmt = $con->prepare($query);
-            $stmt->execute([$this->_ref_equip]);
-            $result = $stmt->fetch();
-            $bdd->closeCon();
-            if ($result['somme'] > 0) {
-                return true;
-            }
-
-        }
-        return false;
-    }
-
 
     /**
      * @param $name_equip
@@ -170,14 +127,3 @@ class Equipment
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
