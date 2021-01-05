@@ -1,6 +1,5 @@
 <?php
 
-require_once("Controller/Database.php");
 
 class Equipment
 {
@@ -30,11 +29,10 @@ class Equipment
     }
 
 
-
     /**
      * @return String RefEquip
      */
-    public function getRefEquip()
+    public function getRefEquip(): string
     {
         return $this->_ref_equip;
     }
@@ -88,7 +86,6 @@ class Equipment
     }
 
 
-
     /**
      * @param $name_equip
      */
@@ -130,14 +127,3 @@ class Equipment
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-

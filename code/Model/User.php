@@ -2,40 +2,40 @@
 
 require_once "Controller/DataBase.php";
 require_once "Model/Borrow.php";
-require_once "Controller/MainDAO.php";
 
-abstract class User
+class User
 {
     protected $_idUser;
     protected $_matriculeUser;
     protected $_email;
     protected $_password;
-    protected $_name;
+    protected $_firstName;
     protected $_lastName;
     protected $_phone;
-    protected $_privilege;
     protected $_borrowList = array();
 
     /**
      * User constructor.
      */
-    public function __construct()
+    public function __construct($id, $email, $matricule, $password, $firstName, $lastName, $phone)
     {
-
+        $this->setIdUser($id);
+        $this->setEmail($email);
+        $this->setMatriculeUser($matricule);
+        $this->setPassword($password);
+        $this->setFirstName($firstName);
+        $this->setLastName($lastName);
+        $this->setPhone($phone);
     }
 
     /**
-     * @param $BorrowItem
+     * @param array $borrowList
      */
     public function addBorrowToList($BorrowItem)
     {
         array_push($this->_borrowList, $BorrowItem);
     }
 
-    public function delBorrowToList($idToDel)
-    {
-        unset($this->_borrowList[$idToDel]);
-    }
     /**
      * @return mixed
      */
@@ -87,17 +87,17 @@ abstract class User
     /**
      * @return mixed
      */
-    public function getName()
+    public function getFirstName()
     {
-        return $this->_name;
+        return $this->_firstName;
     }
 
     /**
      * @param mixed $name
      */
-    public function setName($name)
+    public function setFirstName($name)
     {
-        $this->_name = $name;
+        $this->_firstName = $name;
     }
 
     /**
@@ -163,35 +163,5 @@ abstract class User
     {
         $this->_borrowList = $borrowList;
     }
-    /**
-     * @return mixed
-     */
-    public function getPrivilege()
-    {
-        return $this->_privilege;
-    }
-
-    /**
-     * @param mixed $privilege
-     */
-    public function setPrivilege($privilege): void
-    {
-        $this->_privilege = $privilege;
-    }
-
 
 }
-/*
-$user = new User();
-
-echo $user->getName() ." ";
-echo $user->getLastName() ." ";
-echo $user->getEmail() ."</br>";
-
-$user->setName("tom");
-$user->update();
-
-echo $user->getName() ." ";
-echo $user->getLastName() ." ";
-echo $user->getEmail();
-*/

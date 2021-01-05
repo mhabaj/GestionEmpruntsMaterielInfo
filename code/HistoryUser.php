@@ -1,13 +1,16 @@
 <?php
 require_once("Controller/control-session.php");
 require_once("Controller/UserController.php");
-require "Controller/DataBase.php";
+require_once("ControllerDAO/UserDAO.php");
 
 if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1  && isset($_GET['id_user_toDisplay']) || $_GET['id_user_toDisplay'] == $_SESSION['id_user'] && isset($_GET['id_user_toDisplay'])) {
-    $userController= new UserController();
+    if(!UserDAO::userExists($_GET['id_user_toDisplay']))
+        header('Location: DashBoard.php');
+
+    $userController = new UserController($_GET['id_user_toDisplay']);
     try
     {
-        $finalStatement=$userController->getHistory($_GET['id_user_toDisplay']);
+        $finalStatement = $userController->getHistory($_GET['id_user_toDisplay']);
     }
     catch (Exception $e)
     {

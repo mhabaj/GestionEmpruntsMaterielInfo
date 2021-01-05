@@ -30,11 +30,11 @@
         <div class="navbar-header">
             <!-- Button for smallest screens -->
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"><span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
-            <a class="navbar-brand" href="index.php"><img src="assets/images/logo.png" alt="logo"></a>
+            <a class="navbar-brand" href="Index.php"><img src="assets/images/logo.png" alt="logo"></a>
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav pull-right">
-                <li class="active"><a href="index.php">Home</a></li>
+                <li class="active"><a href="Index.php">Home</a></li>
                 <li><a href="about.php">About</a></li>
                 <li><a href="contact.php">Contact</a></li>
                 <li><a class="btn" href="Authentification.php">SIGN IN</a></li>
@@ -89,10 +89,11 @@
     <div class="footer2">
         <div class="container">
             <div class="row">
+
                 <div class="col-md-6 widget">
                     <div class="widget-body">
                         <p class="simplenav">
-                            <a href="index.php">Home</a> |
+                            <a href="#">Home</a> |
                             <a href="about.php">About</a> |
                             <a href="contact.php">Contact</a> |
                             <b><a href="Authentification.php">Sign in</a></b>
@@ -107,6 +108,7 @@
                         </p>
                     </div>
                 </div>
+
             </div> <!-- /row of widgets -->
         </div>
     </div>
