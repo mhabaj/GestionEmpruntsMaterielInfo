@@ -1,35 +1,25 @@
 <?php
 
 require_once("Controller/control-session.php");
-require_once("Controller/DataBase.php");
 require_once("Model/User.php");
-require_once("Model/UserRegular.php");
-require_once("Model/UserAdmin.php");
 require_once("Controller/UserController.php");
+require_once("ControllerDAO/UserDAO.php");
 
-if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1 && isset($_GET['id_user_toDisplay']) || $_GET['id_user_toDisplay'] == $_SESSION['id_user'] && isset($_GET['id_user_toDisplay'])) {
+if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1 && isset($_GET['id_user_toDisplay']) || $_GET['id_user_toDisplay'] == $_SESSION['id_user'] && isset($_GET['id_user_toDisplay']))
+{
+    if(!UserDAO::userExists($_GET['id_user_toDisplay']))
+        header('Location: DashBoard.php');
 
-    $userController = new UserController();
-    try {
-        $userController->initUserController($_GET['id_user_toDisplay']);
-    } catch (Exception $e) {
-        echo $e->getMessage();
-        header('Location: Catalogue.php');
-    }
+    $userController = new UserController($_GET['id_user_toDisplay']);
 
     $currentUser = $userController->getUser();
-    /* si l'utilisateur a cliqué sur modifier utilisateur */
-    if (isset($_POST['modifyUsers']) && isset($_GET['id_user_toDisplay']) && (isset($userController) && $userController != null && isset($currentUser) && $currentUser != null)) {
-        ?>
 
-        <?php
+    /* si l'utilisateur a cliqué sur modifier utilisateur */
+    if (isset($_POST['modifyUser']) && isset($_GET['id_user_toDisplay']) && (isset($userController) && $userController != null && isset($currentUser) && $currentUser != null)) {
+
         //include modifyUser.view
         require_once('view/modifyUser.view.php');
 
-        ?>
-
-
-        <?php
     }
     /* Traitement de la page modifier utilisateur */
     if (isset($_POST['submitModification'])) {
@@ -37,9 +27,9 @@ if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1 && isset(
             if ($userController->modifyUser($_GET['id_user_toDisplay'], $_POST['matricule'], $_POST['email'], $_POST['lastname'], $_POST['name'], $_POST['phone'], $_POST['administrateur']) == true)
                 header('Location: DetailUser.php?id_user_toDisplay=' . $currentUser->getIdUser());
         } catch (Exception $e) {
-            echo $e->getMessage();
             $url = 'DetailUser.php?id_user_toDisplay=' . $currentUser->getIdUser();
             header("refresh:2;url=$url");
+            echo $e->getMessage();
         }
     }
 
@@ -64,9 +54,9 @@ if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1 && isset(
     if (isset($_POST['submitModificationMdp'])) {
         if (isset($_POST['password']) && isset($_POST['passwordrepeat'])) {
             if ($userController->modifyPassword($_POST['password'], $_POST['passwordrepeat']) == false) {
-                echo("<p> Les deux mots de passe ne correspondent pas <p/>");
                 $url = 'DetailUser.php?id_user_toDisplay=' . $currentUser->getIdUser();
                 header("refresh:2;url=.$url");
+                $erreur = "<p> Les deux mots de passe ne correspondent pas <p/>";
             } else {
                 header('Location: DetailUser.php?id_user_toDisplay=' . $currentUser->getIdUser());
             }
@@ -79,5 +69,5 @@ if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1 && isset(
     }
 } else {
     echo "Vous n'avez pas accès à cette page";
-    header('Location: Catalogue.php');
+    header('Location: DashBoard.php');
 }

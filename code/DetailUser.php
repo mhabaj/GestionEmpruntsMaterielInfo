@@ -1,25 +1,17 @@
 <?php
 
 require_once("Controller/control-session.php");
-require_once("Controller/DataBase.php");
 require_once("Model/User.php");
-require_once("Model/UserRegular.php");
-require_once("Model/UserAdmin.php");
+require_once("ControllerDAO/UserDAO.php");
 require_once("Controller/UserController.php");
 
 
 if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1 && isset($_GET['id_user_toDisplay']) || isset($_GET['id_user_toDisplay']) && $_GET['id_user_toDisplay'] == $_SESSION['id_user'] )
 {
-    $userController = new UserController();
+    if(!UserDAO::userExists($_GET['id_user_toDisplay']))
+        header('Location: DashBoard.php');
 
-    try
-    {
-        $userController->initUserController($_GET['id_user_toDisplay']);
-    }
-    catch (Exception $e)
-    {
-        header('Location: Catalogue.php');
-    }
+    $userController = new UserController($_GET['id_user_toDisplay']);
 
     $currentUser = $userController->getUser();
 
@@ -34,16 +26,16 @@ if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1 && isset(
         <?php
         if(isset($_POST['endBorrow']) && $_SESSION['isAdmin_user'] == 1 && isset($_POST['idBorrow']) && is_numeric($_POST['idBorrow']))
         {
-            $userController->returnBorrow($_SESSION['id_user'],$_POST['idBorrow']);
+            $userController->endBorrow($_POST['idBorrow']);
             header("Refresh:0");
         }
     }
     else
     {
-        header('Location: Catalogue.php');
+        header('Location: DashBoard.php');
     }
 }
 else
 {
-    header('Location: Catalogue.php');
+    header('Location: DashBoard.php');
 }
