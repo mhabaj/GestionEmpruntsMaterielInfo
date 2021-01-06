@@ -2,6 +2,8 @@
 require_once("Functions.php");
 require_once("ControllerDAO/BorrowDAO.php");
 require_once("ControllerDAO/UserDAO.php");
+require_once("ControllerDAO/EquipmentDAO.php");
+
 
 /**
  * Class UserController
@@ -25,7 +27,7 @@ class UserController
     /**
      * @return bool
      */
-    public function disconnect()
+    public function disconnect(): bool
     {
         session_unset();
         session_destroy();
@@ -38,27 +40,32 @@ class UserController
      * @param $quantity
      * @return bool Object, else null
      * PREC : quantity > 0
+     * @throws Exception
      */
-    public function startBorrow($ref_equip_toBorrow, $dateFin, $quantity)
+    public function startBorrow($ref_equip_toBorrow, $dateFin, $quantity): bool
     {
-        try {
-            $indexOf = 0;
-            while ($indexOf < $quantity) {
-                $newBorrow = BorrowDAO::startBorrow($ref_equip_toBorrow, $dateFin);
-                $this->_user->addBorrowToList($newBorrow);
-                $indexOf += 1;
+        if (Functions::checkReservationDate($dateFin) && Functions::checkQuantityEquipment($quantity)) {
+            if (EquipmentDAO::howMuchAvailable($ref_equip_toBorrow) >= $quantity && $quantity > 0) {
+
+                $indexOf = 0;
+                while ($indexOf < $quantity) {
+                    $newBorrow = BorrowDAO::startBorrow($ref_equip_toBorrow, $dateFin);
+                    $this->_user->addBorrowToList($newBorrow);
+                    $indexOf += 1;
+                }
+                return true;
+
             }
-            return true;
-        } catch (Exception $e) {
-            throw new Exception("Exception User: couldn't borrow Equipment\n");
         }
+        return false;
     }
 
     /**
      * @param $id_borrow_toDel
      * @throws Exception
      */
-    public function endborrow($id_borrow_toDel)
+    public
+    function endborrow($id_borrow_toDel)
     {
         $cpt_array = 0;
         foreach ($this->_user->getBorrowList() as $borrow):
@@ -84,26 +91,24 @@ class UserController
      * @return bool
      * @throws Exception
      */
-    public function createUser($matricule, $password, $passwordRepeat, $email, $lastname, $name, $phone, $isAdmin)
+    public
+    function createUser($matricule, $password, $passwordRepeat, $email, $lastname, $name, $phone, $isAdmin): bool
     {
         if ($passwordRepeat != $password) {
             throw new Exception("Les deux mots de passe ne correspondent pas !");
         }
 
-        try {
-            if (Functions::checkMatricule($matricule) == true && Functions::checkMail($email) == true && Functions::checkPhoneNumber($phone) == true && Functions::checkNameUser($lastname) == true && Functions::checkFirstNameUser($name) == true) {
-                if ($isAdmin == 'ok')
-                    $isAdmin = 1;
-                else
-                    $isAdmin = 0;
+        if (Functions::checkMatricule($matricule) == true && Functions::checkMail($email) == true && Functions::checkPhoneNumber($phone) == true && Functions::checkNameUser($lastname) == true && Functions::checkFirstNameUser($name) == true) {
+            if ($isAdmin == 'ok')
+                $isAdmin = 1;
+            else
+                $isAdmin = 0;
 
-                UserDAO::createUser($matricule, $email, $password, $name, $lastname, $phone, $isAdmin);
-                return true;
-            } else
-                return false;
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
-        }
+            UserDAO::createUser($matricule, $email, $password, $name, $lastname, $phone, $isAdmin);
+            return true;
+        } else
+            return false;
+
 
     }
 
@@ -119,7 +124,8 @@ class UserController
      * @return bool
      * @throws Exception
      */
-    public function modifyUser($id, $matricule, $email, $lastname, $name, $phone, $isAdmin): bool
+    public
+    function modifyUser($id, $matricule, $email, $lastname, $name, $phone, $isAdmin): bool
     {
 
         if (Functions::checkMatricule($matricule) == true && Functions::checkMail($email) == true && Functions::checkPhoneNumber($phone) == true && Functions::checkNameUser($lastname) == true && Functions::checkFirstNameUser($name) == true) {
@@ -140,31 +146,32 @@ class UserController
      * @param $password
      * @param $passwordRepeat
      * @return bool
+     * @throws Exception
      */
-    public function modifyPassword($password, $passwordRepeat)
+    public
+    function modifyPassword($password, $passwordRepeat): bool
     {
         if ($password == '' || $password == null) {
             return false;
         }
-        try {
-            if ($password == $passwordRepeat) {
-                UserDAO::changeUserPassword($this->_user, $password);
 
-                return true;
-            } else {
-                return false;
-            }
-        } catch (Exception $e) {
-            echo $e->getMessage();
+        if ($password == $passwordRepeat) {
+            UserDAO::changeUserPassword($this->_user, $password);
+
+            return true;
+        } else {
             return false;
-
         }
+
+
     }
+
 
     /**
      * @return mixed
      */
-    public function getUser()
+    public
+    function getUser(): ?User
     {
         return $this->_user;
     }

@@ -20,21 +20,29 @@ class EquipmentController
 
     /**
      * EquipmentController constructor.
-     * @param $refEquipment
      * @throws Exception
      */
-    public function __construct(){}
+    public function __construct()
+    {
+    }
 
-    public function loadEquipmentFromDDB(String $refEquipment)
+    /**
+     * @param string $refEquipment
+     * @throws Exception
+     */
+    public function loadEquipmentFromDDB(string $refEquipment)
     {
         $this->_equipment = EquipmentDAO::initEquipmentController($refEquipment);
     }
 
+    /**
+     * @param Equipment $equipment
+     */
     public function loadEquipmentFromObject(Equipment $equipment)
     {
         $this->_equipment = $equipment;
     }
-    
+
     /**
      * @param $ref_equip
      * @param $type_equip

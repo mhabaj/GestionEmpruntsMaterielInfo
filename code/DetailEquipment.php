@@ -11,7 +11,7 @@ ob_start();
 
 
 if (isset($_GET['ref_equip']) && $_GET['ref_equip'] != null) {
-
+    $currentEquipment = null;
     try {
         $equipmentController = new EquipmentController();
         $equipmentController->loadEquipmentFromDDB($_GET['ref_equip']);
@@ -43,7 +43,13 @@ if (isset($_GET['ref_equip']) && $_GET['ref_equip'] != null) {
 
         $userController = new UserController($_SESSION['id_user']);
 
-        $userController->startBorrow($currentEquipment->getRefEquip(), $dateFinBorrow, $quantite_equip);
+        try {
+            if ($currentEquipment != null) {
+                $userController->startBorrow($currentEquipment->getRefEquip(), $dateFinBorrow, $quantite_equip);
+            }
+        } catch (Exception $e) {
+            echo "<p>" . $e->getMessage() . "</p>";
+        }
         ob_end_clean();
 
         header("Refresh:0");

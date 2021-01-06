@@ -62,12 +62,16 @@ if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1 && isset(
     /* Traitement de la page modifier password  */
     if (isset($_POST['submitModificationMdp'])) {
         if (isset($_POST['password']) && isset($_POST['passwordrepeat'])) {
-            if ($userController->modifyPassword($_POST['password'], $_POST['passwordrepeat']) == false) {
-                $url = 'DetailUser.php?id_user_toDisplay=' . $currentUser->getIdUser();
-                header("refresh:2;url=$url");
-                $erreur = "<p> Les deux mots de passe ne correspondent pas <p/>";
-            } else {
-                header('Location: DetailUser.php?id_user_toDisplay=' . $currentUser->getIdUser());
+            try {
+                if ($userController->modifyPassword($_POST['password'], $_POST['passwordrepeat']) == false) {
+                    $url = 'DetailUser.php?id_user_toDisplay=' . $currentUser->getIdUser();
+                    header("refresh:2;url=$url");
+                    echo "<p> Les deux mots de passe ne correspondent pas <p/>";
+                } else {
+                    header('Location: DetailUser.php?id_user_toDisplay=' . $currentUser->getIdUser());
+                }
+            } catch (Exception $e) {
+                echo "<p>" . $e->getMessage() . "</p>";
             }
         }
 
