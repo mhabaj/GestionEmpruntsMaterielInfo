@@ -14,7 +14,7 @@ final class EquipmentControllerTest extends TestCase
 {
     /**
      * @covers EquipmentController::initEquipmentController
-     * @dataProvider providerInvalidRef
+     * @dataProvider providerUser
      * @param String $refEquip
      * @throws Exception
      */
@@ -219,7 +219,7 @@ final class EquipmentControllerTest extends TestCase
         ];
     }
 
-    public function providerInvalidRef(): array
+    public function providerUser(): array
     {
         return [
             ["A0"],
