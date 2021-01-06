@@ -1,7 +1,7 @@
 <?php
 require_once("Functions.php");
 require_once("ControllerDAO/BorrowDAO.php");
-require_once ("ControllerDAO/UserDAO.php");
+require_once("ControllerDAO/UserDAO.php");
 
 /**
  * Class UserController
@@ -156,6 +156,8 @@ class UserController
             }
         } catch (Exception $e) {
             echo $e->getMessage();
+            return false;
+
         }
     }
 

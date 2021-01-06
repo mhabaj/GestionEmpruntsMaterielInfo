@@ -5,6 +5,7 @@ require_once "Model/Equipment.php";
 require_once "Controller/Functions.php";
 require_once "Controller/EquipmentController.php";
 require_once("ControllerDAO/EquipmentDAO.php");
+ob_start();
 
 
 if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1 && isset($_GET['ref_equip'])) {
@@ -34,12 +35,14 @@ if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1 && isset(
                 try {
                     $equipmentController->modifyEquipment($ref_equip, $type_equip, $nom_equip, $marque_equip, $version_equip, $quantite_equip);
                     $photo = Functions::uploadImage($type_equip);
-                    if ($photo != null && $photo != "")
-                    {
+                    if ($photo != null && $photo != "") {
+                        ob_end_clean();
                         EquipmentDAO::updateImageToEquipment($photo, $ref_equip);
                     }
                     unset($currentEquipment);
                     unset($equipmentController);
+                    ob_end_clean();
+
                     header("Location: DetailEquipment.php?ref_equip=" . $ref_equip);
 
                 } catch (Exception $e) {
@@ -48,18 +51,24 @@ if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1 && isset(
                 }
 
             } else {
+                ob_end_clean();
+
                 header("refresh:0");
             }
         }
 
 
     } catch (Exception $e) {
+        ob_end_clean();
+
         header("refresh:3;url=DashBoard.php");
         echo $e->getMessage();
         echo "<p> Redirection dans 3 secondes.. </p>";
 
     }
 } else {
+    ob_end_clean();
+
     header("refresh:3;url=DashBoard.php");
     echo "L'equipement que vous essayer de consulter est invalide";
     echo "<p> Redirection dans 3 secondes.. </p>";

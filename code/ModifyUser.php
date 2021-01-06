@@ -42,12 +42,16 @@ if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1 && isset(
             if ($userController->modifyUser($_GET['id_user_toDisplay'], $_POST['matricule'], $_POST['email'], $_POST['lastname'], $_POST['name'], $_POST['phone'], $postAdmin) == true) {
 
                 if ($_SESSION['isAdmin_user'] == 1 && $postAdmin == 0) {
+                    ob_end_clean();
+
                     $userController->disconnect();
                 }
-
+                ob_end_clean();
                 header('Location: DetailUser.php?id_user_toDisplay=' . $currentUser->getIdUser());
             }
         } catch (Exception $e) {
+            ob_end_clean();
+
             $url = 'DetailUser.php?id_user_toDisplay=' . $currentUser->getIdUser();
             header("refresh:3;url=$url");
             echo "<p>" . $e->getMessage() . "</p>";
