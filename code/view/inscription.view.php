@@ -1,5 +1,16 @@
-<html lang="fr">
-<body>
+<?php
+require_once("head.view.php");
+require_once("navbar.view.php");
+?>
+    <!-- Intro -->
+    <div class="container">
+        <div class="maincontent">
+            <br> <br>
+            <h2 class="thin"></h2>
+            <p class="text-muted">
+
+            </p>
+            <!-- /Intro-->
 <form method="POST" enctype="multipart/form-data">
     <h1>Inscrire un utilisateur</h1>
     <p>Veuillez remplir les champs ci-dessous pour inscrire un utilisateur</p>
@@ -28,10 +39,13 @@
         <input type="checkbox" checked="checked" name="administrateur"  value ="ok" style="margin-bottom:15px">Administrateur
     </label>
     <hr>
-    <button type="submit" name="submitInscription">Confirmer l'inscription</button>
+    <button class="btn btn-success" type="submit" name="submitInscription">Confirmer l'inscription</button>
 </form>
+<br>
 <form method="Post">
-    <button type="submit"  name="cancelbtn">Annuler l'inscription </button>
+    <button class="btn btn-danger" type="submit"  name="cancelbtn">Annuler l'inscription </button>
 </form>
-</body>
-</html>
+
+<?php
+require_once("footer.view.php");
+?>

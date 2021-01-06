@@ -6,5 +6,5 @@
     <label for="radio_name">par nom</label>
     <input type="radio" name="radio_recherche" id="radio_ref" value="radio_ref">
     <label for="radio_ref">par référence</label>
-    <button type="submit" name="startSearching">Rechercher</button>
+    <button class="btn btn-primary" type="submit" name="startSearching">Rechercher</button>
 </form>

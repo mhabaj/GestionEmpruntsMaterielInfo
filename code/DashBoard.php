@@ -8,11 +8,12 @@ require_once "Controller/EquipmentController.php";
 require_once "ControllerDAO/CatalogueController.php";
 ob_start();
 
+
 $myCatalogueController = new CatalogueController();
 
 /*********************************************************************************************************************/
 
-require_once "view/buttondetailUser.view.php";
+require_once("view/dashboard.view.php");
 require_once "view/searchEquipment.view.php";
 if (isset($_POST['startSearching']) && $_POST['EquipmentToSearch'] != null && $_POST['EquipmentToSearch'] != " ") {
     try {

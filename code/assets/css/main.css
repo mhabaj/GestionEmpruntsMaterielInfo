@@ -54,7 +54,9 @@ img.pull-left { margin-right: 10px; }
 	#social .wrapper { width:340px; margin:0 auto; }
 
 /* Main content block */
-.maincontent { }
+.maincontent { 		
+	padding-top: 5%;
+	padding-left: 10%;}
 
 /* Sidebars */
 .sidebar { padding-top:36px; padding-bottom:30px; }
