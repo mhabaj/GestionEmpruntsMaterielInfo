@@ -5,6 +5,7 @@ require_once "Model/Equipment.php";
 require_once "Controller/Functions.php";
 require_once "Controller/EquipmentController.php";
 require_once("ControllerDAO/UserDAO.php");
+ob_start();
 
 
 if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1) {
@@ -57,13 +58,12 @@ if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1) {
                     }
                     unset($currentEquipment);
                     unset($equipmentController);
-                    header("Location: DetailEquipment.php?ref_equip=" .$tempRef);
+                    ob_end_clean();
+                    header("Location: DetailEquipment.php?ref_equip=" . $tempRef);
 
                 } catch (Exception $e) {
-                    echo $e->getMessage();
-
+                    echo "<p>" . $e->getMessage() . "</p>";
                 }
-
             }
         }
 
@@ -72,9 +72,11 @@ if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1) {
         header("refresh:3;url=DashBoard.php");
         echo $e->getMessage();
         echo "<p> Redirection dans 3 secondes.. </p>";
-
+        ob_end_clean();
 
     }
 
+} else {
+    ob_end_clean();
+    header('Location: DashBoard.php');
 }
-?>

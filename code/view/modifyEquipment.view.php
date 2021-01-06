@@ -20,11 +20,11 @@
     <input type="text" placeholder="Version de l'équipement" name="version_equip" required
            value="<?php if (isset($equipmentController) && $equipmentController != null && isset($currentEquipment) && $currentEquipment != null) echo $currentEquipment->getVersionEquip(); ?>">
     <p> Quantité totale du materiel <b>(Disponible à modifier/ Occupé / Total présent:
-            <mark><?php if (isset($equipmentController) && $equipmentController != null && isset($currentEquipment) && $currentEquipment != null) echo $currentEquipment->howMuchAvailable() . "/" . ($currentEquipment->howMuchAvailable() - $currentEquipment->howMuchTotal()) * -1 . "/" . $currentEquipment->howMuchTotal(); ?></mark>
+            <mark><?php if (isset($equipmentController) && $equipmentController != null && isset($currentEquipment) && $currentEquipment != null) echo EquipmentDAO::howMuchAvailable($currentEquipment->getRefEquip()) . "/" . (EquipmentDAO::howMuchAvailable($currentEquipment->getRefEquip()) - EquipmentDAO::howMuchTotal($currentEquipment->getRefEquip())) * -1 . "/" . EquipmentDAO::howMuchTotal($currentEquipment->getRefEquip()); ?></mark>
             ): </b></p>
     <input type="number" placeholder="Quantite de l'équipement" name="quantite_equip" required
-           min="<?php if (isset($equipmentController) && $equipmentController != null && isset($currentEquipment) && $currentEquipment != null) echo($currentEquipment->howMuchTotal() - $currentEquipment->howMuchAvailable()); ?>"
-           value="<?php if (isset($equipmentController) && $equipmentController != null && isset($currentEquipment) && $currentEquipment != null) echo $currentEquipment->howMuchTotal(); ?>">
+           min="<?php if (isset($equipmentController) && $equipmentController != null && isset($currentEquipment) && $currentEquipment != null) echo(EquipmentDAO::howMuchTotal($currentEquipment->getRefEquip()) - EquipmentDAO::howMuchAvailable($currentEquipment->getRefEquip())); ?>"
+           value="<?php if (isset($equipmentController) && $equipmentController != null && isset($currentEquipment) && $currentEquipment != null) echo EquipmentDAO::howMuchTotal($currentEquipment->getRefEquip()); ?>">
     <br>
     <p><label><b>Images: </label></p>
 

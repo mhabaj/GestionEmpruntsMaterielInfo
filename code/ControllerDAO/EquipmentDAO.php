@@ -108,6 +108,10 @@ class EquipmentDAO
                 $myStatement2->execute([$_ref_equipNew]);
             }
 
+            $requestCreate = " INSERT INTO `stock_photo` (`link_photo`, `ref_equip`) VALUES (?,?);";
+            $myStatement = $con->prepare($requestCreate);
+            $myStatement->execute(["",$_ref_equipNew]);
+
 
             $con->commit();
         } catch (PDOException $e) {
@@ -118,7 +122,7 @@ class EquipmentDAO
     }
 
     /* PRECONDITION ON NE PEUT PAS DELETE DES DEVICES DONT LE CHAMP isAVAILABLE EST FALSE, $desiredQuantity ne peut pas etre < 0, */
-    public function updateDeviceCount($_ref_equip, $desiredQuantity)
+    public static function updateDeviceCount($_ref_equip, $desiredQuantity)
     {
         $bdd = new DataBase();
         $con = $bdd->getCon();

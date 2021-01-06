@@ -1,23 +1,61 @@
 <?php
 
-require_once "Controller/DataBase.php";
-require_once "Model/Borrow.php";
 
+/**
+ * Class User
+ */
 class User
 {
-    protected $_idUser;
-    protected $_matriculeUser;
-    protected $_email;
-    protected $_password;
-    protected $_firstName;
-    protected $_lastName;
-    protected $_phone;
-    protected $_borrowList = array();
+    /**
+     * @var
+     */
+    private $_idUser;
+    /**
+     * @var
+     */
+    private $_matriculeUser;
+    /**
+     * @var
+     */
+    private $_email;
+    /**
+     * @var
+     */
+    private $_password;
+    /**
+     * @var
+     */
+    private $_firstName;
+    /**
+     * @var
+     */
+    private $_lastName;
+    /**
+     * @var
+     */
+    private $_phone;
+    /**
+     * @var array
+     */
+    private $_borrowList = array();
+    /**
+     * @var
+     */
+    private $_isAdmin;
+
 
     /**
      * User constructor.
+     * @param $id
+     * @param $email
+     * @param $matricule
+     * @param $password
+     * @param $firstName
+     * @param $lastName
+     * @param $phone
+     * @param $isAdmin
      */
-    public function __construct($id, $email, $matricule, $password, $firstName, $lastName, $phone)
+    public function __construct($id, $email, $matricule, $password, $firstName, $lastName, $phone, $isAdmin)
     {
         $this->setIdUser($id);
         $this->setEmail($email);
@@ -26,10 +64,11 @@ class User
         $this->setFirstName($firstName);
         $this->setLastName($lastName);
         $this->setPhone($phone);
+        $this->_isAdmin = $isAdmin;
     }
 
     /**
-     * @param array $borrowList
+     * @param $BorrowItem
      */
     public function addBorrowToList($BorrowItem)
     {
@@ -151,7 +190,7 @@ class User
     /**
      * @return mixed
      */
-    public function getBorrowList()
+    public function getBorrowList(): array
     {
         return $this->_borrowList;
     }
@@ -163,5 +202,22 @@ class User
     {
         $this->_borrowList = $borrowList;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getIsAdmin()
+    {
+        return $this->_isAdmin;
+    }
+
+    /**
+     * @param mixed $isAdmin
+     */
+    public function setIsAdmin($isAdmin): void
+    {
+        $this->_isAdmin = $isAdmin;
+    }
+
 
 }

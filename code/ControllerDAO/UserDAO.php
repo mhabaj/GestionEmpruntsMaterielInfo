@@ -1,11 +1,18 @@
 <?php
 
-require_once ("Model/User.php");
-require_once ("Controller/DataBase.php");
+require_once("Model/User.php");
+require_once("Controller/DataBase.php");
 
+/**
+ * Class UserDAO
+ */
 class UserDAO
 {
-    public static function userExists($id)
+    /**
+     * @param $id
+     * @return bool
+     */
+    public static function userExists($id): bool
     {
         $bdd = new DataBase();
         $con = $bdd->getCon();
@@ -16,13 +23,17 @@ class UserDAO
 
         $result = $stmt->rowCount();
 
-        if($result == 1)
+        if ($result == 1)
             return true;
         else
             return false;
     }
 
-    public static function getUserByID($id)
+    /**
+     * @param int $id
+     * @return User|null
+     */
+    public static function getUserByID(int $id): ?User
     {
         $bdd = new DataBase();
         $con = $bdd->getCon();
@@ -34,7 +45,7 @@ class UserDAO
         $result = $stmt->fetch();
         $count = $stmt->rowCount();
 
-        if($count == 0)
+        if ($count == 0)
             return null;
 
         $user = new User($id, $result['email_user'], $result['matricule_user'], $result['password_user'],
@@ -49,7 +60,7 @@ class UserDAO
         $result = $myStatement->rowCount();
         $borrowLignes = $myStatement->fetchAll();
 
-        if ($result > 0){
+        if ($result > 0) {
             foreach ($borrowLignes as $borrow) {
 
                 $BorrowItem = new Borrow($borrow['ref_equip'], $borrow['enddate_borrow']);
@@ -66,28 +77,39 @@ class UserDAO
         return $user;
     }
 
+    /**
+     * @param $user
+     * @param $newPassword
+     * @throws Exception
+     */
     public static function changeUserPassword($user, $newPassword)
     {
         $bdd = new DataBase();
         $con = $bdd->getCon();
         $con->beginTransaction();
-        $hashedNewPassword= sha1($newPassword);
+        $hashedNewPassword = sha1($newPassword);
 
-        try
-        {
+        try {
             $requete = "UPDATE USERS SET password_user= ? WHERE id_user = ?;";
             $stmt = $con->prepare($requete);
-            $stmt->execute([$hashedNewPassword,$user->getIdUser()]);
+            $stmt->execute([$hashedNewPassword, $user->getIdUser()]);
             $con->commit();
-        }
-        catch (Exception $e)
-        {
+        } catch (Exception $e) {
             $con->rollback();
             throw new Exception("Could not update password");
         }
 
     }
-    
+
+    /**
+     * @param $_idUser
+     * @param $_matricule_user
+     * @param $_email_user
+     * @param $_name_user
+     * @param $_lastname_user
+     * @param $_phone
+     * @param $_isAdmin_user
+     */
     public static function modifyUser($_idUser, $_matricule_user, $_email_user, $_name_user, $_lastname_user, $_phone, $_isAdmin_user)
     {
         $bdd = new DataBase();
@@ -108,7 +130,12 @@ class UserDAO
         $bdd->closeCon();
     }
 
-    public static function connect($matricule, $mdp)
+    /**
+     * @param $matricule
+     * @param $mdp
+     * @return bool
+     */
+    public static function connect($matricule, $mdp): bool
     {
         $bdd = new DataBase();
         $con = $bdd->getCon();
@@ -129,12 +156,32 @@ class UserDAO
             $_SESSION['isAdmin_user'] = $infoUser['isAdmin_user'];
             $bdd->closeCon();
             return TRUE;
-        }
-        else
-        {
+        } else {
             $bdd->closeCon();
             return FALSE;
         }
+    }
+
+    /**
+     * renvoie un statement? de l'historique de l'utilisateur
+     * @param $id_user_toDisplay
+     * @return null
+     */
+    public static function getHistory($id_user_toDisplay)
+    {
+        try {
+            $bdd = new DataBase();
+            $con = $bdd->getCon();
+            $queryUser = "SELECT * FROM borrow_info INNER JOIN borrow ON borrow_info.id_borrow=borrow.id_borrow INNER JOIN device ON device.id_device=borrow.id_device INNER JOIN 
+            equipment ON equipment.ref_equip=device.ref_equip WHERE borrow.id_user=? AND borrow_info.isActive=0";
+            $myStatement = $con->prepare($queryUser);
+            $myStatement->execute([$id_user_toDisplay]); //$_GET['id_user_toDisplay']
+
+            return $myStatement;
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
+        return null;
     }
 
     /**
@@ -148,7 +195,7 @@ class UserDAO
      * @return bool
      * @throws Exception
      */
-    public static function createUser($_matriculeUser, $_emailUser, $_passwordUser, $_firstNameUser, $_lastnameUser, $_phone, $_isAdminUser)
+    public static function createUser($_matriculeUser, $_emailUser, $_passwordUser, $_firstNameUser, $_lastnameUser, $_phone, $_isAdminUser): bool
     {
         $bdd = new DataBase();
         $con = $bdd->getCon();
@@ -159,11 +206,13 @@ class UserDAO
             $stmt = $con->prepare($query);
             $stmt->execute([$_matriculeUser, $_emailUser, $_passwordUser, $_firstNameUser, $_lastnameUser, $_phone, $_isAdminUser]);
             $con->commit();
+            $bdd->closeCon();
             return true;
         } catch (PDOException $e) {
             $con->rollback();
+            $bdd->closeCon();
             throw new Exception("<p> Could not create the user, invalid user input </p> ");
         }
-        $bdd->closeCon();
+
     }
 }

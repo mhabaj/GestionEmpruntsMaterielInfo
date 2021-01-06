@@ -20,21 +20,29 @@ class EquipmentController
 
     /**
      * EquipmentController constructor.
-     * @param $refEquipment
      * @throws Exception
      */
-    public function __construct(){}
+    public function __construct()
+    {
+    }
 
-    public function loadEquipmentFromDDB(int $refEquipment)
+    /**
+     * @param string $refEquipment
+     * @throws Exception
+     */
+    public function loadEquipmentFromDDB(string $refEquipment)
     {
         $this->_equipment = EquipmentDAO::initEquipmentController($refEquipment);
     }
 
+    /**
+     * @param Equipment $equipment
+     */
     public function loadEquipmentFromObject(Equipment $equipment)
     {
         $this->_equipment = $equipment;
     }
-    
+
     /**
      * @param $ref_equip
      * @param $type_equip
@@ -42,10 +50,9 @@ class EquipmentController
      * @param $marque_equip
      * @param $version_equip
      * @param $quantite_equip
-     * @param $currentUser
      * @throws Exception
      */
-    public function modifyEquipment($ref_equip, $type_equip, $nom_equip, $marque_equip, $version_equip, $quantite_equip, $currentUser)
+    public function modifyEquipment($ref_equip, $type_equip, $nom_equip, $marque_equip, $version_equip, $quantite_equip)
     {
 
         try {
@@ -63,12 +70,7 @@ class EquipmentController
     }
 
     /**
-     * @param $ref_equip
-     * @param $type_equip
-     * @param $marque_equip
-     * @param $nom_equip
-     * @param $version_equip
-     * @param $quantity_equip
+     * @param $Quantity
      * @throws Exception
      */
     public function createNewEquipment($Quantity)

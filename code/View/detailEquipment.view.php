@@ -16,7 +16,10 @@
         : <?php if (isset($equipmentController) && $equipmentController != null && isset($currentEquipment) && $currentEquipment != null) echo $currentEquipment->getTypeEquip() ?> </p>
     <br/>
     <p> Matériel
-        : <?php if (isset($equipmentController) && $equipmentController != null && isset($currentEquipment) && $currentEquipment != null) echo $currentEquipment->getBrandEquip() . " " . $currentEquipment->getNameEquip(); ?> </p>
+        : <?php if (isset($equipmentController) && $equipmentController != null && isset($currentEquipment) && $currentEquipment != null) echo $currentEquipment->getBrandEquip(); ?> </p>
+    <br/>
+    <p> Nom
+        : <?php if (isset($equipmentController) && $equipmentController != null && isset($currentEquipment) && $currentEquipment != null) echo $currentEquipment->getNameEquip(); ?> </p>
     <br/>
     <p> Version
         : <?php if (isset($equipmentController) && $equipmentController != null && isset($currentEquipment) && $currentEquipment != null) echo $currentEquipment->getVersionEquip() ?> </p>
@@ -40,10 +43,10 @@
 
         <input type="date" placeholder="Date fin de reservation" name="dateRes">
         <p> Quantite du materiel souhaité <b>(Disponible / Occupé / Total présent:
-                <mark><?php if (isset($equipmentController) && $equipmentController != null && isset($currentEquipment) && $currentEquipment != null) echo $currentEquipment->howMuchAvailable() . "/" . ($currentEquipment->howMuchAvailable() - $currentEquipment->howMuchTotal()) * -1 . "/" . $currentEquipment->howMuchTotal(); ?></mark>): </b></p>
+                <mark><?php if (isset($equipmentController) && $equipmentController != null && isset($currentEquipment) && $currentEquipment != null) echo EquipmentDAO::howMuchAvailable($currentEquipment->getRefEquip()) . "/" . (EquipmentDAO::howMuchAvailable($currentEquipment->getRefEquip()) - EquipmentDAO::howMuchTotal($currentEquipment->getRefEquip())) * -1 . "/" . EquipmentDAO::howMuchTotal($currentEquipment->getRefEquip()); ?></mark>): </b></p>
 
         <input type="number" placeholder="Quantité souhaité" name="quantiteNumber" min="1" value="1"
-               max="<?php if (isset($equipmentController) && $equipmentController != null && isset($currentEquipment) && $currentEquipment != null) echo $currentEquipment->howMuchAvailable() ?>">
+               max="<?php if (isset($equipmentController) && $equipmentController != null && isset($currentEquipment) && $currentEquipment != null) echo EquipmentDAO::howMuchAvailable($currentEquipment->getRefEquip()) ?>">
         <input type="submit" value="Reserver l'équipement" placeholder="Reserver l'équipement"
                name="reserveEquipment">
     </form>

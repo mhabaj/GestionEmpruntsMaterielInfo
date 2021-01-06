@@ -1,8 +1,16 @@
 <?php
 
+/**
+ * Class Functions
+ */
 class Functions
 {
-    public static function checkRefEquip($inputRefEquip)
+    /**
+     * @param $inputRefEquip
+     * @return bool
+     * @throws Exception
+     */
+    public static function checkRefEquip($inputRefEquip): bool
     {
         if (preg_match('/^(AN|AP|XX)[0-9]{3}$/', $inputRefEquip)) {
             return true;
@@ -11,6 +19,11 @@ class Functions
         }
     }
 
+    /**
+     * @param $mail
+     * @return bool
+     * @throws Exception
+     */
     public static function checkMail($mail): bool
     {
         if (preg_match('/^([-0-9a-zA-Z.+_])+@[-0-9a-zA-Z.+_]+.[a-zA-Z]{2,4}$/', $mail)) {
@@ -20,27 +33,44 @@ class Functions
         }
     }
 
+    /**
+     * @param $phoneNumber
+     * @return bool
+     * @throws Exception
+     */
     public static function checkPhoneNumber($phoneNumber): bool
     {
-        if (preg_match('/(0|(\\+33)|(0033))[1-9][0-9]{8}/', $phoneNumber))
-        {
+
+        if ($phoneNumber == null || $phoneNumber == "") {
+            return true;
+        }
+        if (preg_match('/^(0|(\+33)|(0033))[1-9][0-9]{8}$/', $phoneNumber)) {
             return true;
         } else {
             throw new Exception("Le numéro de telephone que vous avez entré est invalide");
         }
     }
 
+    /**
+     * @param $matricule
+     * @return bool
+     * @throws Exception
+     */
     public static function checkMatricule($matricule): bool
     {
         if (preg_match('/^([A-Z]|[a-z]|[0-9]){7}$/', $matricule)) {
             return true;
-        } else
-            {
+        } else {
             throw new Exception("Votre identifiant de connexion est invalide, il doit comporter 7 caracteres");
         }
     }
 
-    public static function checkNameMateriel($nom)
+    /**
+     * @param $nom
+     * @return bool
+     * @throws Exception
+     */
+    public static function checkNameMateriel($nom): bool
     {
         if (preg_match('/[A-Za-z0-9-._,;:#()"]{1,30}/', $nom)) {
             return true;
@@ -49,7 +79,12 @@ class Functions
         }
     }
 
-    public static function checkVersionMateriel($version)
+    /**
+     * @param $version
+     * @return bool
+     * @throws Exception
+     */
+    public static function checkVersionMateriel($version): bool
     {
         if (preg_match('/^[A-Za-z0-9-._,;:#()"]{3,15}$/', $version)) {
             return true;
@@ -58,6 +93,11 @@ class Functions
         }
     }
 
+    /**
+     * @param $nom
+     * @return bool
+     * @throws Exception
+     */
     public static function checkNameUser($nom): bool
     {
         if (preg_match('/^([A-Z]|[a-z]){1,30}$/', $nom)) {
@@ -67,6 +107,11 @@ class Functions
         }
     }
 
+    /**
+     * @param $nom
+     * @return bool
+     * @throws Exception
+     */
     public static function checkFirstNameUser($nom): bool
     {
         if (preg_match('/^([A-Z]|[a-z]){1,30}$/', $nom)) {
@@ -76,6 +121,11 @@ class Functions
         }
     }
 
+    /**
+     * @param $brand
+     * @return bool
+     * @throws Exception
+     */
     public static function checkBrandEquip($brand): bool
     {
         if (preg_match('/^([A-Za-z0-9-._,;:#()"]){1,30}$/', $brand)) {
@@ -85,6 +135,11 @@ class Functions
         }
     }
 
+    /**
+     * @param $type
+     * @return bool
+     * @throws Exception
+     */
     public static function checkTypeEquip($type): bool
     {
         if (preg_match('/^([A-Za-z0-9-._,;:#()"]){1,30}$/', $type)) {
@@ -94,6 +149,11 @@ class Functions
         }
     }
 
+    /**
+     * @param $entered_date
+     * @return bool
+     * @throws Exception
+     */
     public static function checkReservationDate($entered_date): bool
     {
         if ($entered_date != null && strtotime($entered_date) > strtotime('now')) {
@@ -103,6 +163,11 @@ class Functions
         }
     }
 
+    /**
+     * @param $quantite_equip
+     * @return bool
+     * @throws Exception
+     */
     public static function checkQuantityEquipment($quantite_equip): bool
     {
         if ($quantite_equip != null && is_numeric($quantite_equip) && $quantite_equip >= 0) {
@@ -113,7 +178,12 @@ class Functions
         }
     }
 
-    public static function uploadImage($Type)
+    /**
+     * @param $Type
+     * @return string|null
+     * @throws Exception
+     */
+    public static function uploadImage($Type): ?string
     {
         //Type is typeEquip
 //-----------------------------------------------------
@@ -164,7 +234,7 @@ class Functions
                     'Õ' => 'O', 'Ö' => 'O', 'Ø' => 'O', 'Ù' => 'U', 'Ú' => 'U', 'Û' => 'U', 'Ü' => 'U', 'Ý' => 'Y', 'Þ' => 'B', 'ß' => 'Ss',
                     'à' => 'a', 'á' => 'a', 'â' => 'a', 'ã' => 'a', 'ä' => 'a', 'å' => 'a', 'æ' => 'a', 'ç' => 'c', 'è' => 'e', 'é' => 'e',
                     'ê' => 'e', 'ë' => 'e', 'ì' => 'i', 'í' => 'i', 'î' => 'i', 'ï' => 'i', 'ð' => 'o', 'ñ' => 'n', 'ò' => 'o', 'ó' => 'o',
-                    'ô' => 'o', 'õ' => 'o', 'ö' => 'o', 'ø' => 'o', 'ù' => 'u', 'ú' => 'u', 'û' => 'u', 'ý' => 'y', 'ý' => 'y', 'þ' => 'b',
+                    'ô' => 'o', 'õ' => 'o', 'ö' => 'o', 'ø' => 'o', 'ù' => 'u', 'ú' => 'u', 'û' => 'u', 'ý ' => 'y', 'ý' => 'y', 'þ' => 'b',
                     'ÿ' => 'y', 'Ŕ' => 'R', 'ŕ' => 'r',
                 );
                 $fichier = strtr($fichier, $table);
@@ -194,8 +264,9 @@ class Functions
 
 
         }
+        return null;
     }
+
 }
-
-
+//Functions::checkPhoneNumber("0678954874874");
 //-----------------------------------------------------
