@@ -22,8 +22,11 @@ class Functions
 
     public static function checkPhoneNumber($phoneNumber): bool
     {
-        if (preg_match('/(0|(\\+33)|(0033))[1-9][0-9]{8}/', $phoneNumber))
-        {
+
+        if ($phoneNumber == null || $phoneNumber == "") {
+            return true;
+        }
+        if (preg_match('/^(0|(\+33)|(0033))[1-9][0-9]{8}$/', $phoneNumber)) {
             return true;
         } else {
             throw new Exception("Le numéro de telephone que vous avez entré est invalide");
@@ -34,8 +37,7 @@ class Functions
     {
         if (preg_match('/^([A-Z]|[a-z]|[0-9]){7}$/', $matricule)) {
             return true;
-        } else
-            {
+        } else {
             throw new Exception("Votre identifiant de connexion est invalide, il doit comporter 7 caracteres");
         }
     }
@@ -194,7 +196,9 @@ class Functions
 
 
         }
+        return null;
     }
-}
 
+}
+//Functions::checkPhoneNumber("0678954874874");
 //-----------------------------------------------------
