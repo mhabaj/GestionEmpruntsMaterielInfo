@@ -1,41 +1,38 @@
 <?php
-require_once("Controller/DataBase.php");
-require_once("Model/User.php");
-require_once("Model/UserRegular.php");
-require_once("Model/UserAdmin.php");
-require_once ("Controller/AuthentificationController.php");
 
-if (!isset($_SESSION['id_user']))
-{
-?>
+require_once("ControllerDAO/UserDAO.php");
+ob_start();
 
-    <?php
-        //INCLUDE VIEW ICI:
-            require_once("view/authentification.view.php");
+if (!isset($_SESSION['id_user']) || ($_SESSION['id_user'] != '')) {
+    $erreur = "";
     ?>
 
+    <?php
+    //INCLUDE VIEW ICI:
+    require_once("view/authentification.view.php");
+    ?>
 
     <?php
-
 
     if (isset($_POST['submitLogin'])) {
 
-        if (!isset($_SESSION['id_user'])) {
-            $matricule = $_POST['matricule'];
-            $password = $_POST['password'];
+        $matricule = $_POST['matricule'];
+        $password = $_POST['password'];
 
-            if (strlen($matricule) == 7)
-            {
-                $authCont = new AuthentificationController($matricule, $password);
-                $authCont->identification();
+        if (strlen($matricule) == 7) {
+            if (!UserDAO::connect($matricule, $password)) {
+                echo "<p>Identifiant ou mot de passe incorrects.</p>";
+            } else {
+                ob_end_clean();
+                header('Location: DashBoard.php');
             }
 
         } else {
-            header('Location: Catalogue.php');
+            echo "<p>Matricule Entrée Invalide</p>";
         }
     }
 } else {
-    header('Location: Catalogue.php');
+    ob_end_clean();
+    header('Location: DashBoard.php');
 }
 
-?>

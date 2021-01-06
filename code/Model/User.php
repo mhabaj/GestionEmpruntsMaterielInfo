@@ -1,220 +1,79 @@
 <?php
 
-require_once "Controller/DataBase.php";
-require_once "Model/Borrow.php";
 
-abstract class User
+/**
+ * Class User
+ */
+class User
 {
-    protected $_idUser;
-    protected $_matriculeUser;
-    protected $_email;
-    protected $_password;
-    protected $_name;
-    protected $_lastName;
-    protected $_phone;
-    protected $_privilege;
-
     /**
-     * @return mixed
+     * @var
      */
-    public function getPrivilege()
-    {
-        return $this->_privilege;
-    }
-
+    private $_idUser;
     /**
-     * @param mixed $privilege
+     * @var
      */
-    public function setPrivilege($privilege): void
-    {
-        $this->_privilege = $privilege;
-    }
+    private $_matriculeUser;
+    /**
+     * @var
+     */
+    private $_email;
+    /**
+     * @var
+     */
+    private $_password;
+    /**
+     * @var
+     */
+    private $_firstName;
+    /**
+     * @var
+     */
+    private $_lastName;
+    /**
+     * @var
+     */
+    private $_phone;
+    /**
+     * @var array
+     */
+    private $_borrowList = array();
+    /**
+     * @var
+     */
+    private $_isAdmin;
 
-    protected $_borrowList = array();
 
     /**
      * User constructor.
+     * @param $id
+     * @param $email
+     * @param $matricule
+     * @param $password
+     * @param $firstName
+     * @param $lastName
+     * @param $phone
+     * @param $isAdmin
      */
-    public function __construct()
+    public function __construct($id, $email, $matricule, $password, $firstName, $lastName, $phone, $isAdmin)
     {
-
+        $this->setIdUser($id);
+        $this->setEmail($email);
+        $this->setMatriculeUser($matricule);
+        $this->setPassword($password);
+        $this->setFirstName($firstName);
+        $this->setLastName($lastName);
+        $this->setPhone($phone);
+        $this->_isAdmin = $isAdmin;
     }
 
-
     /**
-     * @param array $borrowList
+     * @param $BorrowItem
      */
     public function addBorrowToList($BorrowItem)
     {
         array_push($this->_borrowList, $BorrowItem);
     }
-
-    /**
-     * @param $ref_equip_toBorrow
-     * @param $dateFin
-     * @param $quantity
-     * @return bool Object, else null
-     * PREC : quantity > 0
-     */
-    public function borrowEquipement($ref_equip_toBorrow, $dateFin, $quantity)
-    {
-        try {
-            $indexOf = 0;
-            while ($indexOf < $quantity) {
-                $newBorrow = new Borrow($ref_equip_toBorrow, $dateFin);
-                $newBorrow->startBorrow();
-                $this->addBorrowToList($newBorrow);
-                $indexOf += 1;
-            }
-            return true;
-        } catch (Exception $e) {
-            throw new Exception("Exception User: couldn't borrow Equipment\n");
-        }
-    }
-
-    /* initalise all user attributes that has id_userToLoad */
-    public function loadingUser($id_userToLoad)
-    {
-        $bdd = new DataBase();
-        $con = $bdd->getCon();
-
-        $query = "SELECT * FROM users WHERE id_user = ? ;";
-        $stmt = $con->prepare($query);
-        $stmt->execute([$id_userToLoad]);
-
-        $result = $stmt->fetch();
-        $this->setIdUser($result['id_user']);
-        $this->setEmail($result['email_user']);
-        $this->setMatriculeUser($result['matricule_user']);
-        $this->setPassword($result['password_user']);
-        $this->setName($result['name_user']);
-        $this->setLastName($result['lastname_user']);
-        $this->setPhone($result['phone_user']);
-        $this->setPrivilege($result['isAdmin_user']);
-
-
-        $myQuery = "SELECT borrow_info.id_borrow,startdate_borrow,enddate_borrow,isActive, borrow.id_device, device.ref_equip FROM borrow_info
-                    INNER JOIN borrow INNER JOIN device ON borrow.id_borrow= borrow_info.id_borrow AND borrow.id_device= device.id_device
-                    WHERE borrow.id_user = '$this->_idUser' AND borrow_info.isActive=1;";
-
-        $myStatement = $con->query($myQuery);
-        $result = $myStatement->rowCount();
-        $borrowLignes = $myStatement->fetchAll();
-
-        if ($result == 0)
-            $this->_borrowList = array();
-        else {
-            foreach ($borrowLignes as $borrow) {
-                $BorrowItem = new Borrow($borrow['ref_equip'], $borrow['enddate_borrow']);
-                $BorrowItem->setStartDate($borrow['startdate_borrow']);
-                $BorrowItem->setDeviceId($borrow['id_device']);
-                $BorrowItem->setIdBorrow($borrow['id_borrow']);
-                array_push($this->_borrowList, $BorrowItem);
-            }
-        }
-        $bdd->closeCon();
-    }
-
-
-    public function loadUser()
-    {
-        $this->_idUser = $_SESSION['id_user'];
-
-        $bdd = new DataBase();
-        $con = $bdd->getCon();
-        $query = "SELECT * FROM users WHERE id_user = ? ;";
-        $stmt = $con->prepare($query);
-        $stmt->execute([$this->_idUser]);
-        $result = $stmt->fetch();
-        $this->setEmail($result['email_user']);
-        $this->setMatriculeUser($result['matricule_user']);
-        $this->setPassword($result['password_user']);
-        $this->setName($result['name_user']);
-        $this->setLastName($result['lastname_user']);
-        $this->setPhone($result['phone_user']);
-        $this->setPrivilege($result['isAdmin_user']);
-
-        $myQuery = "SELECT borrow_info.id_borrow,startdate_borrow,enddate_borrow,isActive, borrow.id_device, device.ref_equip FROM borrow_info 
-                    INNER JOIN borrow INNER JOIN device ON borrow.id_borrow= borrow_info.id_borrow AND borrow.id_device= device.id_device
-                    WHERE borrow.id_user = '$this->_idUser'AND borrow_info.isActive=1;";
-        $myStatement = $con->query($myQuery);
-        $result = $myStatement->rowCount();
-        $borrowLignes = $myStatement->fetchAll();
-
-        if ($result == 0)
-            $this->_borrowList = array();
-        else {
-            foreach ($borrowLignes as $borrow) {
-                $BorrowItem = new Borrow($borrow['ref_equip'], $borrow['enddate_borrow']);
-                $BorrowItem->setStartDate($borrow['startdate_borrow']);
-                $BorrowItem->setDeviceId($borrow['id_device']);
-                $BorrowItem->setIdBorrow($borrow['id_borrow']);
-                array_push($this->_borrowList, $BorrowItem);
-            }
-        }
-        $bdd->closeCon();
-    }
-
-    public function connect()
-    {
-
-        $bdd = new DataBase();
-        $con = $bdd->getCon();
-
-        //Hashage du mdp
-        $hash_mdp = sha1($this->_password);
-
-        //Inserer valeurs
-        $requete = "SELECT * FROM users WHERE matricule_user = ? AND password_user= ? ;";
-        $stmt = $con->prepare($requete);
-        $stmt->execute([$this->_matriculeUser, $hash_mdp]);
-        $result = $stmt->rowCount();
-
-        if ($result == 1) {
-            session_start();
-            $infoUser = $stmt->fetch();
-            $_SESSION['id_user'] = $infoUser['id_user'];
-            $this->_idUser = $infoUser['id_user'];
-            $this->loadUser();
-            $bdd->closeCon();
-            return TRUE;
-        }
-        else
-        {
-            $bdd->closeCon();
-            return FALSE;
-        }
-    }
-
-    public function changePassword($newPassword)
-    {
-        $bdd = new DataBase();
-        $con = $bdd->getCon();
-        $con->beginTransaction();
-        $hashedNewPassword= sha1($newPassword);
-
-        try
-        {
-            $requete = "UPDATE USERS SET password_user= ? WHERE id_user = ?;";
-            $stmt = $con->prepare($requete);
-            $stmt->execute([$hashedNewPassword,$this->_idUser]);
-            $con->commit();
-        }
-        catch (Exception $e)
-        {
-            $con->rollback();
-            throw new Exception("Could not update password");
-        }
-
-    }
-
-    public function disconnect()
-    {
-        session_unset();
-        session_destroy();
-        return TRUE;
-    }
-
 
     /**
      * @return mixed
@@ -267,17 +126,17 @@ abstract class User
     /**
      * @return mixed
      */
-    public function getName()
+    public function getFirstName()
     {
-        return $this->_name;
+        return $this->_firstName;
     }
 
     /**
      * @param mixed $name
      */
-    public function setName($name)
+    public function setFirstName($name)
     {
-        $this->_name = $name;
+        $this->_firstName = $name;
     }
 
     /**
@@ -331,7 +190,7 @@ abstract class User
     /**
      * @return mixed
      */
-    public function getBorrowList()
+    public function getBorrowList(): array
     {
         return $this->_borrowList;
     }
@@ -344,18 +203,21 @@ abstract class User
         $this->_borrowList = $borrowList;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getIsAdmin()
+    {
+        return $this->_isAdmin;
+    }
+
+    /**
+     * @param mixed $isAdmin
+     */
+    public function setIsAdmin($isAdmin): void
+    {
+        $this->_isAdmin = $isAdmin;
+    }
+
+
 }
-/*
-$user = new User();
-
-echo $user->getName() ." ";
-echo $user->getLastName() ." ";
-echo $user->getEmail() ."</br>";
-
-$user->setName("tom");
-$user->update();
-
-echo $user->getName() ." ";
-echo $user->getLastName() ." ";
-echo $user->getEmail();
-*/

@@ -30,8 +30,7 @@ class DataBase
                 $this->_con = new PDO($dsn, $this->_config['username'], $this->_config['password']);
                 $this->_con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-            } catch (PDOException $e)
-            {
+            } catch (PDOException $e) {
                 die("Erreur connexion bdd : " . $e->getMessage());
             }
         }
@@ -42,16 +41,6 @@ class DataBase
         return $this->_con;
     }
 }
-
-//$bdd = new DataBase();
-//$con = $bdd->getCon();
-
-/*$requete = "SELECT * FROM role";
-$reponse = $con->query($requete);
-$donne = $reponse->fetch();
-$nomRole = $donne['nom_role'];
-echo "<p> nome role est $nomRole</p>";
-*/
 
 
 

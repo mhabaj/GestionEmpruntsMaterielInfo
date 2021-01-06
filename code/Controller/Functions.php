@@ -1,8 +1,16 @@
 <?php
 
+/**
+ * Class Functions
+ */
 class Functions
 {
-    public static function checkRefEquip($inputRefEquip)
+    /**
+     * @param $inputRefEquip
+     * @return bool
+     * @throws Exception
+     */
+    public static function checkRefEquip($inputRefEquip): bool
     {
         if (preg_match('/^(AN|AP|XX)[0-9]{3}$/', $inputRefEquip)) {
             return true;
@@ -11,34 +19,58 @@ class Functions
         }
     }
 
+    /**
+     * @param $mail
+     * @return bool
+     * @throws Exception
+     */
     public static function checkMail($mail): bool
     {
-        if (preg_match('/[-0-9a-zA-Z.+_]+@[-0-9a-zA-Z.+_]+.[a-zA-Z]{2,4}/igm', $mail)) {
+        if (preg_match('/^([-0-9a-zA-Z.+_])+@[-0-9a-zA-Z.+_]+.[a-zA-Z]{2,4}$/', $mail)) {
             return true;
         } else {
             throw new Exception("Le mail que vous avez entré est invalide");
         }
     }
 
+    /**
+     * @param $phoneNumber
+     * @return bool
+     * @throws Exception
+     */
     public static function checkPhoneNumber($phoneNumber): bool
     {
-        if (preg_match('/((\+)33|0|0033)[1-9](\d{2}){4}/igm', $phoneNumber)) {
+
+        if ($phoneNumber == null || $phoneNumber == "") {
+            return true;
+        }
+        if (preg_match('/^(0|(\+33)|(0033))[1-9][0-9]{8}$/', $phoneNumber)) {
             return true;
         } else {
             throw new Exception("Le numéro de telephone que vous avez entré est invalide");
         }
     }
 
+    /**
+     * @param $matricule
+     * @return bool
+     * @throws Exception
+     */
     public static function checkMatricule($matricule): bool
     {
         if (preg_match('/^([A-Z]|[a-z]|[0-9]){7}$/', $matricule)) {
             return true;
         } else {
-            throw new Exception("Votre identifiant de connexion est invalide");
+            throw new Exception("Votre identifiant de connexion est invalide, il doit comporter 7 caracteres");
         }
     }
 
-    public static function checkNameMateriel($nom)
+    /**
+     * @param $nom
+     * @return bool
+     * @throws Exception
+     */
+    public static function checkNameMateriel($nom): bool
     {
         if (preg_match('/[A-Za-z0-9-._,;:#()"]{1,30}/', $nom)) {
             return true;
@@ -47,7 +79,12 @@ class Functions
         }
     }
 
-    public static function checkVersionMateriel($version)
+    /**
+     * @param $version
+     * @return bool
+     * @throws Exception
+     */
+    public static function checkVersionMateriel($version): bool
     {
         if (preg_match('/^[A-Za-z0-9-._,;:#()"]{3,15}$/', $version)) {
             return true;
@@ -56,6 +93,11 @@ class Functions
         }
     }
 
+    /**
+     * @param $nom
+     * @return bool
+     * @throws Exception
+     */
     public static function checkNameUser($nom): bool
     {
         if (preg_match('/^([A-Z]|[a-z]){1,30}$/', $nom)) {
@@ -65,6 +107,11 @@ class Functions
         }
     }
 
+    /**
+     * @param $nom
+     * @return bool
+     * @throws Exception
+     */
     public static function checkFirstNameUser($nom): bool
     {
         if (preg_match('/^([A-Z]|[a-z]){1,30}$/', $nom)) {
@@ -74,6 +121,11 @@ class Functions
         }
     }
 
+    /**
+     * @param $brand
+     * @return bool
+     * @throws Exception
+     */
     public static function checkBrandEquip($brand): bool
     {
         if (preg_match('/^([A-Za-z0-9-._,;:#()"]){1,30}$/', $brand)) {
@@ -83,6 +135,11 @@ class Functions
         }
     }
 
+    /**
+     * @param $type
+     * @return bool
+     * @throws Exception
+     */
     public static function checkTypeEquip($type): bool
     {
         if (preg_match('/^([A-Za-z0-9-._,;:#()"]){1,30}$/', $type)) {
@@ -92,6 +149,11 @@ class Functions
         }
     }
 
+    /**
+     * @param $entered_date
+     * @return bool
+     * @throws Exception
+     */
     public static function checkReservationDate($entered_date): bool
     {
         if ($entered_date != null && strtotime($entered_date) > strtotime('now')) {
@@ -101,6 +163,11 @@ class Functions
         }
     }
 
+    /**
+     * @param $quantite_equip
+     * @return bool
+     * @throws Exception
+     */
     public static function checkQuantityEquipment($quantite_equip): bool
     {
         if ($quantite_equip != null && is_numeric($quantite_equip) && $quantite_equip >= 0) {
@@ -111,7 +178,12 @@ class Functions
         }
     }
 
-    public static function uploadImage($Type)
+    /**
+     * @param $Type
+     * @return string|null
+     * @throws Exception
+     */
+    public static function uploadImage($Type): ?string
     {
         //Type is typeEquip
 //-----------------------------------------------------
@@ -127,7 +199,8 @@ class Functions
 
         $ph = basename($_FILES['photo']['name']);
 
-        $photo = $sousdossier . $ph;
+
+        $photo = $sousdossier . $Type . $ph;
 
         // UPLOAD DE L'IMAGE
         $fichier = basename($_FILES['photo']['name']);
@@ -138,44 +211,62 @@ class Functions
 
             $taille_maxi = 8388608;
             $taille = filesize($_FILES['photo']['tmp_name']);
-            $extensions = array('.PNG', '.png', '.jpg', '.JPG', '.jpeg', '.JPEG');
+            $extensions = array('.PNG', '.png', '.jpg', '.JPG', '.jpeg', '.JPEG', 'gif', 'GIF');
             $extension = strrchr($_FILES['photo']['name'], '.');
             //Début des vérifications de sécurité...
             if (!in_array($extension, $extensions)) //Si l'extension n'est pas dans le tableau
             {
-                $erreur = "<script> triggerMessageBox('error','Seulement les photos de type png, jpg, jpeg!') </script>";
+                $erreur = "Seulement les photos de type png, jpg, jpeg et gif sont acceptes";
 
             }
 
             if ($taille > $taille_maxi) {
-                $erreur = "<script> triggerMessageBox('error','Photo trop grande ') </script>";
-
-
+                $erreur = "Photo trop grande ";
             }
 
             if (empty($erreur)) //S'il n'y a pas d'erreur, on upload
             {
                 //On formate le nom du fichier ici...
-                $fichier = strtr($fichier,
-                    'ÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÒÓÔÕÖÙÚÛÜÝàáâãäåçèéêëìíîïðòóôõöùúûüýÿ',
-                    'AAAAAACEEEEIIIIOOOOOUUUUYaaaaaaceeeeiiiioooooouuuuyy');
+                $table = array(
+                    'Š' => 'S', 'š' => 's', 'Đ' => 'Dj', 'đ' => 'dj', 'Ž' => 'Z', 'ž' => 'z', 'Č' => 'C', 'č' => 'c', 'Ć' => 'C', 'ć' => 'c',
+                    'À' => 'A', 'Á' => 'A', 'Â' => 'A', 'Ã' => 'A', 'Ä' => 'A', 'Å' => 'A', 'Æ' => 'A', 'Ç' => 'C', 'È' => 'E', 'É' => 'E',
+                    'Ê' => 'E', 'Ë' => 'E', 'Ì' => 'I', 'Í' => 'I', 'Î' => 'I', 'Ï' => 'I', 'Ñ' => 'N', 'Ò' => 'O', 'Ó' => 'O', 'Ô' => 'O',
+                    'Õ' => 'O', 'Ö' => 'O', 'Ø' => 'O', 'Ù' => 'U', 'Ú' => 'U', 'Û' => 'U', 'Ü' => 'U', 'Ý' => 'Y', 'Þ' => 'B', 'ß' => 'Ss',
+                    'à' => 'a', 'á' => 'a', 'â' => 'a', 'ã' => 'a', 'ä' => 'a', 'å' => 'a', 'æ' => 'a', 'ç' => 'c', 'è' => 'e', 'é' => 'e',
+                    'ê' => 'e', 'ë' => 'e', 'ì' => 'i', 'í' => 'i', 'î' => 'i', 'ï' => 'i', 'ð' => 'o', 'ñ' => 'n', 'ò' => 'o', 'ó' => 'o',
+                    'ô' => 'o', 'õ' => 'o', 'ö' => 'o', 'ø' => 'o', 'ù' => 'u', 'ú' => 'u', 'û' => 'u', 'ý ' => 'y', 'ý' => 'y', 'þ' => 'b',
+                    'ÿ' => 'y', 'Ŕ' => 'R', 'ŕ' => 'r',
+                );
+                $fichier = strtr($fichier, $table);
                 $fichier = preg_replace('/([^.a-zA-Z0-9]+)/i', '-', $fichier);
-                if (move_uploaded_file($_FILES['photo']['tmp_name'], $sousdossier . $fichier)) {
-                    return $photo;
-                } else //Sinon (la fonction renvoie FALSE).
-                {
-                    echo "<script> triggerMessageBox('error','Erreur interne, image non traité') </script>";
-                    $photo = '';
-                    return $photo;
+
+
+                $fichierSplit = explode(".", $fichier);
+                $fichierOrig = $fichierSplit[0];
+                $fichierOrigbackupName = $fichierSplit[0];
+                $num = 0;
+                $filenameFULL = $fichier;
+                while (file_exists($sousdossier . $fichierOrig . "." . $fichierSplit[1])) {
+                    $fichierOrig = (string)$fichierOrigbackupName . "(" . $num . ")";
+                    $filenameFULL = $fichierOrig . "." . $fichierSplit[1];
+                    $num++;
+                }
+
+                if (move_uploaded_file($_FILES['photo']['tmp_name'], $sousdossier . $filenameFULL)) {
+                    return $sousdossier . $filenameFULL;
+                } else {
+                    throw new Exception("Erreur Interne Upload Image");
                 }
             } else {
-                echo $erreur;
+                throw new Exception($erreur);
+
             }
 
 
         }
+        return null;
     }
+
 }
-
-
+//Functions::checkPhoneNumber("0678954874874");
 //-----------------------------------------------------
