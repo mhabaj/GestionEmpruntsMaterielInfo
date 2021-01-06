@@ -12,7 +12,7 @@ class UserDAO
      * @param $id
      * @return bool
      */
-    public static function userExists($id): bool
+    public function userExists($id): bool
     {
         $bdd = new DataBase();
         $con = $bdd->getCon();
@@ -33,7 +33,7 @@ class UserDAO
      * @param int $id
      * @return User|null
      */
-    public static function getUserByID(int $id): ?User
+    public function getUserByID(int $id): ?User
     {
         $bdd = new DataBase();
         $con = $bdd->getCon();
@@ -82,7 +82,7 @@ class UserDAO
      * @param $newPassword
      * @throws Exception
      */
-    public static function changeUserPassword($user, $newPassword)
+    public function changeUserPassword($user, $newPassword)
     {
         $bdd = new DataBase();
         $con = $bdd->getCon();
@@ -110,7 +110,7 @@ class UserDAO
      * @param $_phone
      * @param $_isAdmin_user
      */
-    public static function modifyUser($_idUser, $_matricule_user, $_email_user, $_name_user, $_lastname_user, $_phone, $_isAdmin_user)
+    public function modifyUser($_idUser, $_matricule_user, $_email_user, $_name_user, $_lastname_user, $_phone, $_isAdmin_user)
     {
         $bdd = new DataBase();
         $con = $bdd->getCon();
@@ -135,7 +135,7 @@ class UserDAO
      * @param $mdp
      * @return bool
      */
-    public static function connect($matricule, $mdp): bool
+    public function connect($matricule, $mdp): bool
     {
         $bdd = new DataBase();
         $con = $bdd->getCon();
@@ -167,7 +167,7 @@ class UserDAO
      * @param $id_user_toDisplay
      * @return null
      */
-    public static function getHistory($id_user_toDisplay)
+    public function getHistory($id_user_toDisplay)
     {
         try {
             $bdd = new DataBase();
@@ -195,7 +195,7 @@ class UserDAO
      * @return bool
      * @throws Exception
      */
-    public static function createUser($_matriculeUser, $_emailUser, $_passwordUser, $_firstNameUser, $_lastnameUser, $_phone, $_isAdminUser): bool
+    public function createUser($_matriculeUser, $_emailUser, $_passwordUser, $_firstNameUser, $_lastnameUser, $_phone, $_isAdminUser): bool
     {
         $bdd = new DataBase();
         $con = $bdd->getCon();

@@ -21,7 +21,8 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="com.jetbrains.php.phpunit.codeGeneration.PhpNewTestDialog.defaultLibrary" value="PHPUnit" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/code/Tests" />
     <property name="settings.editor.selected.configurable" value="configurable.group.editor" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
@@ -48,7 +49,7 @@
       <workItem from="1608917082498" duration="4394000" />
       <workItem from="1608992302951" duration="8782000" />
       <workItem from="1609065772693" duration="5873000" />
-      <workItem from="1609956327229" duration="72000" />
+      <workItem from="1609956327229" duration="3308000" />
     </task>
     <servers />
   </component>
@@ -56,10 +57,18 @@
     <option name="version" value="3" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="835" y="275" key="FileChooserDialogImpl" timestamp="1609966832009">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="835" y="275" key="FileChooserDialogImpl/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1609966832009" />
     <state x="794" y="443" key="NewPhpFileDialog" timestamp="1608735380918">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="794" y="443" key="NewPhpFileDialog/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1608735380918" />
+    <state x="683" y="264" width="745" height="512" key="com.jetbrains.php.test.PhpNewTestDialog" timestamp="1609966833831">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="683" y="264" width="745" height="512" key="com.jetbrains.php.test.PhpNewTestDialog/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1609966833831" />
     <state x="478" y="111" width="1640" height="1027" key="dock-window-1" timestamp="1608739753018">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
