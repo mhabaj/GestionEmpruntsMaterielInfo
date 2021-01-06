@@ -32,7 +32,7 @@
             <input type="submit" value="Historique de l'utilisateur" name="History"/>
         </form>
 
-        <h3> Liste des emprunts courants de l'utilisateurs </h3>
+        <h3> Liste des emprunts courants de l'utilisateur </h3>
 
         <?php
 
