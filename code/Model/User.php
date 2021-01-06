@@ -5,19 +5,21 @@ require_once "Model/Borrow.php";
 
 class User
 {
-    protected $_idUser;
-    protected $_matriculeUser;
-    protected $_email;
-    protected $_password;
-    protected $_firstName;
-    protected $_lastName;
-    protected $_phone;
-    protected $_borrowList = array();
+    private $_idUser;
+    private $_matriculeUser;
+    private $_email;
+    private $_password;
+    private $_firstName;
+    private $_lastName;
+    private $_phone;
+    private $_borrowList = array();
+    private $_isAdmin;
+
 
     /**
      * User constructor.
      */
-    public function __construct($id, $email, $matricule, $password, $firstName, $lastName, $phone)
+    public function __construct($id, $email, $matricule, $password, $firstName, $lastName, $phone, $isAdmin)
     {
         $this->setIdUser($id);
         $this->setEmail($email);
@@ -26,6 +28,7 @@ class User
         $this->setFirstName($firstName);
         $this->setLastName($lastName);
         $this->setPhone($phone);
+        $this->_isAdmin = $isAdmin;
     }
 
     /**
@@ -163,5 +166,22 @@ class User
     {
         $this->_borrowList = $borrowList;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getIsAdmin()
+    {
+        return $this->_isAdmin;
+    }
+
+    /**
+     * @param mixed $isAdmin
+     */
+    public function setIsAdmin($isAdmin): void
+    {
+        $this->_isAdmin = $isAdmin;
+    }
+
 
 }

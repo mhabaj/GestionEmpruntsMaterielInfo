@@ -11,10 +11,8 @@ class CatalogueController
 
     public function getEquipmentList()
     {
-        if( isset($_GET['type']))
-        {
-            try
-            {
+        if (isset($_GET['type'])) {
+            try {
                 $bdd = new DataBase();
                 $con = $bdd->getCon();
 
@@ -23,39 +21,30 @@ class CatalogueController
                 $myStatement->execute([$_GET['type']]);
 
 
-                while($donnees = $myStatement->fetch())
-                {
+                while ($donnees = $myStatement->fetch()) {
                     require "view/resultSearchEquipment.view.php";
                 }
-            }
-            catch(PDOException $e)
-            {
+            } catch (PDOException $e) {
                 throw new PDOException("Error!: " . $e->getMessage());
             }
             $myStatement->closeCursor();
-        }
-        else
-        {
-            try
-            {
+        } else {
+            try {
                 $bdd = new DataBase();
                 $con = $bdd->getCon();
 
                 $queryEquipments = "SELECT DISTINCT(type_equip) FROM equipment ;";
                 $myStatement = $con->query($queryEquipments);
 
-                while($donnees = $myStatement->fetch())
-                { ?>
-                    <a href="DashBoard.php?type=<?php echo $donnees['type_equip']?>">
+                while ($donnees = $myStatement->fetch()) { ?>
+                    <a href="DashBoard.php?type=<?php echo $donnees['type_equip'] ?>">
                         <div>
-                            <strong> Type </strong> : <?php echo $donnees['type_equip'];?> <br/>
+                            <strong> Type </strong> : <?php echo $donnees['type_equip']; ?> <br/>
                         </div>
                     </a>
                     <?php
                 }
-            }
-            catch(PDOException $e)
-            {
+            } catch (PDOException $e) {
                 throw new PDOException("Error!: " . $e->getMessage());
             }
             $myStatement->closeCursor();
@@ -82,9 +71,7 @@ class CatalogueController
             }
             $myStatement->closeCursor();
         } else {
-            ?>
-            <label>Aucun document ne correspond aux termes de recherche spécifiés.</label>
-            <?php
+            throw new Exception("Aucun équipement ne correspond aux termes de recherche spécifiés.");
         }
         $myStatement->closeCursor();
     }
@@ -97,24 +84,17 @@ class CatalogueController
 
         $queryEquipments = "SELECT * FROM users WHERE matricule_user LIKE ?;";
         $myStatement = $con->prepare($queryEquipments);
-        $myStatement->execute([$UserToSearch."%"]);
+        $myStatement->execute([$UserToSearch . "%"]);
 
-        if($myStatement->rowCount() > 0)
-        {
+        if ($myStatement->rowCount() > 0) {
             while ($donnees = $myStatement->fetch()) {
                 require "view/resultSearchUser.view.php";
             }
-        }
-        else{
-            ?>
-            <label>Aucun document ne correspond aux termes de recherche spécifiés.</label>
-            <?php
+        } else {
+            throw new Exception("Aucun document ne correspond aux termes de recherche spécifiés.");
         }
         $myStatement->closeCursor();
     }
-
-
-
 
 
 }

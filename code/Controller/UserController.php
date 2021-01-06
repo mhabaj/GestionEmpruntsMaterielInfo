@@ -1,15 +1,30 @@
 <?php
 require_once("Functions.php");
+require_once("ControllerDAO/BorrowDAO.php");
 
+
+/**
+ * Class UserController
+ */
 class UserController
 {
+    /**
+     * @var User|null
+     */
     private $_user;
 
+    /**
+     * UserController constructor.
+     * @param $id
+     */
     public function __construct($id)
     {
         $this->_user = UserDAO::getUserByID($id);
     }
 
+    /**
+     * @return bool
+     */
     public function disconnect()
     {
         session_unset();
@@ -39,6 +54,10 @@ class UserController
         }
     }
 
+    /**
+     * @param $id_borrow_toDel
+     * @throws Exception
+     */
     public function endborrow($id_borrow_toDel)
     {
         $cpt_array = 0;
@@ -53,78 +72,89 @@ class UserController
     }
 
 
-
-	public function createUser($matricule,$password,$passwordRepeat,$email,$lastname,$name,$phone,$isAdmin)
+    /**
+     * @param $matricule
+     * @param $password
+     * @param $passwordRepeat
+     * @param $email
+     * @param $lastname
+     * @param $name
+     * @param $phone
+     * @param $isAdmin
+     * @return bool
+     * @throws Exception
+     */
+    public function createUser($matricule, $password, $passwordRepeat, $email, $lastname, $name, $phone, $isAdmin)
     {
-        if ($passwordRepeat != $password)
-        {
+        if ($passwordRepeat != $password) {
             throw new Exception("Les deux mots de passe ne correspondent pas !");
         }
 
-        try
-        {
-            if (Functions::checkMatricule($matricule) == true && Functions::checkMail($email) == true && Functions::checkPhoneNumber($phone) == true && Functions::checkNameUser($lastname) == true && Functions::checkFirstNameUser($name) == true)
-            {
+        try {
+            if (Functions::checkMatricule($matricule) == true && Functions::checkMail($email) == true && Functions::checkPhoneNumber($phone) == true && Functions::checkNameUser($lastname) == true && Functions::checkFirstNameUser($name) == true) {
                 if ($isAdmin == 'ok')
                     $isAdmin = 1;
                 else
                     $isAdmin = 0;
 
-                UserDAO::createUser($matricule,$email,$password,$name,$lastname,$phone,$isAdmin);
+                UserDAO::createUser($matricule, $email, $password, $name, $lastname, $phone, $isAdmin);
                 return true;
-            }
-            else
+            } else
                 return false;
-        }
-        catch (Exception $e)
-        {
+        } catch (Exception $e) {
             throw new Exception($e->getMessage());
         }
 
     }
 
-    public function modifyUser($id,$matricule,$email,$lastname,$name,$phone,$isAdmin)
+
+    /**
+     * @param $id
+     * @param $matricule
+     * @param $email
+     * @param $lastname
+     * @param $name
+     * @param $phone
+     * @param $isAdmin
+     * @return bool
+     * @throws Exception
+     */
+    public function modifyUser($id, $matricule, $email, $lastname, $name, $phone, $isAdmin): bool
     {
-        try
-        {
-            if (Functions::checkMatricule($matricule) == true && Functions::checkMail($email) == true && Functions::checkPhoneNumber($phone) == true && Functions::checkNameUser($lastname) == true && Functions::checkFirstNameUser($name) == true)
-            {
 
-                if ($isAdmin == 'ok')
-                    $isAdmin = 1;
-                else
-                    $isAdmin = 0;
+        if (Functions::checkMatricule($matricule) == true && Functions::checkMail($email) == true && Functions::checkPhoneNumber($phone) == true && Functions::checkNameUser($lastname) == true && Functions::checkFirstNameUser($name) == true) {
 
-                UserDAO::modifyUser($id, $matricule, $email, $name, $lastname, $phone, $isAdmin);
-                return true;
-            }
+            if ($isAdmin == 'ok')
+                $isAdmin = 1;
             else
-                return false;
-        }
-        catch (Exception $e)
-        {
-            echo $e->getMessage();
+                $isAdmin = 0;
+
+            UserDAO::modifyUser($id, $matricule, $email, $name, $lastname, $phone, $isAdmin);
+            return true;
+        } else
             return false;
-        }
+
     }
 
-    public function modifyPassword($password,$passwordRepeat)
+    /**
+     * @param $password
+     * @param $passwordRepeat
+     * @return bool
+     */
+    public function modifyPassword($password, $passwordRepeat)
     {
-        try
-        {
-            if ($password == $passwordRepeat)
-            {
+        if ($password == '' || $password == null) {
+            return false;
+        }
+        try {
+            if ($password == $passwordRepeat) {
                 UserDAO::changeUserPassword($this->_user, $password);
-                header('Location: DetailUser.php?id_user_toDisplay='.$this->_user->getIdUser());
+
                 return true;
-            }
-            else
-            {
+            } else {
                 return false;
             }
-        }
-        catch(Exception $e)
-        {
+        } catch (Exception $e) {
             echo $e->getMessage();
         }
     }

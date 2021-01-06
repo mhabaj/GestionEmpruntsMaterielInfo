@@ -2,34 +2,33 @@
 require_once("Controller/control-session.php");
 require_once("Controller/UserController.php");
 require_once("ControllerDAO/UserDAO.php");
+ob_start();
 
-if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1  && isset($_GET['id_user_toDisplay']) || $_GET['id_user_toDisplay'] == $_SESSION['id_user'] && isset($_GET['id_user_toDisplay'])) {
-    if(!UserDAO::userExists($_GET['id_user_toDisplay']))
+if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1 && isset($_GET['id_user_toDisplay']) || $_GET['id_user_toDisplay'] == $_SESSION['id_user'] && isset($_GET['id_user_toDisplay'])) {
+    if (!UserDAO::userExists($_GET['id_user_toDisplay']))
         header('Location: DashBoard.php');
 
-    try
-    {
+    try {
         $finalStatement = UserDAO::getHistory($_GET['id_user_toDisplay']);
-    }
-    catch (Exception $e)
-    {
-        echo $e->getMessage();
-    }
-    ?>
 
-    <?php
-    //On include view ici
-    require_once("View/historyUser.view.php");
-    ?>
 
-    <?php
-}
-else{
-    ?>
-    <label>Erreur veuillez contacter le support</label>
-    <?php
+        if (isset($finalStatement) && $finalStatement != null) {
+            if ($finalStatement->rowCount() > 0) {
+                while ($donnees = $finalStatement->fetch()) {
+                    require "view/historyUser.view.php";
+
+                }
+            } else {
+                echo "<p>L'utilisateur n'a emprunté aucun objet jusqu'à présent.</p>";
+            }
+        }
+
+    } catch (Exception $e) {
+        echo "<p>" . $e->getMessage() . "</p>";
+    }
+
+
+} else {
+    echo "<p>Erreur veuillez contacter le support</p>";
 }
 ?>
-
-</body>
-</html>

@@ -122,7 +122,7 @@ class EquipmentDAO
     }
 
     /* PRECONDITION ON NE PEUT PAS DELETE DES DEVICES DONT LE CHAMP isAVAILABLE EST FALSE, $desiredQuantity ne peut pas etre < 0, */
-    public function updateDeviceCount($_ref_equip, $desiredQuantity)
+    public static function updateDeviceCount($_ref_equip, $desiredQuantity)
     {
         $bdd = new DataBase();
         $con = $bdd->getCon();
