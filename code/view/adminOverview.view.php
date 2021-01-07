@@ -15,9 +15,7 @@ if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1) {
         <input type="search" placeholder="Matricule de l'utilisateur" name="UserToSearch">
         <button class="btn btn-primary" type="submit" name="startSearchingUser">Rechercher utilisateur</button>
     </form>
-
-
-
+    
     <?php
     require_once("footer.view.php");
 }
