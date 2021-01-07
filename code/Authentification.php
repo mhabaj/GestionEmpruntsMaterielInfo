@@ -1,38 +1,41 @@
 <?php
-
-require_once("ControllerDAO/UserDAO.php");
+$title = "Page d'authentification";
+require_once("Controller/UserController.php");
+$erreur = "";
 ob_start();
 
 if (!isset($_SESSION['id_user']) || ($_SESSION['id_user'] != '')) {
-    $erreur = "";
-    ?>
 
-    <?php
-    //INCLUDE VIEW ICI:
-    require_once("view/authentification.view.php");
-    ?>
-
-    <?php
 
     if (isset($_POST['submitLogin'])) {
 
         $matricule = $_POST['matricule'];
         $password = $_POST['password'];
 
-        if (strlen($matricule) == 7) {
-            if (!UserDAO::connect($matricule, $password)) {
-                echo "<p>Identifiant ou mot de passe incorrects.</p>";
-            } else {
-                ob_end_clean();
-                header('Location: DashBoard.php');
-            }
+        try {
+            if (Functions::checkMatricule($matricule)) {
+                $tmpUserCtrl = new UserController();
+                if (!$tmpUserCtrl->getUserDAO()->connect($matricule, $password)) {
+                    $erreur = "<p>Identifiant ou mot de passe incorrects.</p>";
+                } else {
+                    ob_end_clean();
+                    header('Location: DashBoard.php');
+                }
 
-        } else {
-            echo "<p>Matricule Entrée Invalide</p>";
+            }
+        } catch (Exception $e) {
+
+            $erreur = "<p>" . $e->getMessage() . "</p>";
+
         }
     }
+
+
+    //INCLUDE VIEW ICI:
+    require_once("view/authentification.view.php");
+
 } else {
-    ob_end_clean();
+    //ob_end_clean();
     header('Location: DashBoard.php');
 }
 

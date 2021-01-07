@@ -58,7 +58,7 @@ require_once("navbar.view.php");
 
 
     <br/>
-    <button type="submit" name="submitEquipment">Create Equipment</button>
+    <button class="btn btn-success" type="submit" name="submitEquipment">Create Equipment</button>
 </form>
 <?php
 require_once("footer.view.php");

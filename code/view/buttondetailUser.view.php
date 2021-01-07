@@ -1,5 +1,6 @@
-<html>
-<body>
+<?php
+require_once("dashboard.view.php");
+?>
 
 <form method="get" action="DetailUser.php">
     <button type="submit"
