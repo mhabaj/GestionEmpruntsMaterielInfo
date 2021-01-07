@@ -11,9 +11,12 @@ require_once("navbar.view.php");
 
         </p>
         <!-- /Intro-->
-    <h2>Informations sur l'utilisateur </h2>
+
 
     <div>
+    <div class="panel panel-info">
+        <div class="panel-heading"><h3>Informations sur l'utilisateur</h3></div>
+        <div class="panel-body">
         <p> Nom
             : <?php if (isset($userController) && $userController != null && isset($currentUser) && $currentUser != null) echo $currentUser->getLastName(); ?> </p>
         <p> Prénom
@@ -27,7 +30,8 @@ require_once("navbar.view.php");
         <p> numéro de telephone
             : <?php if (isset($userController) && $userController != null && isset($currentUser) && $currentUser != null) echo $currentUser->getPhone(); ?> </p>
         <br/>
-
+        </div>
+    </div>
         <form method="POST" enctype="multipart/form-data"
               action="ModifyUser.php?id_user_toDisplay=<?php if (isset($_GET['id_user_toDisplay'])) echo $_GET['id_user_toDisplay'] ?>">
             <input class="btn btn-primary" type="submit" value="Modifier Utilisateur" name="modifyUser"/>
@@ -64,7 +68,7 @@ require_once("navbar.view.php");
         </div>
     </div>
 
-            
+
 
     <?php
     if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1) {

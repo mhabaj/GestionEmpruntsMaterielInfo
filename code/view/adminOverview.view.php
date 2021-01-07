@@ -13,7 +13,7 @@ if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1) {
     <br>
     <form method="POST" enctype="multipart/form-data">
         <input type="search" placeholder="Matricule de l'utilisateur" name="UserToSearch">
-        <button class="btn btn-primary" type="submit" name="startSearchingUser">Rechercher utilisateur</button>
+        <button class="btn btn-success" type="submit" name="startSearchingUser">Rechercher utilisateur</button>
     </form>
     
     <?php
