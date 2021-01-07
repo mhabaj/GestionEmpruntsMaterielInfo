@@ -125,6 +125,7 @@ class UserController
             && Functions::checkNameUser($lastname) == true
             && Functions::checkFirstNameUser($name) == true) {
 
+            $this->_user = new User();
 
             $this->_userDAO->createUser($matricule, $email, $password, $name, $lastname, $phone, $isAdmin);
             $this->_user->setMatriculeUser($matricule);
