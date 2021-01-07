@@ -36,10 +36,13 @@ class CatalogueController
                 $queryEquipments = "SELECT DISTINCT(type_equip) FROM equipment ;";
                 $myStatement = $con->query($queryEquipments);
 
+                ?>
+                <strong> Affichage par Type</strong>
+                <?php
                 while ($donnees = $myStatement->fetch()) { ?>
                     <a href="DashBoard.php?type=<?php echo $donnees['type_equip'] ?>">
                         <div>
-                            <strong> Type </strong> : <?php echo $donnees['type_equip']; ?> <br/>
+                            <?php echo $donnees['type_equip']; ?> <br/>
                         </div>
                     </a>
                     <?php

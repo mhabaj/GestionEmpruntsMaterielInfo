@@ -17,8 +17,8 @@ if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1 && isset(
             if ($finalStatement->rowCount() > 0) {
                 while ($donnees = $finalStatement->fetch()) {
                     require "view/historyUser.view.php";
-
                 }
+
             } else {
                 echo "<p>L'utilisateur n'a emprunté aucun objet jusqu'à présent.</p>";
             }
@@ -33,3 +33,4 @@ if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1 && isset(
     echo "<p>Erreur veuillez contacter le support</p>";
 }
 
+require_once("view/footer.view.php");
