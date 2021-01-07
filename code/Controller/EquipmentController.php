@@ -95,6 +95,7 @@ class EquipmentController
                 && Functions::checkBrandEquip($this->_equipment->getBrandEquip()) && Functions::checkTypeEquip($this->_equipment->getTypeEquip())
                 && Functions::checkVersionMateriel($this->_equipment->getVersionEquip()) && Functions::checkQuantityEquipment($Quantity)) {
                 $this->_equipmentDAO->createEquipment($this->_equipment->getRefEquip(), $this->_equipment->getTypeEquip(), $this->_equipment->getBrandEquip(), $this->_equipment->getNameEquip(), $this->_equipment->getVersionEquip(), $Quantity);
+                return true;
             }
         } catch (Exception | PDOException $e) {
             throw new Exception($e->getMessage());

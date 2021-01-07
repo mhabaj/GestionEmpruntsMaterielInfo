@@ -5,6 +5,7 @@ require_once "Model/Equipment.php";
 require_once "Controller/Functions.php";
 require_once "Controller/EquipmentController.php";
 require_once("ControllerDAO/UserDAO.php");
+require_once("Controller/UserController.php");
 ob_start();
 
 
