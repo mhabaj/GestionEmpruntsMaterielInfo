@@ -105,18 +105,19 @@ class UserController
      * @return bool
      * @throws Exception
      */
-    public
-    function createUser($matricule, $password, $passwordRepeat, $email, $lastname, $name, $phone, $isAdmin): bool
+    public function createUser($matricule, $password, $passwordRepeat, $email, $lastname, $name, $phone, $isAdmin): bool
     {
         if ($passwordRepeat != $password) {
             throw new Exception("Les deux mots de passe ne correspondent pas !");
         }
 
-        if (Functions::checkMatricule($matricule) == true && Functions::checkMail($email) == true && Functions::checkPhoneNumber($phone) == true && Functions::checkNameUser($lastname) == true && Functions::checkFirstNameUser($name) == true) {
-            if ($isAdmin == 'ok')
-                $isAdmin = 1;
-            else
-                $isAdmin = 0;
+        if ($this->_userDAO->matriculeUserExists($matricule) == false
+            && Functions::checkMatricule($matricule) == true
+            && Functions::checkMail($email) == true
+            && Functions::checkPhoneNumber($phone) == true
+            && Functions::checkNameUser($lastname) == true
+            && Functions::checkFirstNameUser($name) == true) {
+
 
             $this->_userDAO->createUser($matricule, $email, $password, $name, $lastname, $phone, $isAdmin);
             return true;

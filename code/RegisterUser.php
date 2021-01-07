@@ -12,10 +12,6 @@ if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1) {
 
     //on include inscriptions.view
     require_once('view/inscription.view.php');
-    ?>
-
-    <?php
-
 
     /* si l'admin décide de créer un utilisateur*/
     if (isset($_POST['submitInscription'])) {
@@ -24,7 +20,13 @@ if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1) {
 
             if (isset($_POST['administrateur']) && isset($_POST['matricule']) && isset($_POST['password']) && isset($_POST['passwordrepeat']) && isset($_POST['name']) && isset($_POST['lastname'])
                 && isset($_POST['phone']) && isset($_POST['administrateur'])) {
-                if ($userController->createUser($_POST['matricule'], $_POST['password'], $_POST['passwordrepeat'], $_POST['email'], $_POST['name'], $_POST['lastname'], $_POST['phone'], $_POST['administrateur']) == true) {
+
+                $isAdmin = 0;
+                if ($_POST['administrateur'] == 'ok')
+                    $isAdmin = 1;
+
+
+                if ($userController->createUser($_POST['matricule'], $_POST['password'], $_POST['passwordrepeat'], $_POST['email'], $_POST['name'], $_POST['lastname'], $_POST['phone'], $isAdmin) == true) {
                     ob_end_clean();
 
                     header('Location:DashBoard.php');

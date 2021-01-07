@@ -9,6 +9,9 @@ class EquipmentDAO
 {
 
 
+    /**
+     * EquipmentDAO constructor.
+     */
     public function __construct()
     {
     }
@@ -65,9 +68,10 @@ class EquipmentDAO
      * @param $brand_equipUpd
      * @param $name_equipUpd
      * @param $version_equipUpd
+     * @return bool
      * @throws Exception
      */
-    public function modifyEquipment($ref_equipToUpdate, $ref_equipUpd, $type_equipUpd, $brand_equipUpd, $name_equipUpd, $version_equipUpd)
+    public function modifyEquipment($ref_equipToUpdate, $ref_equipUpd, $type_equipUpd, $brand_equipUpd, $name_equipUpd, $version_equipUpd): bool
     {
         $bdd = new DataBase();
         $con = $bdd->getCon();
@@ -79,11 +83,14 @@ class EquipmentDAO
             $myStatement = $con->prepare($requestUpdate);
             $myStatement->execute([$ref_equipUpd, $type_equipUpd, $brand_equipUpd, $name_equipUpd, $version_equipUpd, $ref_equipToUpdate]);
             $con->commit();
+            $bdd->closeCon();
+
+            return true;
         } catch (PDOException $e) {
             $con->rollback();
+            $bdd->closeCon();
             throw new Exception("Error ModifyEquipment() : " . $e->getMessage());
         }
-        $bdd->closeCon();
     }
 
     /* prec le ref equipement ne doit pas deja etre dans la bdd et quantity >0   */
@@ -94,8 +101,10 @@ class EquipmentDAO
      * @param $name_equipNew
      * @param $version_equipNew
      * @param $quantity
+     * @return bool
+     * @throws Exception
      */
-    public function createEquipment($_ref_equipNew, $type_equipNew, $brand_equipNew, $name_equipNew, $version_equipNew, $quantity)
+    public function createEquipment($_ref_equipNew, $type_equipNew, $brand_equipNew, $name_equipNew, $version_equipNew, $quantity): bool
     {
         $bdd = new DataBase();
         $con = $bdd->getCon();
@@ -117,17 +126,23 @@ class EquipmentDAO
             $myStatement = $con->prepare($requestCreate);
             $myStatement->execute(["", $_ref_equipNew]);
 
-
             $con->commit();
+            $bdd->closeCon();
+            return true;
         } catch (PDOException $e) {
             $con->rollback();
-            print "Error!: " . $e->getMessage() . "</br>";
+            $bdd->closeCon();
+            throw new Exception($e->getMessage());
         }
-        $bdd->closeCon();
     }
 
     /* PRECONDITION ON NE PEUT PAS DELETE DES DEVICES DONT LE CHAMP isAVAILABLE EST FALSE, $desiredQuantity ne peut pas etre < 0, */
-    public function updateDeviceCount($_ref_equip, $desiredQuantity)
+    /**
+     * @param $_ref_equip
+     * @param $desiredQuantity
+     * @return bool
+     */
+    public function updateDeviceCount($_ref_equip, $desiredQuantity): bool
     {
         $bdd = new DataBase();
         $con = $bdd->getCon();
@@ -152,7 +167,7 @@ class EquipmentDAO
                 }
                 $indexOf++;
             }
-
+            return true;
         } elseif ($numberOfDevices < $desiredQuantity) {
             $indexOf = 0;
             while ($indexOf < ($desiredQuantity - $numberOfDevices)) {
@@ -168,9 +183,9 @@ class EquipmentDAO
                 }
                 $indexOf++;
             }
-
+            return true;
         }
-
+        return false;
     }
 
 
@@ -277,11 +292,6 @@ class EquipmentDAO
 
         return false;
     }
-
-    /**
-     * @param $ref_equip
-     * @return bool
-     */
 
 
     /**

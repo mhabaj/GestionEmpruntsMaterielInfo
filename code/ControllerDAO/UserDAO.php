@@ -221,8 +221,7 @@ class UserDAO
      * @return bool
      * @throws Exception
      */
-    public
-    function createUser($_matriculeUser, $_emailUser, $_passwordUser, $_firstNameUser, $_lastnameUser, $_phone, $_isAdminUser): bool
+    public function createUser($_matriculeUser, $_emailUser, $_passwordUser, $_firstNameUser, $_lastnameUser, $_phone, $_isAdminUser): bool
     {
         $bdd = new DataBase();
         $con = $bdd->getCon();
