@@ -11,8 +11,6 @@ require_once("navbar.view.php");
 
         </p>
         <!-- /Intro-->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
     <h2>Informations sur l'utilisateur </h2>
 
     <div>
@@ -55,9 +53,9 @@ require_once("navbar.view.php");
         {
 
         ?>
-
-    <div class="card" style="width: 60%;">
-        <div class="card-body">
+    <br/>
+    <div class="panel panel-default" style="width: 60%;">
+        <div class="panel-body">
             <p> Emprunt numero : <?php echo $borrowedItem->getIdBorrow(); ?></p>
             <p> Reference de l'équipement emprunté : <?php echo $borrowedItem->getRefEquip(); ?> </p>
             <p> Id du matériel physique preté : <?php echo $borrowedItem->getDeviceId(); ?>
@@ -66,8 +64,7 @@ require_once("navbar.view.php");
         </div>
     </div>
 
-
-        <br/>
+            
 
     <?php
     if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1) {
