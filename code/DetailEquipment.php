@@ -45,7 +45,7 @@ if (isset($_GET['ref_equip']) && $_GET['ref_equip'] != null) {
 
         try {
             if ($currentEquipment != null) {
-                $userController->startBorrow($currentEquipment->getRefEquip(), $dateFinBorrow, $quantite_equip);
+                $userController->startBorrow($equipmentController, $currentEquipment->getRefEquip(), $dateFinBorrow, $quantite_equip,[$_SESSION['id_user']]);
             }
         } catch (Exception $e) {
             echo "<p>" . $e->getMessage() . "</p>";

@@ -40,7 +40,6 @@ class Functions
      */
     public static function checkPhoneNumber($phoneNumber): bool
     {
-
         if ($phoneNumber == null || $phoneNumber == "") {
             return true;
         }
@@ -72,7 +71,7 @@ class Functions
      */
     public static function checkNameMateriel($nom): bool
     {
-        if (preg_match('/[A-Za-z0-9-._,;:#()"]{1,30}/', $nom)) {
+        if (preg_match('/^[A-Za-z0-9-._,:#()"]{1,30}$/', $nom)) {
             return true;
         } else {
             throw new Exception("Le nom du matériel que vous avez entré est invalide");
@@ -170,7 +169,7 @@ class Functions
      */
     public static function checkQuantityEquipment($quantite_equip): bool
     {
-        if ($quantite_equip != null && is_numeric($quantite_equip) && $quantite_equip >= 0) {
+        if ($quantite_equip != null && $quantite_equip >= 0) {
             return true;
         } else {
             throw new Exception("Incorrect Quantite materiel input");
@@ -268,5 +267,3 @@ class Functions
     }
 
 }
-//Functions::checkPhoneNumber("0678954874874");
-//-----------------------------------------------------

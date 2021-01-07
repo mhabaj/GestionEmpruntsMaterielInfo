@@ -1,6 +1,7 @@
 <?php
 require_once "D:/wamp64/www/GestionEmpruntsMaterielInfo/code/Controller/DataBase.php";
 
+
 /**
  * Class BorrowDAO
  */
@@ -18,7 +19,7 @@ class BorrowDAO
      * @return Borrow
      * @throws PDOException
      */
-    public function startBorrow($refEquip, $endDate): Borrow
+    public function startBorrow($refEquip, $endDate,$id_user): Borrow
     {
 
 
@@ -47,7 +48,7 @@ class BorrowDAO
 
         $requestInsert1 = "INSERT INTO borrow (id_user, id_device, id_borrow) VALUES (?, ? , ?);";
         $myStatement = $con->prepare($requestInsert1);
-        $myStatement->execute([$_SESSION['id_user'], $device_id, $id_borrow]);
+        $myStatement->execute([$id_user, $device_id, $id_borrow]);
 
 
         $con->commit();
@@ -58,14 +59,12 @@ class BorrowDAO
     /**
      * @param $idBorrow
      * @param $device_id
+     * @param $end_date
      * @return bool
      * @throws Exception
      */
-    public function stopBorrow($idBorrow, $device_id): bool
+    public function stopBorrow($idBorrow, $device_id,$end_date): bool
     {
-        date_default_timezone_set('Europe/Paris');
-        $currentDateTime = date('Y/m/d');
-        $end_date = $currentDateTime;
 
         $bdd = new DataBase();
         $con = $bdd->getCon();
