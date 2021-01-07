@@ -1,8 +1,11 @@
 <?php
-require_once("Functions.php");
-require_once("ControllerDAO/BorrowDAO.php");
-require_once("ControllerDAO/UserDAO.php");
-require_once("EquipmentController.php");
+require_once(__DIR__ ."/../Controller/Functions.php");
+require_once(__DIR__ ."/../ControllerDAO/BorrowDAO.php");
+require_once(__DIR__ ."/../ControllerDAO/UserDAO.php");
+require_once(__DIR__ ."/../Controller/EquipmentController.php");
+
+
+
 
 /**
  * Class UserController
@@ -14,18 +17,26 @@ class UserController
      */
     private $_user;
 
+    /**
+     * @var UserDAO
+     */
     private $_userDAO;
 
 
     /**
      * UserController constructor.
-     * @param $id
+     * @param int|null $id for userID or "void" for empty object
      */
-    public function __construct($id)
+    public function __construct(int $id = null)
     {
-        $this->_userDAO = new UserDAO();
-        $this->_user = $this->_userDAO->getUserByID($id);
-
+        if ($id == null) {
+            $this->_userDAO = new UserDAO();
+        } else {
+            if (is_int($id)) {
+                $this->_userDAO = new UserDAO();
+                $this->_user = $this->_userDAO->getUserByID($id);
+            }
+        }
     }
 
     /**
@@ -53,14 +64,15 @@ class UserController
             if ($equipmentController->getEquipmentDAO()->howMuchAvailable($ref_equip_toBorrow) >= $quantity && $quantity > 0) {
 
                 $indexOf = 0;
-                while ($indexOf < $quantity) {
+                while ($indexOf < $quantity)
+                {
                     $tmpBorrowController = new BorrowController();
                     $newBorrow = $tmpBorrowController->getBorrowDAO()->startBorrow($ref_equip_toBorrow, $dateFin);
+                    $newBorrow->setEndDate($dateFin);
                     $this->_user->addBorrowToList($newBorrow);
                     $indexOf += 1;
                 }
                 return true;
-
             }
         }
         return false;
@@ -70,13 +82,17 @@ class UserController
      * @param $id_borrow_toDel
      * @throws Exception
      */
-    public function endborrow($id_borrow_toDel)
+    public function endBorrow($id_borrow_toDel)
     {
+        date_default_timezone_set('Europe/Paris');
+        $currentDateTime = date('Y/m/d');
+        $end_date = $currentDateTime;
+
         $cpt_array = 0;
         foreach ($this->_user->getBorrowList() as $borrow):
             if ($borrow->getIdBorrow() == $id_borrow_toDel) {
                 $tmpBorrowController = new BorrowController();
-                $tmpBorrowController->getBorrowDAO()->stopBorrow($borrow->getIdBorrow(), $borrow->getDeviceId());
+                $tmpBorrowController->getBorrowDAO()->stopBorrow($borrow->getIdBorrow(), $borrow->getDeviceId(),$end_date);
                 unset($this->_user->getBorrowList()[$cpt_array]);
                 break;
             }
@@ -97,27 +113,33 @@ class UserController
      * @return bool
      * @throws Exception
      */
-    public
-    function createUser($matricule, $password, $passwordRepeat, $email, $lastname, $name, $phone, $isAdmin): bool
+    public function createUser($matricule, $password, $passwordRepeat, $email, $lastname, $name, $phone, $isAdmin): bool
     {
         if ($passwordRepeat != $password) {
             throw new Exception("Les deux mots de passe ne correspondent pas !");
         }
 
-        if (Functions::checkMatricule($matricule) == true && Functions::checkMail($email) == true && Functions::checkPhoneNumber($phone) == true && Functions::checkNameUser($lastname) == true && Functions::checkFirstNameUser($name) == true) {
-            if ($isAdmin == 'ok')
-                $isAdmin = 1;
-            else
-                $isAdmin = 0;
+        if ($this->_userDAO->matriculeUserExists($matricule) == false
+            && Functions::checkMatricule($matricule) == true
+            && Functions::checkMail($email) == true
+            && Functions::checkPhoneNumber($phone) == true
+            && Functions::checkNameUser($lastname) == true
+            && Functions::checkFirstNameUser($name) == true) {
+
 
             $this->_userDAO->createUser($matricule, $email, $password, $name, $lastname, $phone, $isAdmin);
+
+            $this->_user->setMatriculeUser($matricule);
+            $this->_user->setEmail($email);
+            $this->_user->setLastName($lastname);
+            $this->_user->setFirstName($name);
+            $this->_user->setPhone($phone);
+            $this->_user->setIsAdmin($isAdmin);
+
             return true;
         } else
             return false;
-
-
     }
-
 
     /**
      * @param $id
@@ -135,7 +157,6 @@ class UserController
     {
 
         if (Functions::checkMatricule($matricule) == true && Functions::checkMail($email) == true && Functions::checkPhoneNumber($phone) == true && Functions::checkNameUser($lastname) == true && Functions::checkFirstNameUser($name) == true) {
-
             if ($isAdmin == 'ok')
                 $isAdmin = 1;
             else
@@ -154,24 +175,24 @@ class UserController
      * @return bool
      * @throws Exception
      */
-    public
-    function modifyPassword($password, $passwordRepeat): bool
+    public function modifyPassword($password, $passwordRepeat) : bool
     {
-        if ($password == '' || $password == null) {
+        if ($password == '' || $password == null)
+        {
             return false;
         }
-
-        if ($password == $passwordRepeat) {
+        if ($password == $passwordRepeat)
+        {
+            $hashedNewPassword = sha1($password);
             $this->_userDAO->changeUserPassword($this->_user, $password);
-
+            $this->_user->setPassword($hashedNewPassword);
             return true;
-        } else {
+        }
+        else
+        {
             return false;
         }
-
-
     }
-
 
     /**
      * @return mixed
@@ -182,4 +203,30 @@ class UserController
         return $this->_user;
     }
 
+    /**
+     * @return UserDAO
+     */
+    public function getUserDAO(): UserDAO
+    {
+        return $this->_userDAO;
+    }
+
+
+    /**
+     * @param UserDAO $userDAO
+     */
+    public function setUserDAO(UserDAO $userDAO): void
+    {
+        $this->_userDAO = $userDAO;
+
+    }
+
+    /**
+     * @param User $user
+     */
+    public function setUser(User $user): void
+    {
+        $this->_user = $user;
+
+    }
 }

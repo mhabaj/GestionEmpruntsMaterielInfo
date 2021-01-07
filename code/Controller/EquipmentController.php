@@ -1,6 +1,6 @@
 <?php
-require_once("ControllerDAO/EquipmentDAO.php");
-require_once("Model/Equipment.php");
+require_once(__DIR__ ."/../ControllerDAO/EquipmentDAO.php");
+require_once(__DIR__ ."/../Model/Equipment.php");
 
 /**
  * Class EquipmentController

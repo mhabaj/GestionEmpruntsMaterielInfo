@@ -1,5 +1,5 @@
 <?php
-require_once "Controller/DataBase.php";
+require_once __DIR__ ."/../Controller/DataBase.php";
 
 /**
  * Class BorrowDAO
@@ -20,8 +20,6 @@ class BorrowDAO
      */
     public function startBorrow($refEquip, $endDate): Borrow
     {
-
-
         date_default_timezone_set('Europe/Paris');
         $currentDateTime = date('Y/m/d');
 
@@ -58,14 +56,12 @@ class BorrowDAO
     /**
      * @param $idBorrow
      * @param $device_id
+     * @param $end_date
      * @return bool
      * @throws Exception
      */
-    public function stopBorrow($idBorrow, $device_id): bool
+    public function stopBorrow($idBorrow, $device_id,$end_date): bool
     {
-        date_default_timezone_set('Europe/Paris');
-        $currentDateTime = date('Y/m/d');
-        $end_date = $currentDateTime;
 
         $bdd = new DataBase();
         $con = $bdd->getCon();

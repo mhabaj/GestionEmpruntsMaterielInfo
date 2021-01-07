@@ -1,7 +1,9 @@
 <?php
 
-require_once("Model/User.php");
-require_once("Controller/DataBase.php");
+require_once(__DIR__ ."/../Model/User.php");
+require_once(__DIR__ ."/../Controller/DataBase.php");
+require_once(__DIR__ ."/../Model/Borrow.php");
+
 
 /**
  * Class UserDAO
@@ -79,21 +81,21 @@ class UserDAO
 
     /**
      * @param $user
-     * @param $newPassword
+     * @param $hashedNewPassword
      * @throws Exception
      */
-    public function changeUserPassword($user, $newPassword)
+    public function changeUserPassword($user, $hashedNewPassword)
     {
         $bdd = new DataBase();
         $con = $bdd->getCon();
         $con->beginTransaction();
-        $hashedNewPassword = sha1($newPassword);
 
         try {
             $requete = "UPDATE USERS SET password_user= ? WHERE id_user = ?;";
             $stmt = $con->prepare($requete);
             $stmt->execute([$hashedNewPassword, $user->getIdUser()]);
             $con->commit();
+            return true;
         } catch (Exception $e) {
             $con->rollback();
             throw new Exception("Could not update password");
@@ -163,11 +165,35 @@ class UserDAO
     }
 
     /**
+     * @param $matricule
+     * @param $mdp
+     * @return bool
+     */
+    public function matriculeUserExists($matricule): bool
+    {
+        $bdd = new DataBase();
+        $con = $bdd->getCon();
+
+
+        //Inserer valeurs
+        $requete = "SELECT * FROM users WHERE matricule_user like ?;";
+        $stmt = $con->prepare($requete);
+        $stmt->execute([$matricule]);
+        $resultcount = $stmt->rowCount();
+        if ($resultcount > 0) {
+            return true;
+        }
+        return false;
+    }
+
+
+    /**
      * renvoie un statement? de l'historique de l'utilisateur
      * @param $id_user_toDisplay
      * @return null
      */
-    public function getHistory($id_user_toDisplay)
+    public
+    function getHistory($id_user_toDisplay)
     {
         try {
             $bdd = new DataBase();
@@ -213,6 +239,24 @@ class UserDAO
             $bdd->closeCon();
             throw new Exception("<p> Could not create the user, invalid user input </p> ");
         }
+
+    }
+
+    /**
+     * @return User|null
+     */
+    public
+    function getLastInsertedUser()
+    {
+
+        $bdd = new DataBase();
+        $con = $bdd->getCon();
+
+        $query = "SELECT MAX(id_user) as 'id'  FROM users;";
+        $stmt = $con->prepare($query);
+        $stmt->execute();
+        $result = $stmt->fetch();
+        return $this->getUserByID($result['id']);
 
     }
 }
