@@ -1,6 +1,7 @@
 <?php
 require_once("ControllerDAO/EquipmentDAO.php");
 require_once("Model/Equipment.php");
+require_once("Functions.php");
 
 /**
  * Class EquipmentController

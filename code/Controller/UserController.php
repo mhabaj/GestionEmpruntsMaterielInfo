@@ -1,8 +1,10 @@
 <?php
 require_once("Functions.php");
+
 require_once("ControllerDAO/BorrowDAO.php");
 require_once("ControllerDAO/UserDAO.php");
 require_once("EquipmentController.php");
+require_once("BorrowController.php");
 
 /**
  * Class UserController
@@ -51,6 +53,7 @@ class UserController
      * @param $ref_equip_toBorrow
      * @param $dateFin
      * @param $quantity
+     * @param $idUser
      * @return bool Object, else null
      * PREC : quantity > 0 && reservation date after current server date
      * @throws Exception
@@ -64,6 +67,7 @@ class UserController
                 while ($indexOf < $quantity) {
                     $tmpBorrowController = new BorrowController();
                     $newBorrow = $tmpBorrowController->getBorrowDAO()->startBorrow($ref_equip_toBorrow, $dateFin, $idUser);
+                    $newBorrow->setEndDate($dateFin);
                     $this->_user->addBorrowToList($newBorrow);
                     $indexOf += 1;
                 }
@@ -123,6 +127,13 @@ class UserController
 
 
             $this->_userDAO->createUser($matricule, $email, $password, $name, $lastname, $phone, $isAdmin);
+            $this->_user->setMatriculeUser($matricule);
+            $this->_user->setEmail($email);
+            $this->_user->setLastName($lastname);
+            $this->_user->setFirstName($name);
+            $this->_user->setPhone($phone);
+            $this->_user->setIsAdmin($isAdmin);
+
             return true;
         } else
             return false;
@@ -153,6 +164,12 @@ class UserController
             && Functions::checkFirstNameUser($name) == true) {
 
             $this->_userDAO->modifyUser($id, $matricule, $email, $name, $lastname, $phone, $isAdmin);
+            $this->_user->setMatriculeUser($matricule);
+            $this->_user->setEmail($email);
+            $this->_user->setLastName($lastname);
+            $this->_user->setFirstName($name);
+            $this->_user->setPhone($phone);
+            $this->_user->setIsAdmin($isAdmin);
             return true;
         } else
             return false;
@@ -205,5 +222,14 @@ class UserController
     public function setUserDAO(UserDAO $userDAO): void
     {
         $this->_userDAO = $userDAO;
+    }
+
+    /**
+     * @param User $user
+     */
+    public function setUser(User $user): void
+    {
+        $this->_user = $user;
+
     }
 }
