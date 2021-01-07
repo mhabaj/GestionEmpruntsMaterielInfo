@@ -3,6 +3,7 @@ require_once("Functions.php");
 require_once("ControllerDAO/BorrowDAO.php");
 require_once("ControllerDAO/UserDAO.php");
 require_once("EquipmentController.php");
+require_once("BorrowController.php");
 
 /**
  * Class UserController

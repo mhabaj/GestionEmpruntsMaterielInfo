@@ -11,6 +11,8 @@ require_once("navbar.view.php");
 
         </p>
         <!-- /Intro-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
     <h2>Informations sur l'utilisateur </h2>
 
     <div>
@@ -30,17 +32,17 @@ require_once("navbar.view.php");
 
         <form method="POST" enctype="multipart/form-data"
               action="ModifyUser.php?id_user_toDisplay=<?php if (isset($_GET['id_user_toDisplay'])) echo $_GET['id_user_toDisplay'] ?>">
-            <input type="submit" value="Modifier Utilisateur" name="modifyUser"/>
+            <input class="btn btn-primary" type="submit" value="Modifier Utilisateur" name="modifyUser"/>
         </form>
-
+        <br/>
         <form method="POST" enctype="multipart/form-data"
               action="ModifyUser.php?id_user_toDisplay=<?php if (isset($_GET['id_user_toDisplay'])) echo $_GET['id_user_toDisplay'] ?>">
-            <input type="submit" value="Modifier mot de passe" name="modifyPassword"/>
+            <input class="btn btn-primary" type="submit" value="Modifier mot de passe" name="modifyPassword"/>
         </form>
-
+        <br/>
         <form method="POST" enctype="multipart/form-data"
               action="HistoryUser.php?id_user_toDisplay=<?php if (isset($_GET['id_user_toDisplay'])) echo $_GET['id_user_toDisplay'] ?>">
-            <input type="submit" value="Historique de l'utilisateur" name="History"/>
+            <input class="btn btn-info" type="submit" value="Historique de l'utilisateur" name="History"/>
         </form>
 
         <h3> Liste des emprunts courants de l'utilisateur </h3>
@@ -53,21 +55,26 @@ require_once("navbar.view.php");
         {
 
         ?>
-        <p> Emprunt numero : <?php echo $borrowedItem->getIdBorrow(); ?></p>
-        <p> Reference de l'équipement emprunté : <?php echo $borrowedItem->getRefEquip(); ?> </p>
-        <p> Id du matériel physique preté : <?php echo $borrowedItem->getDeviceId(); ?>
-        <p> Date de debut de l'emprunt : <?php echo $borrowedItem->getStartDate(); ?> </p>
-        <p> Date de fin de l'emprunt : <?php echo $borrowedItem->getEndDate(); ?></p>
+
+    <div class="card" style="width: 60%;">
+        <div class="card-body">
+            <p> Emprunt numero : <?php echo $borrowedItem->getIdBorrow(); ?></p>
+            <p> Reference de l'équipement emprunté : <?php echo $borrowedItem->getRefEquip(); ?> </p>
+            <p> Id du matériel physique preté : <?php echo $borrowedItem->getDeviceId(); ?>
+            <p> Date de debut de l'emprunt : <?php echo $borrowedItem->getStartDate(); ?> </p>
+            <p> Date de fin de l'emprunt : <?php echo $borrowedItem->getEndDate(); ?></p>
+        </div>
+    </div>
+
 
         <br/>
-    </div>
 
     <?php
     if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1) {
         ?>
         <form method="POST" enctype="multipart/form-data">
             <input type="hidden" value="<?php echo $borrowedItem->getIdBorrow() ?>" name="idBorrow"/>
-            <input type="submit" value="Cliquez pour terminer un emprunt" name="endBorrow"/>
+            <input class="btn btn-secondary" type="submit" value="Cliquez pour terminer un emprunt" name="endBorrow"/>
         </form>
         <?php
     }
