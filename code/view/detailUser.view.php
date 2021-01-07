@@ -1,5 +1,16 @@
-    <html>
-    <body>
+<?php
+require_once("head.view.php");
+require_once("navbar.view.php");
+?>
+<!-- Intro -->
+<div class="container">
+    <div class="maincontent">
+        <br> <br>
+        <h2 class="thin"></h2>
+        <p class="text-muted">
+
+        </p>
+        <!-- /Intro-->
     <h2>Informations sur l'utilisateur </h2>
 
     <div>
@@ -66,5 +77,6 @@
 
     /* seulement l'admin ou l'utilisateur (pour son profil) peut acceder à la modification de user */
     ?>
-    </body>
-    </html>
+<?php
+require_once("footer.view.php");
+?>
