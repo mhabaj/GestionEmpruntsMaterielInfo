@@ -1,18 +1,24 @@
 <?php
-require_once "Controller/DataBase.php";
+require_once "D:/wamp64/www/GestionEmpruntsMaterielInfo/code/Controller/DataBase.php";
 
 /**
  * Class BorrowDAO
  */
 class BorrowDAO
 {
+    public function __construct()
+    {
+
+
+    }
+
     /**
      * @param $refEquip
      * @param $endDate
      * @return Borrow
      * @throws PDOException
      */
-    public static function startBorrow($refEquip, $endDate): Borrow
+    public function startBorrow($refEquip, $endDate): Borrow
     {
 
 
@@ -55,7 +61,7 @@ class BorrowDAO
      * @return bool
      * @throws Exception
      */
-    public static function stopBorrow($idBorrow, $device_id): bool
+    public function stopBorrow($idBorrow, $device_id): bool
     {
         date_default_timezone_set('Europe/Paris');
         $currentDateTime = date('Y/m/d');

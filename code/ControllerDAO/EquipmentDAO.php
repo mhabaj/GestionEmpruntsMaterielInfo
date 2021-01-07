@@ -1,6 +1,6 @@
 <?php
 
-require_once "Controller/DataBase.php";
+require_once "D:/wamp64/www/GestionEmpruntsMaterielInfo/code/Controller/DataBase.php";
 
 /**
  * Class EquipmentDAO
@@ -282,23 +282,7 @@ class EquipmentDAO
      * @param $ref_equip
      * @return bool
      */
-    public function isRefEquipValid($ref_equip): bool
-    {
-        if (strlen($ref_equip)) {
-            $bdd = new DataBase();
-            $con = $bdd->getCon();
-            $query = ("select count(*) as 'somme' from equipment where ref_equip like ? ;");
-            $stmt = $con->prepare($query);
-            $stmt->execute([$ref_equip]);
-            $result = $stmt->fetch();
-            $bdd->closeCon();
-            if ($result['somme'] > 0) {
-                return true;
-            }
 
-        }
-        return false;
-    }
 
     /**
      * @param $ref_equip

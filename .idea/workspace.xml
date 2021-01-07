@@ -1,9 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="a09b4e55-2fad-4a7e-a427-617b9f2a97c8" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/code/Tests/UserControllerTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/Controller/BorrowController.php" beforeDir="false" afterPath="$PROJECT_DIR$/code/Controller/BorrowController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/Controller/DataBase.php" beforeDir="false" afterPath="$PROJECT_DIR$/code/Controller/DataBase.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/code/Controller/EquipmentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/code/Controller/EquipmentController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/Controller/Functions.php" beforeDir="false" afterPath="$PROJECT_DIR$/code/Controller/Functions.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/Controller/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/code/Controller/UserController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/Controller/control-session.php" beforeDir="false" afterPath="$PROJECT_DIR$/code/Controller/control-session.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/ControllerDAO/BorrowDAO.php" beforeDir="false" afterPath="$PROJECT_DIR$/code/ControllerDAO/BorrowDAO.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/ControllerDAO/CatalogueController.php" beforeDir="false" afterPath="$PROJECT_DIR$/code/ControllerDAO/CatalogueController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/code/ControllerDAO/EquipmentDAO.php" beforeDir="false" afterPath="$PROJECT_DIR$/code/ControllerDAO/EquipmentDAO.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/ControllerDAO/UserDAO.php" beforeDir="false" afterPath="$PROJECT_DIR$/code/ControllerDAO/UserDAO.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/Model/UserAdmin.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/Model/UserDummy.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/Model/UserRegular.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/Tests/EquipmentControllerTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/code/Tests/EquipmentControllerTest.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,6 +48,7 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="PHP" />
   <component name="ProjectId" id="1mhqBY2bWHgqdM96cJz4bRE6095" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -24,15 +57,53 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="php.test.frameworks.configurable" />
+    <property name="com.jetbrains.php.phpunit.codeGeneration.PhpNewTestDialog.defaultLibrary" value="PHPUnit" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/code/Tests" />
+    <property name="settings.editor.selected.configurable" value="reference.webide.settings.project.settings.php" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
-  <component name="RunManager">
-    <configuration name="Test" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
-      <TestRunner directory="$PROJECT_DIR$" />
+  <component name="RunManager" selected="PHPUnit.UserControllerTest.testCreateUserValid">
+    <configuration name="EquipmentControllerTest" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="EquipmentControllerTest" file="$PROJECT_DIR$/code/Tests/EquipmentControllerTest.php" scope="Class" />
       <method v="2" />
     </configuration>
+    <configuration name="EquipmentControllerTest.testModifyEquipmentInvalid" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="EquipmentControllerTest" file="$PROJECT_DIR$/code/Tests/EquipmentControllerTest.php" method="testModifyEquipmentInvalid" scope="Method" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Test" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
+      <TestRunner directory="$PROJECT_DIR$/code/Tests" />
+      <method v="2" />
+    </configuration>
+    <configuration name="UserControllerTest" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="UserControllerTest" file="$PROJECT_DIR$/code/Tests/UserControllerTest.php" scope="Class" />
+      <method v="2" />
+    </configuration>
+    <configuration name="UserControllerTest.testCreateUserInvalid" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="UserControllerTest" file="$PROJECT_DIR$/code/Tests/UserControllerTest.php" method="testCreateUserInvalid" scope="Method" />
+      <method v="2" />
+    </configuration>
+    <configuration name="UserControllerTest.testCreateUserValid" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="UserControllerTest" file="$PROJECT_DIR$/code/Tests/UserControllerTest.php" method="testCreateUserValid" scope="Method" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="PHPUnit.Test" />
+      <item itemvalue="PHPUnit.EquipmentControllerTest" />
+      <item itemvalue="PHPUnit.UserControllerTest" />
+      <item itemvalue="PHPUnit.EquipmentControllerTest.testModifyEquipmentInvalid" />
+      <item itemvalue="PHPUnit.UserControllerTest.testCreateUserInvalid" />
+      <item itemvalue="PHPUnit.UserControllerTest.testCreateUserValid" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="PHPUnit.UserControllerTest.testCreateUserValid" />
+        <item itemvalue="PHPUnit.UserControllerTest.testCreateUserInvalid" />
+        <item itemvalue="PHPUnit.EquipmentControllerTest.testModifyEquipmentInvalid" />
+        <item itemvalue="PHPUnit.UserControllerTest" />
+        <item itemvalue="PHPUnit.EquipmentControllerTest" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -42,25 +113,89 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1609956035295</updated>
-      <workItem from="1609956036362" duration="1102000" />
+      <workItem from="1609956036362" duration="2399000" />
+      <workItem from="1609963964998" duration="15044000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="WindowStateProjectService">
-    <state x="223" y="67" width="1089" height="727" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1609956258997">
+    <state x="348" y="67" key="#CLI_Interpreters" timestamp="1609957534357">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="223" y="67" width="1089" height="727" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824@0.0.1536.824" timestamp="1609956258997" />
-    <state x="549" y="167" key="FileChooserDialogImpl" timestamp="1609957005104">
+    <state x="348" y="67" key="#CLI_Interpreters/0.0.1536.824@0.0.1536.824" timestamp="1609957534357" />
+    <state x="223" y="59" width="1089" height="765" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1609957369032">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1609957005104" />
-    <state x="277" y="57" key="SettingsEditor" timestamp="1609956217696">
+    <state x="223" y="59" width="1089" height="765" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824@0.0.1536.824" timestamp="1609957369032" />
+    <state x="499" y="159" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1609970193745">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="277" y="57" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1609956217696" />
+    <state x="499" y="159" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.824@0.0.1536.824" timestamp="1609970193745" />
+    <state x="549" y="167" key="FileChooserDialogImpl" timestamp="1609967730204">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1609967730204" />
+    <state width="1493" height="210" key="GridCell.Tab.0.bottom" timestamp="1609980182538">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="210" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1609980182538" />
+    <state width="1493" height="210" key="GridCell.Tab.0.center" timestamp="1609980182538">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="210" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1609980182538" />
+    <state width="1493" height="210" key="GridCell.Tab.0.left" timestamp="1609980182538">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="210" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1609980182538" />
+    <state width="1493" height="210" key="GridCell.Tab.0.right" timestamp="1609980182538">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="210" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1609980182538" />
+    <state width="1493" height="261" key="GridCell.Tab.1.bottom" timestamp="1609975571922">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="261" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1609975571922" />
+    <state width="1493" height="261" key="GridCell.Tab.1.center" timestamp="1609975571921">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="261" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1609975571921" />
+    <state width="1493" height="261" key="GridCell.Tab.1.left" timestamp="1609975571921">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="261" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1609975571921" />
+    <state width="1493" height="261" key="GridCell.Tab.1.right" timestamp="1609975571922">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="261" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1609975571922" />
+    <state x="277" y="57" key="SettingsEditor" timestamp="1609957536710">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="277" y="57" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1609957536710" />
+    <state x="492" y="156" width="741" height="511" key="com.jetbrains.php.test.PhpNewTestDialog" timestamp="1609970895755">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="492" y="156" width="741" height="511" key="com.jetbrains.php.test.PhpNewTestDialog/0.0.1536.824@0.0.1536.824" timestamp="1609970895755" />
+    <state x="425" y="187" key="run.anything.popup" timestamp="1609973936480">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="425" y="187" key="run.anything.popup/0.0.1536.824@0.0.1536.824" timestamp="1609973936480" />
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1609975987728">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1609975987728" />
   </component>
 </project>
