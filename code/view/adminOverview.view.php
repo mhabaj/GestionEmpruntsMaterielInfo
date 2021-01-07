@@ -17,5 +17,5 @@ if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1) {
     </form>
     
     <?php
-    require_once("footer.view.php");
+
 }
