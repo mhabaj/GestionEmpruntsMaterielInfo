@@ -41,7 +41,8 @@ require_once("navbar.view.php");
     <hr>
     <button class="btn btn-success" type="submit" name="submitInscription">Confirmer l'inscription</button>
 </form>
-<br>
+<?php if (isset($erreur) && !$erreur == "") echo "<p>" . $erreur . "</p>"; ?>
+    <br>
 <form method="Post">
     <button class="btn btn-danger" type="submit"  name="cancelbtn">Annuler l'inscription </button>
 </form>

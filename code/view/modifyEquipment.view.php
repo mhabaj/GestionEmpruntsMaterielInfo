@@ -64,6 +64,7 @@ require_once("navbar.view.php");
     <p><input class="btn btn-success" type="submit" value="Modifier l'equipement" placeholder="Modifier l'équipement"
               name="modifierEquipment"></p>
 </form>
+<?php if (isset($erreur) && !$erreur == "") echo "<p>" . $erreur . "</p>"; ?>
 <?php
 require_once("footer.view.php");
 ?>

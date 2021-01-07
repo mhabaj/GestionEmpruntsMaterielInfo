@@ -22,7 +22,7 @@ require_once("navbar.view.php");
 
     <button class="btn btn-success" type="submit" name="submitModificationMdp">Confirmer les modifications </button>
 </form>
-
+<?php if (isset($erreur) && !$erreur == "") echo "<p>" . $erreur . "</p>"; ?>
 <?php
 require_once("footer.view.php");
 ?>

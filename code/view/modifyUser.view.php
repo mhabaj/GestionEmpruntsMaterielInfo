@@ -1,5 +1,17 @@
-<html lang="fr">
-    <body>
+<?php
+require_once("head.view.php");
+require_once("navbar.view.php");
+?>
+
+<div class="container">
+    <div class="maincontent">
+        <br> <br>
+        <h2 class="thin"></h2>
+        <p class="text-muted">
+
+        </p>
+        <!-- /Intro-->
+
         <form method="POST" enctype="multipart/form-data">
             <h1>Modifier un utilisateur</h1>
             <p>Veuillez remplir les champs ci-dessous pour modifier un utilisateur</p>
@@ -43,11 +55,12 @@
             ?>
 
             <hr>
-            <button type="submit" name="submitModification">Confirmer les modifications</button>
+            <button class="btn btn-primary" type="submit" name="submitModification">Confirmer les modifications</button>
         </form>
-
+        <?php if (isset($erreur) && !$erreur == "") echo "<p>" . $erreur . "</p>"; ?>
+        <br/>
         <form action="DetailUser.php?<?php if (isset($userController) && $userController != null && isset($currentUser) && $currentUser != null) echo $currentUser->getIdUser()?>" enctype="multipart/form-data">
-            <button type="button" name="cancelbtn">Annuler les modifications</button>
+            <button class="btn btn-danger" type="button" name="cancelbtn">Annuler les modifications</button>
         </form>
-    </body>
-</html>
+        <?php if (isset($erreur) && !$erreur == "") echo "<p>" . $erreur . "</p>"; ?>
+<?php require_once("footer.view.php"); ?>

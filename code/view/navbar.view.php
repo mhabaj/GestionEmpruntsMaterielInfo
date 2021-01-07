@@ -22,11 +22,13 @@
                                 name="id_user_toDisplay">Mon compte
                         </button>
                     </form>
+                    <?php if (isset($erreur) && !$erreur == "") echo "<p>" . $erreur . "</p>"; ?>
                 </li>
                 <li>
                         <form method="POST" enctype="multipart/form-data">
                             <button class="btn btn-danger" type="submit" name="disconnect">SIGN OUT</button>
                         </form>
+                        <?php if (isset($erreur) && !$erreur == "") echo "<p>" . $erreur . "</p>"; ?>
                 </li>
             </ul>
         </div><!--/.nav-collapse -->
