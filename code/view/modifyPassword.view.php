@@ -23,5 +23,6 @@ require_once("navbar.view.php");
     <button class="btn btn-success" type="submit" name="submitModificationMdp">Confirmer les modifications </button>
 </form>
 
-</body>
-</html>
+<?php
+require_once("footer.view.php");
+?>
