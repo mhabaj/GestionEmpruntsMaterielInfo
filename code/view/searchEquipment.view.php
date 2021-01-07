@@ -8,3 +8,4 @@
     <label for="radio_ref">par référence</label>
     <button type="submit" name="startSearching">Rechercher</button>
 </form>
+<?php if (isset($erreur) && !$erreur == "") echo "<p>" . $erreur . "</p>"; ?>

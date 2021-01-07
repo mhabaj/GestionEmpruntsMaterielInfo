@@ -1,5 +1,6 @@
 <html>
 <body>
+<?php if (isset($erreur) && !$erreur == "") echo "<p>" . $erreur . "</p>"; ?>
 
 <div>
     <strong> Emprunt numéro </strong> : <?php if (isset($donnees)) echo $donnees['id_borrow']; ?> <br/>
@@ -12,6 +13,7 @@
     <strong> Date fin emprunt </strong> : <?php if (isset($donnees)) echo $donnees['enddate_borrow']; ?>
     <br/>
     <br/>
+
 </div>
 
 

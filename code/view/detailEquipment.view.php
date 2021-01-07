@@ -51,6 +51,8 @@
         <input type="submit" value="Reserver l'équipement" placeholder="Reserver l'équipement"
                name="reserveEquipment">
     </form>
+    <?php if (isset($erreur) && !$erreur == "") echo "<p>" . $erreur . "</p>"; ?>
+
     <?php
 
     if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1) { ?>

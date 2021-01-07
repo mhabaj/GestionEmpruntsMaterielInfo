@@ -35,11 +35,11 @@ class CatalogueController
 
                 $queryEquipments = "SELECT DISTINCT(type_equip) FROM equipment ;";
                 $myStatement = $con->query($queryEquipments);
-
+                echo "<strong> Affichage par Type </strong>";
                 while ($donnees = $myStatement->fetch()) { ?>
-                    <a href="DashBoard.php?type=<?php echo $donnees['type_equip'] ?>">
+                    <a href="DashBoard.php?type=<?php echo $donnees['type_equip']; ?>">
                         <div>
-                            <strong> Type </strong> : <?php echo $donnees['type_equip']; ?> <br/>
+                            <?php echo $donnees['type_equip']; ?> <br/>
                         </div>
                     </a>
                     <?php
@@ -91,7 +91,7 @@ class CatalogueController
                 require "view/resultSearchUser.view.php";
             }
         } else {
-            throw new Exception("Aucun document ne correspond aux termes de recherche spécifiés.");
+            throw new Exception("Aucun utilisateur ne correspond aux termes de recherche spécifiés.");
         }
         $myStatement->closeCursor();
     }

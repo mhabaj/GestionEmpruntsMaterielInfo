@@ -1,4 +1,7 @@
 <?php
+$title = "Historique de l'utilisateur";
+$erreur = "";
+
 require_once("Controller/control-session.php");
 require_once("Controller/UserController.php");
 require_once("ControllerDAO/UserDAO.php");
@@ -25,11 +28,11 @@ if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1 && isset(
         }
 
     } catch (Exception $e) {
-        echo "<p>" . $e->getMessage() . "</p>";
+        $erreur = "<p>" . $e->getMessage() . "</p>";
     }
 
 
 } else {
-    echo "<p>Erreur veuillez contacter le support</p>";
+    header('Location: DashBoard.php');
 }
 

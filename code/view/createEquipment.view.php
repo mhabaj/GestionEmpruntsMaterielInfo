@@ -45,9 +45,9 @@
     <input type="file" id="photo" name="photo"/><br/>
 
 
-
     <br/>
     <button type="submit" name="submitEquipment">Create Equipment</button>
 </form>
+<?php if (isset($erreur) && !$erreur == "") echo "<p>" . $erreur . "</p>"; ?>
 </body>
 </html>

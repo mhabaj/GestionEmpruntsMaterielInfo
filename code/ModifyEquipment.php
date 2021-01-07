@@ -1,4 +1,6 @@
 <?php
+$title = "Modify Equipement";
+$erreur = "";
 
 require_once("Controller/control-session.php");
 require_once "Model/Equipment.php";
@@ -15,14 +17,6 @@ if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1 && isset(
         $equipmentController->loadEquipmentFromDDB($_GET['ref_equip']);
         $currentEquipment = $equipmentController->getEquipment();
 
-        ?>
-        <?php
-
-        require_once("view/modifyEquipment.view.php");
-
-
-        ?>
-        <?php
 
         if (isset($_POST['modifierEquipment']) && isset($equipmentController) && $equipmentController != null) {
             if (isset($_POST['ref_equip']) && isset($_POST['type_equip']) && isset($_POST['nom_equip']) && isset($_POST['marque_equip']) && isset($_POST['version_equip']) && isset($_POST['quantite_equip'])) {
@@ -36,6 +30,7 @@ if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1 && isset(
                     $equipmentController->modifyEquipment($ref_equip, $type_equip, $nom_equip, $marque_equip, $version_equip, $quantite_equip);
                     $photo = Functions::uploadImage($type_equip);
                     if ($photo != null && $photo != "") {
+
                         $equipmentController->getEquipmentDAO()->updateImageToEquipment($photo, $ref_equip);
                     }
                     unset($currentEquipment);
@@ -45,7 +40,7 @@ if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1 && isset(
                     header("Location: DetailEquipment.php?ref_equip=" . $ref_equip);
 
                 } catch (Exception $e) {
-                    echo $e->getMessage();
+                    $erreur = $e->getMessage();
 
                 }
 
@@ -55,6 +50,7 @@ if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1 && isset(
                 header("refresh:0");
             }
         }
+        require_once("view/modifyEquipment.view.php");
 
 
     } catch (Exception $e) {

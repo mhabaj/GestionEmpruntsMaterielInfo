@@ -14,6 +14,7 @@ if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1) {
     <form action="RegisterUser.php" enctype="multipart/form-data">
         <button type="submit" name="startSearchingUser">Creer un Utilisateur</button>
     </form>
+    <?php if (isset($erreurAdmin) && !$erreurAdmin == "") echo "<p>" . $erreurAdmin . "</p>"; ?>
 
     <?php
 }

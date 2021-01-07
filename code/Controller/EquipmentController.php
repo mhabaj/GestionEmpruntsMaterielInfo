@@ -86,9 +86,10 @@ class EquipmentController
 
     /**
      * @param $Quantity
+     * @return bool
      * @throws Exception
      */
-    public function createNewEquipment(int $Quantity)
+    public function createNewEquipment(int $Quantity): bool
     {
         try {
             if (Functions::checkRefEquip($this->_equipment->getRefEquip()) && $this->_equipmentDAO->isNewRefEquipUsed($this->_equipment->getRefEquip()) == false && Functions::checkNameMateriel($this->_equipment->getNameEquip())
@@ -100,6 +101,7 @@ class EquipmentController
         } catch (Exception | PDOException $e) {
             throw new Exception($e->getMessage());
         }
+        return false;
     }
 
     /**
