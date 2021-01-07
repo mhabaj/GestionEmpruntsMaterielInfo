@@ -1,27 +1,76 @@
 <?php
 
-require_once "Controller/DataBase.php";
-require_once "Model/Borrow.php";
-require_once "Controller/MainDAO.php";
 
-abstract class User
+/**
+ * Class User
+ */
+class User
 {
-    protected $_idUser;
-    protected $_matriculeUser;
-    protected $_email;
-    protected $_password;
-    protected $_name;
-    protected $_lastName;
-    protected $_phone;
-    protected $_privilege;
-    protected $_borrowList = array();
+    /**
+     * @var
+     */
+    private $_idUser;
+    /**
+     * @var
+     */
+    private $_matriculeUser;
+    /**
+     * @var
+     */
+    private $_email;
+    /**
+     * @var
+     */
+    private $_password;
+    /**
+     * @var
+     */
+    private $_firstName;
+    /**
+     * @var
+     */
+    private $_lastName;
+    /**
+     * @var
+     */
+    private $_phone;
+    /**
+     * @var array
+     */
+    private $_borrowList = array();
+    /**
+     * @var
+     */
+    private $_isAdmin;
+
 
     /**
      * User constructor.
+     * @param $id
+     * @param $email
+     * @param $matricule
+     * @param $password
+     * @param $firstName
+     * @param $lastName
+     * @param $phone
+     * @param $isAdmin
      */
-    public function __construct()
+    public function __construct(int $id =null, $email=null, $matricule=null, $password=null, $firstName=null, $lastName=null, $phone=null, $isAdmin=null)
     {
-
+        if ($id == null && $email == null && $matricule == null && $password == null && $firstName== null && $lastName== null && $phone== null && $isAdmin== null)
+        {
+            $this->_idUser =null;
+        }
+        else {
+            $this->setIdUser($id);
+            $this->setEmail($email);
+            $this->setMatriculeUser($matricule);
+            $this->setPassword($password);
+            $this->setFirstName($firstName);
+            $this->setLastName($lastName);
+            $this->setPhone($phone);
+            $this->_isAdmin = $isAdmin;
+        }
     }
 
     /**
@@ -32,10 +81,6 @@ abstract class User
         array_push($this->_borrowList, $BorrowItem);
     }
 
-    public function delBorrowToList($idToDel)
-    {
-        unset($this->_borrowList[$idToDel]);
-    }
     /**
      * @return mixed
      */
@@ -87,17 +132,17 @@ abstract class User
     /**
      * @return mixed
      */
-    public function getName()
+    public function getFirstName()
     {
-        return $this->_name;
+        return $this->_firstName;
     }
 
     /**
      * @param mixed $name
      */
-    public function setName($name)
+    public function setFirstName($name)
     {
-        $this->_name = $name;
+        $this->_firstName = $name;
     }
 
     /**
@@ -151,7 +196,7 @@ abstract class User
     /**
      * @return mixed
      */
-    public function getBorrowList()
+    public function getBorrowList(): array
     {
         return $this->_borrowList;
     }
@@ -163,35 +208,22 @@ abstract class User
     {
         $this->_borrowList = $borrowList;
     }
+
     /**
      * @return mixed
      */
-    public function getPrivilege()
+    public function getIsAdmin()
     {
-        return $this->_privilege;
+        return $this->_isAdmin;
     }
 
     /**
-     * @param mixed $privilege
+     * @param mixed $isAdmin
      */
-    public function setPrivilege($privilege): void
+    public function setIsAdmin($isAdmin): void
     {
-        $this->_privilege = $privilege;
+        $this->_isAdmin = $isAdmin;
     }
 
 
 }
-/*
-$user = new User();
-
-echo $user->getName() ." ";
-echo $user->getLastName() ." ";
-echo $user->getEmail() ."</br>";
-
-$user->setName("tom");
-$user->update();
-
-echo $user->getName() ." ";
-echo $user->getLastName() ." ";
-echo $user->getEmail();
-*/

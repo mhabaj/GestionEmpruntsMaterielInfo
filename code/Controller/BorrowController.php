@@ -1,27 +1,44 @@
 <?php
+require_once(__DIR__ ."/../ControllerDAO/BorrowDAO.php");
 
+/**
+ * Class BorrowController
+ */
 class BorrowController
 {
-    //créer code qui compte le nombre de devices disponibles de la ref rentrée
-    //verifier date enddtae > start date
+
+
+    /**
+     * @var BorrowDAO
+     */
+    private $_borrowDAO;
+
+
+    /**
+     * BorrowController constructor.
+     */
+    public function __construct()
+    {
+        $this->_borrowDAO = new BorrowDAO();
+
+    }
+
+
+    /**
+     * @return BorrowDAO
+     */
+    public function getBorrowDAO(): BorrowDAO
+    {
+        return $this->_borrowDAO;
+    }
+
+    /**
+     * @param BorrowDAO $borrowDAO
+     */
+    public function setBorrowDAO(BorrowDAO $borrowDAO): void
+    {
+        $this->_borrowDAO = $borrowDAO;
+    }
 
 
 }
-
-?>
-
-<html>
-<body>
-<form method="POST" enctype="multipart/form-data">
-    <h1>Réservation</h1>
-
-    <label><b>Date de fin</b></label>
-    <input type="text" placeholder="AAAA-MM-JJ" name="endDate" required>
-
-    <label><b>Quantité</b></label>
-    <input type="number" min="1" value="1" placeholder="Quantité" name="quantity" required>
-
-    <button type="submit" name="startBorrow">Réserver</button>
-</form>
-</body>
-</html>
