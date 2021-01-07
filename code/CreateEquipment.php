@@ -9,7 +9,8 @@ ob_start();
 
 
 if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1) {
-    $currentUser = UserDAO::getUserById($_SESSION['id_user']);
+    $tmpUsrCtrl = new UserController($_SESSION['id_user']);
+    $currentUser = $tmpUsrCtrl->getUser();
 
     try {
         $currentEquipment = null;
@@ -54,7 +55,7 @@ if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1) {
 
                     $photo = Functions::uploadImage($currentEquipment->getTypeEquip());
                     if ($photo != null && $photo != "") {
-                        EquipmentDAO::addImageToEquipment($photo, $tempRef);
+                        $equipmentController->getEquipmentDAO()->addImageToEquipment($photo, $tempRef);
                     }
                     unset($currentEquipment);
                     unset($equipmentController);

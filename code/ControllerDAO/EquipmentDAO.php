@@ -8,12 +8,17 @@ require_once "Controller/DataBase.php";
 class EquipmentDAO
 {
 
+
+    public function __construct()
+    {
+    }
+
     /**
      * @param $refEquipment
      * @return Equipment
      * @throws Exception
      */
-    public static function initEquipmentController($refEquipment): Equipment
+    public function initEquipmentController($refEquipment): Equipment
     {
         $bdd = new DataBase();
         $con = $bdd->getCon();
@@ -62,7 +67,7 @@ class EquipmentDAO
      * @param $version_equipUpd
      * @throws Exception
      */
-    public static function modifyEquipment($ref_equipToUpdate, $ref_equipUpd, $type_equipUpd, $brand_equipUpd, $name_equipUpd, $version_equipUpd)
+    public function modifyEquipment($ref_equipToUpdate, $ref_equipUpd, $type_equipUpd, $brand_equipUpd, $name_equipUpd, $version_equipUpd)
     {
         $bdd = new DataBase();
         $con = $bdd->getCon();
@@ -90,7 +95,7 @@ class EquipmentDAO
      * @param $version_equipNew
      * @param $quantity
      */
-    public static function createEquipment($_ref_equipNew, $type_equipNew, $brand_equipNew, $name_equipNew, $version_equipNew, $quantity)
+    public function createEquipment($_ref_equipNew, $type_equipNew, $brand_equipNew, $name_equipNew, $version_equipNew, $quantity)
     {
         $bdd = new DataBase();
         $con = $bdd->getCon();
@@ -110,7 +115,7 @@ class EquipmentDAO
 
             $requestCreate = " INSERT INTO `stock_photo` (`link_photo`, `ref_equip`) VALUES (?,?);";
             $myStatement = $con->prepare($requestCreate);
-            $myStatement->execute(["",$_ref_equipNew]);
+            $myStatement->execute(["", $_ref_equipNew]);
 
 
             $con->commit();
@@ -122,7 +127,7 @@ class EquipmentDAO
     }
 
     /* PRECONDITION ON NE PEUT PAS DELETE DES DEVICES DONT LE CHAMP isAVAILABLE EST FALSE, $desiredQuantity ne peut pas etre < 0, */
-    public static function updateDeviceCount($_ref_equip, $desiredQuantity)
+    public function updateDeviceCount($_ref_equip, $desiredQuantity)
     {
         $bdd = new DataBase();
         $con = $bdd->getCon();
@@ -174,7 +179,7 @@ class EquipmentDAO
      * @param string $refEquip
      * @throws Exception
      */
-    public static function addImageToEquipment(string $photo, string $refEquip)
+    public function addImageToEquipment(string $photo, string $refEquip)
     {
 
         $bdd = new DataBase();
@@ -200,7 +205,7 @@ class EquipmentDAO
      * @param string $refEquip
      * @throws Exception
      */
-    public static function updateImageToEquipment(string $photo, string $refEquip)
+    public function updateImageToEquipment(string $photo, string $refEquip)
     {
 
         $bdd = new DataBase();
@@ -228,7 +233,7 @@ class EquipmentDAO
      * @return bool
      * @throws Exception
      */
-    public static function isRefEquipUsed($ref, $equipment): bool
+    public function isRefEquipUsed($ref, $equipment): bool
     {
         if ($ref != $equipment->getRefEquip()) {
             $bdd = new DataBase();
@@ -255,7 +260,7 @@ class EquipmentDAO
      * @return bool
      * @throws Exception
      */
-    public static function isNewRefEquipUsed($ref_equip): bool
+    public function isNewRefEquipUsed($ref_equip): bool
     {
         $bdd = new DataBase();
         $con = $bdd->getCon();
@@ -277,29 +282,13 @@ class EquipmentDAO
      * @param $ref_equip
      * @return bool
      */
-    public static function isRefEquipValid($ref_equip): bool
-    {
-        if (strlen($ref_equip)) {
-            $bdd = new DataBase();
-            $con = $bdd->getCon();
-            $query = ("select count(*) as 'somme' from equipment where ref_equip like ? ;");
-            $stmt = $con->prepare($query);
-            $stmt->execute([$ref_equip]);
-            $result = $stmt->fetch();
-            $bdd->closeCon();
-            if ($result['somme'] > 0) {
-                return true;
-            }
 
-        }
-        return false;
-    }
 
     /**
      * @param $ref_equip
      * @return mixed
      */
-    public static function howMuchAvailable($ref_equip)
+    public function howMuchAvailable($ref_equip)
     {
         $bdd = new DataBase();
         $con = $bdd->getCon();
@@ -315,7 +304,7 @@ class EquipmentDAO
      * @param $ref_equip
      * @return mixed
      */
-    public static function howMuchTotal($ref_equip)
+    public function howMuchTotal($ref_equip)
     {
         $bdd = new DataBase();
         $con = $bdd->getCon();

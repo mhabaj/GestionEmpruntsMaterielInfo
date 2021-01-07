@@ -9,7 +9,9 @@ ob_start();
 
 
 if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1 && isset($_GET['id_user_toDisplay']) || isset($_GET['id_user_toDisplay']) && $_GET['id_user_toDisplay'] == $_SESSION['id_user']) {
-    if (!UserDAO::userExists($_GET['id_user_toDisplay']))
+
+    $tmpUsrCtrl = new UserController();
+    if (!$tmpUsrCtrl->getUserDAO()->userExists($_GET['id_user_toDisplay']))
         header('Location: DashBoard.php');
 
     $userController = new UserController($_GET['id_user_toDisplay']);

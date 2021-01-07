@@ -1,12 +1,10 @@
 <?php
 require_once("Controller/control-session.php");
-require_once("ControllerDAO/EquipmentDAO.php");
 require_once("Model/Equipment.php");
 require_once("Controller/EquipmentController.php");
 require_once "Controller/Functions.php";
 require_once("Controller/UserController.php");
-require_once("ControllerDAO/UserDAO.php");
-require_once("ControllerDAO/BorrowDAO.php");
+require_once("Controller/BorrowController.php");
 ob_start();
 
 
@@ -42,10 +40,9 @@ if (isset($_GET['ref_equip']) && $_GET['ref_equip'] != null) {
         $quantite_equip = $_POST['quantiteNumber'];
 
         $userController = new UserController($_SESSION['id_user']);
-
         try {
             if ($currentEquipment != null) {
-                $userController->startBorrow($currentEquipment->getRefEquip(), $dateFinBorrow, $quantite_equip);
+                $userController->startBorrow($equipmentController, $currentEquipment->getRefEquip(), $dateFinBorrow, $quantite_equip);
             }
         } catch (Exception $e) {
             echo "<p>" . $e->getMessage() . "</p>";

@@ -43,17 +43,18 @@
 
         <input type="date" placeholder="Date fin de reservation" name="dateRes">
         <p> Quantite du materiel souhaité <b>(Disponible / Occupé / Total présent:
-                <mark><?php if (isset($equipmentController) && $equipmentController != null && isset($currentEquipment) && $currentEquipment != null) echo EquipmentDAO::howMuchAvailable($currentEquipment->getRefEquip()) . "/" . (EquipmentDAO::howMuchAvailable($currentEquipment->getRefEquip()) - EquipmentDAO::howMuchTotal($currentEquipment->getRefEquip())) * -1 . "/" . EquipmentDAO::howMuchTotal($currentEquipment->getRefEquip()); ?></mark>): </b></p>
+                <mark><?php if (isset($equipmentController) && $equipmentController != null && isset($currentEquipment) && $currentEquipment != null) echo $equipmentController->getEquipmentDAO()->howMuchAvailable($currentEquipment->getRefEquip()) . "/" . ($equipmentController->getEquipmentDAO()->howMuchAvailable($currentEquipment->getRefEquip()) - $equipmentController->getEquipmentDAO()->howMuchTotal($currentEquipment->getRefEquip())) * -1 . "/" . $equipmentController->getEquipmentDAO()->howMuchTotal($currentEquipment->getRefEquip()); ?></mark>
+                ): </b></p>
 
         <input type="number" placeholder="Quantité souhaité" name="quantiteNumber" min="1" value="1"
-               max="<?php if (isset($equipmentController) && $equipmentController != null && isset($currentEquipment) && $currentEquipment != null) echo EquipmentDAO::howMuchAvailable($currentEquipment->getRefEquip()) ?>">
+               max="<?php if (isset($equipmentController) && $equipmentController != null && isset($currentEquipment) && $currentEquipment != null) echo $equipmentController->getEquipmentDAO()->howMuchAvailable($currentEquipment->getRefEquip()) ?>">
         <input type="submit" value="Reserver l'équipement" placeholder="Reserver l'équipement"
                name="reserveEquipment">
     </form>
     <?php
 
     if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1) { ?>
-            <p>---------------------------------------------</p>
+        <p>---------------------------------------------</p>
         <label> <b> ESPACE ADMINISTRATEUR: </b> </label>
         <form method="POST" enctype="multipart/form-data">
             <input type="submit" value="Modifier cet équipement" placeholder="Modifier cet équipement"
@@ -63,8 +64,9 @@
 
         <?php
         if (isset($_POST["modifierEquipement"])) {
-            header("Location: ModifyEquipment.php?ref_equip=" . $currentEquipment->getRefEquip());
-
+            if (isset($equipmentController) && $equipmentController != null && isset($currentEquipment) && $currentEquipment != null) {
+                header("Location: ModifyEquipment.php?ref_equip=" . $currentEquipment->getRefEquip());
+            }
         }
 
     }

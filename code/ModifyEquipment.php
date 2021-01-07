@@ -36,8 +36,7 @@ if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1 && isset(
                     $equipmentController->modifyEquipment($ref_equip, $type_equip, $nom_equip, $marque_equip, $version_equip, $quantite_equip);
                     $photo = Functions::uploadImage($type_equip);
                     if ($photo != null && $photo != "") {
-                        ob_end_clean();
-                        EquipmentDAO::updateImageToEquipment($photo, $ref_equip);
+                        $equipmentController->getEquipmentDAO()->updateImageToEquipment($photo, $ref_equip);
                     }
                     unset($currentEquipment);
                     unset($equipmentController);
