@@ -1,19 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="fc02a28c-5f5f-4a9a-b28f-69f9dfcb6675" name="Default Changelist" comment="Resolution bugs et erreur header + ajout buttn add user">
-      <change beforePath="$PROJECT_DIR$/code/Controller/BorrowController.php" beforeDir="false" afterPath="$PROJECT_DIR$/code/Controller/BorrowController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/Controller/EquipmentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/code/Controller/EquipmentController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/Controller/Functions.php" beforeDir="false" afterPath="$PROJECT_DIR$/code/Controller/Functions.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/Controller/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/code/Controller/UserController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/ControllerDAO/BorrowDAO.php" beforeDir="false" afterPath="$PROJECT_DIR$/code/ControllerDAO/BorrowDAO.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/ControllerDAO/EquipmentDAO.php" beforeDir="false" afterPath="$PROJECT_DIR$/code/ControllerDAO/EquipmentDAO.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/ControllerDAO/UserDAO.php" beforeDir="false" afterPath="$PROJECT_DIR$/code/ControllerDAO/UserDAO.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/DashBoard.php" beforeDir="false" afterPath="$PROJECT_DIR$/code/DashBoard.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/Model/Borrow.php" beforeDir="false" afterPath="$PROJECT_DIR$/code/Model/Borrow.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/Model/Equipment.php" beforeDir="false" afterPath="$PROJECT_DIR$/code/Model/Equipment.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/Model/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/code/Model/User.php" afterDir="false" />
-    </list>
+    <list default="true" id="fc02a28c-5f5f-4a9a-b28f-69f9dfcb6675" name="Default Changelist" comment="Resolution bugs et erreur header + ajout buttn add user" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -42,6 +30,7 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="DatabaseDriversLRU" value="mysql" />
     <property name="DefaultPlantUmlFileTemplate" value="UML Class" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
@@ -81,6 +70,7 @@
       <workItem from="1610047781884" duration="6836000" />
       <workItem from="1610117474019" duration="1962000" />
       <workItem from="1610119466889" duration="8092000" />
+      <workItem from="1610137268908" duration="287000" />
     </task>
     <task id="LOCAL-00001" summary="Resolution bugs et erreur header + ajout buttn add user">
       <created>1609932054568</created>
@@ -122,6 +112,7 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="Resolution bugs et erreur header + ajout buttn add user" />
     <option name="LAST_COMMIT_MESSAGE" value="Resolution bugs et erreur header + ajout buttn add user" />
   </component>
