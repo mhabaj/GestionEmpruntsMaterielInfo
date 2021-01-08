@@ -133,7 +133,7 @@ $myCatalogueController = new CatalogueController();
 
 /*********************************************************************************************************************/
 
-
+require_once "view/buttondetailUser.view.php";
 if (isset($_POST['startSearching']) && $_POST['EquipmentToSearch'] != null && $_POST['EquipmentToSearch'] == trim($_POST['EquipmentToSearch'])) {
     try {
         $myCatalogueController->searchEquipment();
@@ -141,7 +141,7 @@ if (isset($_POST['startSearching']) && $_POST['EquipmentToSearch'] != null && $_
         $erreur = "<p>" . $e->getMessage() . "</p>";
     }
 }
-require_once "view/buttondetailUser.view.php";
+
 require_once "view/searchEquipment.view.php";
 /********************************************************************************************************************/
 $myCatalogueController->getEquipmentList();
@@ -157,6 +157,6 @@ if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1) {
         }
     }
     require_once "view/adminOverview.view.php";
-
 }
+require_once("view/footer.view.php");
 /*****************************************************************************************************************************************/

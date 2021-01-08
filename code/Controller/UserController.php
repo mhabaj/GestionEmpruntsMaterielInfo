@@ -1,10 +1,10 @@
 <?php
-require_once("Functions.php");
+require_once(__DIR__ ."/../Controller/Functions.php");
 
-require_once("ControllerDAO/BorrowDAO.php");
-require_once("ControllerDAO/UserDAO.php");
-require_once("EquipmentController.php");
-require_once("BorrowController.php");
+require_once(__DIR__ ."/../ControllerDAO/BorrowDAO.php");
+require_once(__DIR__ ."/../ControllerDAO/UserDAO.php");
+require_once(__DIR__ ."/../Controller/EquipmentController.php");
+require_once(__DIR__ ."/../Controller/BorrowController.php");
 
 /**
  * Class UserController
@@ -41,11 +41,10 @@ class UserController
     /**
      * @return bool
      */
-    public function disconnect(): bool
+    public function disconnect(): void
     {
         session_unset();
         session_destroy();
-        return TRUE;
     }
 
     /**
@@ -118,6 +117,8 @@ class UserController
             throw new Exception("Les deux mots de passe ne correspondent pas !");
         }
 
+        $hashedPassword = sha1($password);
+
         if ($this->_userDAO->matriculeUserExists($matricule) == false
             && Functions::checkMatricule($matricule) == true
             && Functions::checkMail($email) == true
@@ -127,7 +128,7 @@ class UserController
 
             $this->_user = new User();
 
-            $this->_userDAO->createUser($matricule, $email, $password, $name, $lastname, $phone, $isAdmin);
+            $this->_userDAO->createUser($matricule, $email, $hashedPassword, $name, $lastname, $phone, $isAdmin);
             $this->_user->setMatriculeUser($matricule);
             $this->_user->setEmail($email);
             $this->_user->setLastName($lastname);

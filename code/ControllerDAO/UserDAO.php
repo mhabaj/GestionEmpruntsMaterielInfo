@@ -1,8 +1,8 @@
 <?php
 
-require_once("Model/User.php");
-require_once("Controller/DataBase.php");
-require_once("Model/Borrow.php");
+require_once(__DIR__ ."/../Model/User.php");
+require_once(__DIR__ ."/../Controller/DataBase.php");
+require_once(__DIR__ ."/../Model/Borrow.php");
 
 
 /**
@@ -245,7 +245,6 @@ class UserDAO
             $bdd->closeCon();
             throw new Exception("<p> Could not create the user, invalid user input </p> ");
         }
-
     }
 
     /**

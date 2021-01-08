@@ -69,7 +69,7 @@
                 Nous nous soutenions entre nous pour ne pas sombrer dans un desespoir sans fin, à nos 6 ans nous avons été embusqués par un ours féroce, au bord de la mort... Nous avons révéillés la colère des Ackerman qui sommeillait en nous et avons déchirés la gorge de l'ours avec nos dents.
                 Sa peau et sa graisse nous ont permis de nous tenir au chaud dans notre caverne en hiver.</p>
 				<br><br><br><br>
-                <p>Groupe 5 : Alhabaj Mahmod, Ingarao Adrien, Belda Tom, Anica Sean, Ung Alexandre.</p>
+                <p>Groupe 5 : ALHABAJ Mahmod - ANICA Sean - BELDA Tom - INGARAO Adrien - MAGGOUH Naoufal - UNG Alexandre.</p>
 				
 			</article>
 			<!-- /Article -->

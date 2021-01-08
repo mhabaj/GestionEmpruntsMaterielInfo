@@ -29,6 +29,7 @@ if (isset($_GET['ref_equip']) && $_GET['ref_equip'] != null) {
             try {
                 if ($currentEquipment != null) {
                     $userController->startBorrow($equipmentController, $currentEquipment->getRefEquip(), $dateFinBorrow, $quantite_equip, $_SESSION['id_user']);
+                    $erreur = "Réservation réussie.";
                 }
             } catch (Exception $e) {
                 $erreur = "<p>" . $e->getMessage() . "</p>";

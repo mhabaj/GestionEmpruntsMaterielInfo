@@ -19,20 +19,21 @@ if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1) {
         try {
             $userController = new UserController($_SESSION['id_user']);
 
-            if (isset($_POST['administrateur']) && isset($_POST['matricule']) && isset($_POST['password']) && isset($_POST['passwordrepeat']) && isset($_POST['name']) && isset($_POST['lastname'])
-                && isset($_POST['phone']) && isset($_POST['administrateur'])) {
+            $postAdmin = 0;
+            if (isset($_POST['administrateur']) && $_POST['administrateur'] != null )
+                $postAdmin = 1;
 
-                $isAdmin = 0;
-                if ($_POST['administrateur'] == 'ok')
-                    $isAdmin = 1;
+            if (isset($_POST['matricule']) && isset($_POST['password']) && isset($_POST['passwordrepeat']) && isset($_POST['name']) && isset($_POST['lastname'])
+                && isset($_POST['phone']))
+            {
 
-
-                if ($userController->createUser($_POST['matricule'], $_POST['password'], $_POST['passwordrepeat'], $_POST['email'], $_POST['name'], $_POST['lastname'], $_POST['phone'], $isAdmin) == true) {
+                if ($userController->createUser($_POST['matricule'], $_POST['password'], $_POST['passwordrepeat'], $_POST['email'], $_POST['name'], $_POST['lastname'], $_POST['phone'], $postAdmin) == true)
+                {
                     ob_end_clean();
-
                     header('Location:DashBoard.php');
                 }
             }
+
         } catch (Exception $e) {
             ob_end_clean();
             header("refresh:3;url=DashBoard.php");

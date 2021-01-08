@@ -36,6 +36,18 @@ class DataBase
         }
     }
 
+    public function purgeDatabase()
+    {
+
+        $queryEquipments = "DELETE FROM borrow; 
+                            DELETE FROM device; DELETE FROM stock_photo ;DELETE FROM borrow_info;DELETE FROM equipment;DELETE FROM users" ;
+        $myStatement = $this->_con->prepare($queryEquipments);
+        $myStatement->execute([]);
+
+        $myStatement->closeCursor();
+        $this->_con=null;
+    }
+
     public function getCon()
     {
         return $this->_con;
