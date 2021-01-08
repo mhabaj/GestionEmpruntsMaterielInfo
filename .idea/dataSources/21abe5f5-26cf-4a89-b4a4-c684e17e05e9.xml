@@ -907,5 +907,226 @@ SELECT|sys.sys_config
       <ObjectGrants>SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,RELOAD,SHUTDOWN,PROCESS,FILE,REFERENCES,INDEX,ALTER,SHOW DATABASES,SUPER,CREATE TEMPORARY TABLES,LOCK TABLES,EXECUTE,REPLICATION SLAVE,REPLICATION CLIENT,CREATE VIEW,SHOW VIEW,CREATE ROUTINE,ALTER ROUTINE,CREATE USER,EVENT,TRIGGER,CREATE TABLESPACE,CREATE ROLE,DROP ROLE!
 </ObjectGrants>
     </user>
+    <table id="284" parent="3" name="borrow">
+      <Engine>InnoDB</Engine>
+    </table>
+    <table id="285" parent="3" name="borrow_info">
+      <Engine>InnoDB</Engine>
+    </table>
+    <table id="286" parent="3" name="device">
+      <Engine>InnoDB</Engine>
+    </table>
+    <table id="287" parent="3" name="equipment">
+      <Engine>InnoDB</Engine>
+    </table>
+    <table id="288" parent="3" name="stock_photo">
+      <Engine>InnoDB</Engine>
+    </table>
+    <table id="289" parent="3" name="users">
+      <Engine>InnoDB</Engine>
+    </table>
+    <column id="290" parent="284" name="id_user">
+      <Position>1</Position>
+      <DataType>int|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="291" parent="284" name="id_device">
+      <Position>2</Position>
+      <DataType>int|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="292" parent="284" name="id_borrow">
+      <Position>3</Position>
+      <DataType>int|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="293" parent="284" name="borrow_device0_FK">
+      <ColNames>id_device</ColNames>
+      <Type>btree</Type>
+    </index>
+    <index id="294" parent="284" name="borrow_borrow_info1_FK">
+      <ColNames>id_borrow</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="295" parent="284" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id_user
+id_device
+id_borrow</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="296" parent="284" name="borrow_users_FK">
+      <ColNames>id_user</ColNames>
+      <RefTableName>users</RefTableName>
+      <RefColNames>id_user</RefColNames>
+    </foreign-key>
+    <foreign-key id="297" parent="284" name="borrow_device0_FK">
+      <ColNames>id_device</ColNames>
+      <RefTableName>device</RefTableName>
+      <RefColNames>id_device</RefColNames>
+    </foreign-key>
+    <foreign-key id="298" parent="284" name="borrow_borrow_info1_FK">
+      <ColNames>id_borrow</ColNames>
+      <RefTableName>borrow_info</RefTableName>
+      <RefColNames>id_borrow</RefColNames>
+    </foreign-key>
+    <column id="299" parent="285" name="id_borrow">
+      <Position>1</Position>
+      <DataType>int|0s</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>null</SequenceIdentity>
+    </column>
+    <column id="300" parent="285" name="startdate_borrow">
+      <Position>2</Position>
+      <DataType>date|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="301" parent="285" name="enddate_borrow">
+      <Position>3</Position>
+      <DataType>date|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="302" parent="285" name="isActive">
+      <Position>4</Position>
+      <DataType>tinyint(1)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <key id="303" parent="285" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id_borrow</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="304" parent="286" name="id_device">
+      <Position>1</Position>
+      <DataType>int|0s</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>null</SequenceIdentity>
+    </column>
+    <column id="305" parent="286" name="isAvailable">
+      <Position>2</Position>
+      <DataType>tinyint(1)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="306" parent="286" name="ref_equip">
+      <Position>3</Position>
+      <DataType>varchar(5)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="307" parent="286" name="device_equipment_FK">
+      <ColNames>ref_equip</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="308" parent="286" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id_device</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="309" parent="286" name="device_equipment_FK">
+      <ColNames>ref_equip</ColNames>
+      <RefTableName>equipment</RefTableName>
+      <RefColNames>ref_equip</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+    </foreign-key>
+    <column id="310" parent="287" name="ref_equip">
+      <Position>1</Position>
+      <DataType>varchar(5)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="311" parent="287" name="type_equip">
+      <Position>2</Position>
+      <DataType>varchar(30)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="312" parent="287" name="brand_equip">
+      <Position>3</Position>
+      <DataType>varchar(30)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="313" parent="287" name="name_equip">
+      <Position>4</Position>
+      <DataType>varchar(30)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="314" parent="287" name="version_equip">
+      <Position>5</Position>
+      <DataType>varchar(15)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <key id="315" parent="287" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>ref_equip</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="316" parent="288" name="link_photo">
+      <Position>1</Position>
+      <DataType>varchar(700)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="317" parent="288" name="ref_equip">
+      <Position>2</Position>
+      <DataType>varchar(5)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="318" parent="288" name="stock_photo_equipment_FK">
+      <ColNames>ref_equip</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="319" parent="288" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>link_photo
+ref_equip</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="320" parent="288" name="stock_photo_equipment_FK">
+      <ColNames>ref_equip</ColNames>
+      <RefTableName>equipment</RefTableName>
+      <RefColNames>ref_equip</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+    </foreign-key>
+    <column id="321" parent="289" name="id_user">
+      <Position>1</Position>
+      <DataType>int|0s</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>null</SequenceIdentity>
+    </column>
+    <column id="322" parent="289" name="matricule_user">
+      <Position>2</Position>
+      <DataType>varchar(50)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="323" parent="289" name="email_user">
+      <Position>3</Position>
+      <DataType>varchar(50)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="324" parent="289" name="password_user">
+      <Position>4</Position>
+      <DataType>varchar(50)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="325" parent="289" name="name_user">
+      <Position>5</Position>
+      <DataType>varchar(30)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="326" parent="289" name="lastname_user">
+      <Position>6</Position>
+      <DataType>varchar(30)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="327" parent="289" name="phone_user">
+      <Position>7</Position>
+      <DataType>varchar(13)|0s</DataType>
+    </column>
+    <column id="328" parent="289" name="isAdmin_user">
+      <Position>8</Position>
+      <DataType>tinyint(1)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <key id="329" parent="289" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id_user</ColNames>
+      <Primary>1</Primary>
+    </key>
   </database-model>
 </dataSource>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : mar. 05 jan. 2021 à 21:32
+-- Généré le : sam. 09 jan. 2021 à 00:06
 -- Version du serveur :  8.0.21
 -- Version de PHP : 7.3.21
 
@@ -20,6 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Base de données : `bddprojet`
 --
+CREATE DATABASE IF NOT EXISTS `bddprojet` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
+USE `bddprojet`;
 
 -- --------------------------------------------------------
 
@@ -37,8 +39,6 @@ CREATE TABLE IF NOT EXISTS `borrow` (
   KEY `borrow_borrow_info1_FK` (`id_borrow`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-
-
 -- --------------------------------------------------------
 
 --
@@ -52,8 +52,7 @@ CREATE TABLE IF NOT EXISTS `borrow_info` (
   `enddate_borrow` date NOT NULL,
   `isActive` tinyint(1) NOT NULL,
   PRIMARY KEY (`id_borrow`)
-) ENGINE=InnoDB AUTO_INCREMENT=91 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
+) ENGINE=InnoDB AUTO_INCREMENT=248 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -68,9 +67,7 @@ CREATE TABLE IF NOT EXISTS `device` (
   `ref_equip` varchar(5) NOT NULL,
   PRIMARY KEY (`id_device`),
   KEY `device_equipment_FK` (`ref_equip`)
-) ENGINE=InnoDB AUTO_INCREMENT=815 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
-
+) ENGINE=InnoDB AUTO_INCREMENT=959 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -88,7 +85,6 @@ CREATE TABLE IF NOT EXISTS `equipment` (
   PRIMARY KEY (`ref_equip`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-
 -- --------------------------------------------------------
 
 --
@@ -99,11 +95,9 @@ DROP TABLE IF EXISTS `stock_photo`;
 CREATE TABLE IF NOT EXISTS `stock_photo` (
   `link_photo` varchar(700) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `ref_equip` varchar(5) NOT NULL,
-  PRIMARY KEY (`link_photo`),
+  PRIMARY KEY (`link_photo`,`ref_equip`) USING BTREE,
   KEY `stock_photo_equipment_FK` (`ref_equip`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
-
 
 -- --------------------------------------------------------
 
@@ -122,9 +116,19 @@ CREATE TABLE IF NOT EXISTS `users` (
   `phone_user` varchar(13) DEFAULT NULL,
   `isAdmin_user` tinyint(1) NOT NULL,
   PRIMARY KEY (`id_user`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+--
+-- Déchargement des données de la table `users`
+--
 
+INSERT INTO `users` (`id_user`, `matricule_user`, `email_user`, `password_user`, `name_user`, `lastname_user`, `phone_user`, `isAdmin_user`) VALUES
+(5, 'admin12', 'admindu21@gmail.com', 'admin12', 'Mahmoud', 'Alhabaj', NULL, 1),
+(6, 'client1', 'client@hotmail.com', 'client1', 'Nahcute', 'Mahoufal', NULL, 0);
+
+--
+-- Contraintes pour les tables déchargées
+--
 
 --
 -- Contraintes pour la table `borrow`
