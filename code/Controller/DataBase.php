@@ -37,51 +37,23 @@ class DataBase
         }
     }
 
+    public function purgeDatabase()
+    {
+
+        $queryEquipments = "DELETE FROM borrow; 
+                            DELETE FROM device; DELETE FROM stock_photo ;DELETE FROM borrow_info;DELETE FROM equipment;DELETE FROM users" ;
+        $myStatement = $this->_con->prepare($queryEquipments);
+        $myStatement->execute([]);
+
+        $myStatement->closeCursor();
+        $this->_con=null;
+    }
+
     public function getCon()
     {
         return $this->_con;
     }
 
-    /**
-     * @function    restoreDatabaseTables
-     * @usage       Restore database tables from a SQL file
-     */
-    function restoreDatabaseTables()
-    {
-        // Connect & select the database
-        $db = new mysqli($this->_config['host'], $this->_config['username'], $this->_config['password'], $this->_config['dbname']);
-
-        // Temporary variable, used to store current query
-        $templine = '';
-
-        // Read in entire file
-        $lines = file($this->_filePath);
-
-        $error = '';
-
-        // Loop through each line
-        foreach ($lines as $line){
-            // Skip it if it's a comment
-            if(substr($line, 0, 2) == '--' || $line == ''){
-                continue;
-            }
-
-            // Add this line to the current segment
-            $templine .= $line;
-
-            // If it has a semicolon at the end, it's the end of the query
-            if (substr(trim($line), -1, 1) == ';'){
-                // Perform the query
-                if(!$db->query($templine)){
-                    $error .= 'Error performing query "<b>' . $templine . '</b>": ' . $db->error . '<br /><br />';
-                }
-
-                // Reset temp variable to empty
-                $templine = '';
-            }
-        }
-        return !empty($error)?$error:true;
-    }
 }
 
 

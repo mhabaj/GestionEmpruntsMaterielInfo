@@ -164,20 +164,6 @@ class UserControllerTest extends TestCase
         return $result['id'];
     }
 
-    public static function purgeDatabase()
-    {
-        $bdd = new DataBase();
-        $con = $bdd->getCon();
-
-        $queryEquipments = "DELETE FROM borrow; 
-                            DELETE FROM device; DELETE FROM stock_photo ;DELETE FROM borrow_info;DELETE FROM equipment;DELETE FROM users" ;
-        $myStatement = $con->prepare($queryEquipments);
-        $myStatement->execute([]);
-
-        $myStatement->closeCursor();
-        $bdd->closeCon();
-    }
-
     public static function setUpBeforeClass(): void
     {
 
@@ -198,7 +184,8 @@ class UserControllerTest extends TestCase
 
     public static function tearDownAfterClass(): void
     {
-        UserControllerTest::purgeDatabase();
+        $dataBase = new DataBase();
+        $dataBase->purgeDatabase();
     }
 
 

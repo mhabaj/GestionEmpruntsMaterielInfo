@@ -187,8 +187,7 @@ final class EquipmentControllerTest extends TestCase
 
     public static function setUpBeforeClass(): void
     {
-        $dataBase = new DataBase();
-        $dataBase->restoreDatabaseTables();
+
 
         $edao = new EquipmentDAO();
 
@@ -197,11 +196,8 @@ final class EquipmentControllerTest extends TestCase
 
     public static function tearDownAfterClass(): void
     {
-        EquipmentControllerTest::deleteEquipment("XX000");
-        EquipmentControllerTest::deleteEquipment("XX001");
-        EquipmentControllerTest::deleteEquipment("XX002");
-        EquipmentControllerTest::deleteEquipment("XX003");
-        EquipmentControllerTest::deleteEquipment("XX004");
+        $dataBase = new DataBase();
+        $dataBase->purgeDatabase();
     }
 
     public function testCreateEquipment(): void
