@@ -4,7 +4,6 @@
 class DataBase
 {
     private $_con;
-    private $_filePath = ("E:\wamp64\www\GestionEmpruntsMaterielInfo\code\assets\ScriptBDD.sql");
     private $_config = array(
         'driver' => 'mysql',
         'host' => '127.0.0.1',
@@ -37,23 +36,10 @@ class DataBase
         }
     }
 
-    public function purgeDatabase()
-    {
-
-        $queryEquipments = "DELETE FROM borrow; 
-                            DELETE FROM device; DELETE FROM stock_photo ;DELETE FROM borrow_info;DELETE FROM equipment;DELETE FROM users" ;
-        $myStatement = $this->_con->prepare($queryEquipments);
-        $myStatement->execute([]);
-
-        $myStatement->closeCursor();
-        $this->_con=null;
-    }
-
     public function getCon()
     {
         return $this->_con;
     }
-
 }
 
 

@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ ."/../Controller/DataBase.php";
+require_once "Controller/DataBase.php";
 
 /**
  * Class EquipmentDAO
@@ -53,10 +53,10 @@ class EquipmentDAO
             if ($equipment != null) {
                 return $equipment;
             } else {
-                throw new Exception("Exception Equipment Controller: Invalid refEquipment");
+                throw new Exception("Exception EquipmentDAO : refEquipment(référence d'équipement) invalide");
             }
         } else {
-            throw new Exception("Exception Equipment Controller: Invalid refEquipment");
+            throw new Exception("Exception EquipmentDAO : refEquipment(référence d'équipement) invalide");
         }
     }
 
@@ -89,7 +89,7 @@ class EquipmentDAO
         } catch (PDOException $e) {
             $con->rollback();
             $bdd->closeCon();
-            throw new Exception("Error ModifyEquipment() : " . $e->getMessage());
+            throw new Exception("Erreur ModifyEquipment() : " . $e->getMessage());
         }
     }
 
@@ -163,7 +163,7 @@ class EquipmentDAO
                     $con->commit();
                 } catch (PDOException $e) {
                     $con->rollback();
-                    throw new PDOException('Erreur update device count');
+                    throw new PDOException('Erreur de mise à jour de comptage des appareils (update device count).');
                 }
                 $indexOf++;
             }
@@ -179,7 +179,7 @@ class EquipmentDAO
                     $con->commit();
                 } catch (PDOException $e) {
                     $con->rollback();
-                    throw new PDOException('Erreur update device count ');
+                    throw new PDOException('Erreur de mise à jour de comptage des appareils (update device count).');
                 }
                 $indexOf++;
             }
@@ -260,7 +260,7 @@ class EquipmentDAO
             $bdd->closeCon();
 
             if ($result['somme'] >= 1) {
-                throw new Exception("Ref equipment is already used");
+                throw new Exception("La référence de l'équipement est déjà utilisée.");
             } else {
                 return false;
             }
@@ -286,7 +286,7 @@ class EquipmentDAO
         $bdd->closeCon();
 
         if ($result['somme'] >= 1) {
-            throw new Exception("Ref equipment is already used");
+            throw new Exception("La référence de l'équipement est déjà utilisée.");
         }
 
 

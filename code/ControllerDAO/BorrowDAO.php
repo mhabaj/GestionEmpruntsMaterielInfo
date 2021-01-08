@@ -1,5 +1,5 @@
 <?php
-require_once(__DIR__ ."/../Controller/DataBase.php");
+require_once "Controller/DataBase.php";
 
 /**
  * Class BorrowDAO
@@ -20,6 +20,8 @@ class BorrowDAO
      */
     public function startBorrow($refEquip, $endDate, $idUser): Borrow
     {
+
+
         date_default_timezone_set('Europe/Paris');
         $currentDateTime = date('Y/m/d');
 
@@ -43,7 +45,7 @@ class BorrowDAO
         $myStatement->execute([$start_date, $endDate]);
         $id_borrow = $con->lastInsertId("id_borrow");
 
-        $requestInsert1 = "INSERT INTO `borrow` (`id_user`, `id_device`, `id_borrow`) VALUES ( ? , ? , ?);";
+        $requestInsert1 = "INSERT INTO borrow (id_user, id_device, id_borrow) VALUES (?, ? , ?);";
         $myStatement = $con->prepare($requestInsert1);
         $myStatement->execute([$idUser, $device_id, $id_borrow]);
 

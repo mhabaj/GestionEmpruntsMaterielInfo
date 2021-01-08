@@ -4,10 +4,19 @@
 /// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+require_once("head.view.php");
+require_once("navbar.view.php");
 ?>
+<!-- Intro -->
+<div class="container">
+    <div class="maincontent">
+        <br> <br>
+        <h2 class="thin"></h2>
+        <p class="text-muted">
 
-<html>
-<body>
+        </p>
+        <!-- /Intro-->
+
 <div>
     <p> Reference d'équipement:
         : <?php if (isset($equipmentController) && $equipmentController != null && isset($currentEquipment) && $currentEquipment != null) echo $currentEquipment->getRefEquip() ?> </p>
@@ -48,18 +57,17 @@
 
         <input type="number" placeholder="Quantité souhaité" name="quantiteNumber" min="1" value="1"
                max="<?php if (isset($equipmentController) && $equipmentController != null && isset($currentEquipment) && $currentEquipment != null) echo $equipmentController->getEquipmentDAO()->howMuchAvailable($currentEquipment->getRefEquip()) ?>">
-        <input type="submit" value="Reserver l'équipement" placeholder="Reserver l'équipement"
+        <input class="btn btn-primary" type="submit" value="Reserver l'équipement" placeholder="Reserver l'équipement"
                name="reserveEquipment">
     </form>
-    <?php if (isset($erreur) && !$erreur == "") echo "<p>" . $erreur . "</p>"; ?>
-
+    <?php if (isset($erreur) && !$erreur == "") echo "<p>" . $erreur . "</p>"; ?> 
     <?php
 
     if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1) { ?>
         <p>---------------------------------------------</p>
         <label> <b> ESPACE ADMINISTRATEUR: </b> </label>
         <form method="POST" enctype="multipart/form-data">
-            <input type="submit" value="Modifier cet équipement" placeholder="Modifier cet équipement"
+            <input class="btn btn-success" type="submit" value="Modifier cet équipement" placeholder="Modifier cet équipement"
                    name="modifierEquipement">
         </form>
 
@@ -79,5 +87,6 @@
     ?>
 </div>
 
-</body>
-</html>
+<?php
+require_once("footer.view.php");
+?>

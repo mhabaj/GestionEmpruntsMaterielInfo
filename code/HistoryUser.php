@@ -5,7 +5,19 @@ $erreur = "";
 require_once("Controller/control-session.php");
 require_once("Controller/UserController.php");
 require_once("ControllerDAO/UserDAO.php");
+require_once("view/head.view.php");
+require_once("view/navbar.view.php");
 ob_start();
+
+?> <!-- Intro -->
+    <div class="container">
+        <div class="maincontent">
+            <br> <br>
+            <h2 class="thin"></h2>
+            <p class="text-muted">
+
+            </p>
+            <!-- /Intro--><?php
 
 if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1 && isset($_GET['id_user_toDisplay']) || $_GET['id_user_toDisplay'] == $_SESSION['id_user'] && isset($_GET['id_user_toDisplay'])) {
     $tmpUsrCtrl = new UserController();
@@ -35,4 +47,6 @@ if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1 && isset(
 } else {
     header('Location: DashBoard.php');
 }
+
+require_once("view/footer.view.php");
 

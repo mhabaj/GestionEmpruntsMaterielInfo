@@ -55,13 +55,11 @@ class User
      * @param $phone
      * @param $isAdmin
      */
-    public function __construct(int $id =null, $email=null, $matricule=null, $password=null, $firstName=null, $lastName=null, $phone=null, $isAdmin=null)
+    public function __construct(int $id = null, $email = null, $matricule = null, $password = null, $firstName = null, $lastName = null, $phone = null, $isAdmin = null)
     {
-        if ($id == null && $email == null && $matricule == null && $password == null && $firstName== null && $lastName== null && $phone== null && $isAdmin== null)
-        {
-            $this->_idUser =null;
-        }
-        else {
+        if ($id == null && $email == null && $matricule == null && $password == null && $firstName == null && $lastName == null && $phone == null && $isAdmin == null) {
+            $this->_idUser = null;
+        } else {
             $this->setIdUser($id);
             $this->setEmail($email);
             $this->setMatriculeUser($matricule);

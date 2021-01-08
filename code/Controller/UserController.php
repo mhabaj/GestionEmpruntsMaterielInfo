@@ -1,10 +1,10 @@
 <?php
 require_once("Functions.php");
 
-require_once(__DIR__ ."/../ControllerDAO/BorrowDAO.php");
-require_once(__DIR__ ."/../ControllerDAO/UserDAO.php");
-require_once(__DIR__ ."/../Controller/EquipmentController.php");
-require_once(__DIR__ ."/../Controller/BorrowController.php");
+require_once("ControllerDAO/BorrowDAO.php");
+require_once("ControllerDAO/UserDAO.php");
+require_once("EquipmentController.php");
+require_once("BorrowController.php");
 
 /**
  * Class UserController
@@ -41,11 +41,10 @@ class UserController
     /**
      * @return bool
      */
-    public function disconnect(): bool
+    public function disconnect(): void
     {
         session_unset();
         session_destroy();
-        return TRUE;
     }
 
     /**
@@ -60,14 +59,11 @@ class UserController
      */
     public function startBorrow(EquipmentController $equipmentController, $ref_equip_toBorrow, $dateFin, $quantity, $idUser): bool
     {
-        if (Functions::checkReservationDate($dateFin) && Functions::checkQuantityEquipment($quantity))
-        {
+        if (Functions::checkReservationDate($dateFin) && Functions::checkQuantityEquipment($quantity)) {
+            if ($equipmentController->getEquipmentDAO()->howMuchAvailable($ref_equip_toBorrow) >= $quantity && $quantity > 0) {
 
-            if ($equipmentController->getEquipmentDAO()->howMuchAvailable($ref_equip_toBorrow) >= $quantity && $quantity > 0)
-            {
                 $indexOf = 0;
-                while ($indexOf < $quantity)
-                {
+                while ($indexOf < $quantity) {
                     $tmpBorrowController = new BorrowController();
                     $newBorrow = $tmpBorrowController->getBorrowDAO()->startBorrow($ref_equip_toBorrow, $dateFin, $idUser);
                     $newBorrow->setEndDate($dateFin);
@@ -129,6 +125,7 @@ class UserController
             && Functions::checkFirstNameUser($name) == true) {
 
             $this->_user = new User();
+
             $this->_userDAO->createUser($matricule, $email, $password, $name, $lastname, $phone, $isAdmin);
             $this->_user->setMatriculeUser($matricule);
             $this->_user->setEmail($email);
@@ -166,7 +163,6 @@ class UserController
             && Functions::checkNameUser($lastname) == true
             && Functions::checkFirstNameUser($name) == true) {
 
-            $this->_user = new User();
             $this->_userDAO->modifyUser($id, $matricule, $email, $name, $lastname, $phone, $isAdmin);
             $this->_user->setMatriculeUser($matricule);
             $this->_user->setEmail($email);

@@ -159,7 +159,7 @@ class Functions
         if ($entered_date != null && strtotime($entered_date) > strtotime('now')) {
             return true;
         } else {
-            throw new Exception("Incorrect End Reservation Date input (must not be prior to today's date)");
+            throw new Exception("La date de fin de réservation est incorrecte (Elle doit être ultérieure à la date d'aujourd'hui.). [format : YYYY/MM/DD]");
         }
     }
 

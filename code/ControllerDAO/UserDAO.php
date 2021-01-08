@@ -1,8 +1,8 @@
 <?php
 
-require_once(__DIR__ ."/../Model/User.php");
-require_once(__DIR__ ."/../Controller/DataBase.php");
-require_once(__DIR__ ."/../Model/Borrow.php");
+require_once("Model/User.php");
+require_once("Controller/DataBase.php");
+require_once("Model/Borrow.php");
 
 
 /**
@@ -233,7 +233,7 @@ class UserDAO
         $con = $bdd->getCon();
         try {
             $con->beginTransaction();
-;
+
             $query = "INSERT INTO users (matricule_user,email_user,password_user,name_user,lastname_user,phone_user,isAdmin_user) VALUES (?,?,?,?,?,?,?);";
             $stmt = $con->prepare($query);
             $stmt->execute([$_matriculeUser, $_emailUser, $_passwordUser, $_firstNameUser, $_lastnameUser, $_phone, $_isAdminUser]);
@@ -251,8 +251,10 @@ class UserDAO
     /**
      * @return User|null
      */
-    public function getLastInsertedUser(): ?User
+    public
+    function getLastInsertedUser(): ?User
     {
+
         $bdd = new DataBase();
         $con = $bdd->getCon();
 
@@ -260,7 +262,6 @@ class UserDAO
         $stmt = $con->prepare($query);
         $stmt->execute();
         $result = $stmt->fetch();
-
         return $this->getUserByID($result['id']);
 
     }
