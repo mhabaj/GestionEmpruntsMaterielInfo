@@ -245,7 +245,6 @@ class UserDAO
             $bdd->closeCon();
             throw new Exception("<p> Could not create the user, invalid user input </p> ");
         }
-
     }
 
     /**

@@ -283,7 +283,7 @@ final class EquipmentControllerTest extends TestCase
 
         $this->expectException(Exception::class);
 
-        $ec->modifyEquipment("XX007", "TypeTest", "NameTest", "BrandTest", "VersionTest", -1);
+        $ec->modifyEquipment("XX006", "TypeTest", "NameTest", "BrandTest", "VersionTest", -1);
     }
 
 
