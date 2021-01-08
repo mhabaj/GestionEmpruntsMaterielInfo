@@ -173,8 +173,7 @@ class Functions
         if ($quantite_equip != null && $quantite_equip >= 0) {
             return true;
         } else {
-            throw new Exception("Incorrect Quantite materiel input");
-
+            throw new Exception("Erreur, veuillez choisir une quantité de matériel supérieure à 0");
         }
     }
 

@@ -1,8 +1,8 @@
 <?php
 
-require_once("Model/User.php");
-require_once("Controller/DataBase.php");
-require_once("Model/Borrow.php");
+require_once(__DIR__ . "/../Model/User.php");
+require_once(__DIR__ . "/../Controller/DataBase.php");
+require_once(__DIR__ . "/../Model/Borrow.php");
 
 
 /**
@@ -10,8 +10,18 @@ require_once("Model/Borrow.php");
  */
 class UserDAO
 {
+
+    /**
+     * UserDAO constructor.
+     */
+    public function __construct()
+    {
+    }
+
+
     /**
      * @param $id
+     *
      * @return bool
      */
     public function userExists($id): bool
@@ -33,6 +43,7 @@ class UserDAO
 
     /**
      * @param int $id
+     *
      * @return User|null
      */
     public function getUserByID(int $id): ?User
@@ -82,6 +93,7 @@ class UserDAO
     /**
      * @param $user
      * @param $hashedNewPassword
+     *
      * @return bool
      * @throws Exception
      */
@@ -113,6 +125,7 @@ class UserDAO
      * @param $_lastname_user
      * @param $_phone
      * @param $_isAdmin_user
+     *
      * @return bool
      * @throws Exception
      */
@@ -142,6 +155,7 @@ class UserDAO
     /**
      * @param $matricule
      * @param $mdp
+     *
      * @return bool
      */
     public function connect($matricule, $mdp): bool
@@ -173,6 +187,7 @@ class UserDAO
 
     /**
      * @param $matricule
+     *
      * @return bool
      */
     public function matriculeUserExists($matricule): bool
@@ -195,7 +210,9 @@ class UserDAO
 
     /**
      * renvoie un statement? de l'historique de l'utilisateur
+     *
      * @param $id_user_toDisplay
+     *
      * @return null
      */
     public
@@ -224,6 +241,7 @@ class UserDAO
      * @param $_lastnameUser
      * @param $_phone
      * @param $_isAdminUser
+     *
      * @return bool
      * @throws Exception
      */
@@ -245,7 +263,6 @@ class UserDAO
             $bdd->closeCon();
             throw new Exception("<p> Could not create the user, invalid user input </p> ");
         }
-
     }
 
     /**

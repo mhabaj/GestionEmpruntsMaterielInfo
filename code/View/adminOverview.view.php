@@ -8,7 +8,7 @@ if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1) {
     </form>
     <br>
     <form action="RegisterUser.php" enctype="multipart/form-data">
-        <button class="btn btn-primary"  type="submit" name="startSearchingUser">Creer un Utilisateur</button>
+        <button class="btn btn-primary"  type="submit" name="createUser">Creer un Utilisateur</button>
     </form>
     <br>
     <form method="POST" enctype="multipart/form-data">
