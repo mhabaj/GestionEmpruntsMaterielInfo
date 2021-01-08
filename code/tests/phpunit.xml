@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit color="true"
+<phpunit colors="true"
          convertErrorsToExceptions="true"
          convertNoticesToExceptions="true"
          convertWarningsToExceptions="true"
          processIsolation="false"
-         stopOnFailure="false"
-         syntaxCheck="true">
+         stopOnFailure="false">
     <testsuites>
         <testsuite name="Test suite">
-            <directory>E:\wamp64\www\GestionEmpruntsMaterielInfo\code\tests</directory>
+            <directory>.</directory>
         </testsuite>
     </testsuites>
 </phpunit>

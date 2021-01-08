@@ -44,7 +44,8 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="com.jetbrains.php.phpunit.codeGeneration.PhpNewTestDialog.defaultLibrary" value="PHPUnit" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="php.test.frameworks.configurable" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="reference.webide.settings.project.settings.php" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
@@ -127,6 +128,7 @@
       <workItem from="1610026344520" duration="20510000" />
       <workItem from="1610052163397" duration="6494000" />
       <workItem from="1610058828239" duration="4613000" />
+      <workItem from="1610121077475" duration="843000" />
     </task>
     <servers />
   </component>
@@ -158,10 +160,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="784" y="224" width="1092" height="715" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1609881933817" />
-    <state x="92" y="92" width="1736" height="856" key="#com.intellij.execution.junit2.states.ComparisonFailureState$DiffDialog" timestamp="1610052873140">
+    <state x="92" y="92" width="1736" height="856" key="#com.intellij.execution.junit2.states.ComparisonFailureState$DiffDialog" timestamp="1610120421992">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="92" y="92" width="1736" height="856" key="#com.intellij.execution.junit2.states.ComparisonFailureState$DiffDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1610052873140" />
+    <state x="92" y="92" width="1736" height="856" key="#com.intellij.execution.junit2.states.ComparisonFailureState$DiffDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1610120421992" />
     <state x="0" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1609203789769">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -170,22 +172,22 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="740" y="274" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1609957537129" />
-    <state width="1877" height="282" key="GridCell.Tab.0.bottom" timestamp="1610118433002">
+    <state width="1877" height="256" key="GridCell.Tab.0.bottom" timestamp="1610121897054">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="282" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1610118433002" />
-    <state width="1877" height="282" key="GridCell.Tab.0.center" timestamp="1610118433002">
+    <state width="1877" height="256" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1610121897054" />
+    <state width="1877" height="256" key="GridCell.Tab.0.center" timestamp="1610121897054">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="282" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1610118433002" />
-    <state width="1877" height="282" key="GridCell.Tab.0.left" timestamp="1610118433002">
+    <state width="1877" height="256" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1610121897054" />
+    <state width="1877" height="256" key="GridCell.Tab.0.left" timestamp="1610121897054">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="282" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1610118433002" />
-    <state width="1877" height="282" key="GridCell.Tab.0.right" timestamp="1610118433002">
+    <state width="1877" height="256" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1610121897054" />
+    <state width="1877" height="256" key="GridCell.Tab.0.right" timestamp="1610121897054">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="282" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1610118433002" />
+    <state width="1877" height="256" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1610121897054" />
     <state width="1877" height="348" key="GridCell.Tab.1.bottom" timestamp="1610058818687">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -210,10 +212,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="794" y="443" key="NewPhpFileDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1609205794837" />
-    <state x="480" y="169" key="SettingsEditor" timestamp="1609957545367">
+    <state x="480" y="169" key="SettingsEditor" timestamp="1610119421832">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="480" y="169" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1609957545367" />
+    <state x="480" y="169" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1610119421832" />
     <state width="435" height="446" key="SwitcherDM" timestamp="1610055448883">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

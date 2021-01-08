@@ -164,27 +164,6 @@ final class EquipmentControllerTest extends TestCase
     /*******************************************************************************TEST D'INTEGRATION***************************************************************************************/
     /****************************************************************************************************************************************************************************************/
 
-    public static function deleteEquipment($ref)
-    {
-        $bdd = new DataBase();
-        $con = $bdd->getCon();
-
-        $queryEquipments = "DELETE FROM stock_photo WHERE stock_photo.ref_equip LIKE ?;";
-        $myStatement = $con->prepare($queryEquipments);
-        $myStatement->execute([$ref]);
-
-        $queryEquipments = "DELETE FROM device WHERE device.ref_equip LIKE ?;";
-        $myStatement = $con->prepare($queryEquipments);
-        $myStatement->execute([$ref]);
-
-        $queryEquipments = "DELETE FROM equipment WHERE equipment.ref_equip LIKE ?;";
-        $myStatement = $con->prepare($queryEquipments);
-        $myStatement->execute([$ref]);
-
-        $myStatement->closeCursor();
-        $bdd->closeCon();
-    }
-
     public static function setUpBeforeClass(): void
     {
 
@@ -222,12 +201,11 @@ final class EquipmentControllerTest extends TestCase
         $this->assertEquals($equipment1->getTypeEquip(), $equipment2->getTypeEquip());
         $this->assertEquals($equipment1->getNameEquip(), $equipment2->getNameEquip());
 
-        $this->deleteEquipment("XX000");
     }
 
     public function testCreateEquipmentDoublon(): void
     {
-        $equipment = new Equipment("XX000", "TypeTest", "NameTest", "BrandTest", "VersionTest");
+        $equipment = new Equipment("XX002", "TypeTest", "NameTest", "BrandTest", "VersionTest");
 
         $ec = new EquipmentController();
 
@@ -239,7 +217,6 @@ final class EquipmentControllerTest extends TestCase
 
         $ec->createNewEquipment(1);
 
-        $this->deleteEquipment("XX000");
     }
 
     public function testModifyEquipment(): void
@@ -266,7 +243,7 @@ final class EquipmentControllerTest extends TestCase
     {
         $ec = new EquipmentController();
 
-        $equipment1 = new Equipment("XX002", "TypeTest", "NameTest", "BrandTest", "VersionTest");
+        $equipment1 = new Equipment("XX004", "TypeTest", "NameTest", "BrandTest", "VersionTest");
 
         $ec->loadEquipmentFromObject($equipment1);
 
@@ -280,7 +257,7 @@ final class EquipmentControllerTest extends TestCase
 
         $this->expectException(Exception::class);
 
-        $ec->modifyEquipment("XX002", "TypeTest1", "NameTest1", "BrandTest1", "VersionTest1", 1);
+        $ec->modifyEquipment("XX004", "TypeTest1", "NameTest1", "BrandTest1", "VersionTest1", 1);
 
     }
 
@@ -288,25 +265,25 @@ final class EquipmentControllerTest extends TestCase
     {
         $ec = new EquipmentController();
 
-        $equipment = new Equipment("XX004", "TypeTest", "NameTest", "BrandTest", "VersionTest");
+        $equipment = new Equipment("XX006", "TypeTest", "NameTest", "BrandTest", "VersionTest");
 
         $ec->loadEquipmentFromObject($equipment);
 
         $ec->createNewEquipment(3);
 
-        $this->assertEquals(3, $ec->getEquipmentDAO()->howMuchTotal("XX004"));
+        $this->assertEquals(3, $ec->getEquipmentDAO()->howMuchTotal("XX006"));
 
-        $ec->modifyEquipment("XX004", "TypeTest", "NameTest", "BrandTest", "VersionTest", 5);
+        $ec->modifyEquipment("XX006", "TypeTest", "NameTest", "BrandTest", "VersionTest", 5);
 
-        $this->assertEquals(5, $ec->getEquipmentDAO()->howMuchTotal("XX004"));
+        $this->assertEquals(5, $ec->getEquipmentDAO()->howMuchTotal("XX006"));
 
-        $ec->modifyEquipment("XX004", "TypeTest", "NameTest", "BrandTest", "VersionTest", 1);
+        $ec->modifyEquipment("XX006", "TypeTest", "NameTest", "BrandTest", "VersionTest", 1);
 
-        $this->assertEquals(1, $ec->getEquipmentDAO()->howMuchTotal("XX004"));
+        $this->assertEquals(1, $ec->getEquipmentDAO()->howMuchTotal("XX006"));
 
         $this->expectException(Exception::class);
 
-        $ec->modifyEquipment("XX004", "TypeTest", "NameTest", "BrandTest", "VersionTest", -1);
+        $ec->modifyEquipment("XX007", "TypeTest", "NameTest", "BrandTest", "VersionTest", -1);
     }
 
 
