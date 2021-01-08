@@ -1,6 +1,7 @@
 <?php
 require_once("ControllerDAO/EquipmentDAO.php");
 require_once("Model/Equipment.php");
+require_once("Functions.php");
 
 /**
  * Class EquipmentController
@@ -86,19 +87,22 @@ class EquipmentController
 
     /**
      * @param $Quantity
+     * @return bool
      * @throws Exception
      */
-    public function createNewEquipment(int $Quantity)
+    public function createNewEquipment(int $Quantity): bool
     {
         try {
             if (Functions::checkRefEquip($this->_equipment->getRefEquip()) && $this->_equipmentDAO->isNewRefEquipUsed($this->_equipment->getRefEquip()) == false && Functions::checkNameMateriel($this->_equipment->getNameEquip())
                 && Functions::checkBrandEquip($this->_equipment->getBrandEquip()) && Functions::checkTypeEquip($this->_equipment->getTypeEquip())
                 && Functions::checkVersionMateriel($this->_equipment->getVersionEquip()) && Functions::checkQuantityEquipment($Quantity)) {
                 $this->_equipmentDAO->createEquipment($this->_equipment->getRefEquip(), $this->_equipment->getTypeEquip(), $this->_equipment->getBrandEquip(), $this->_equipment->getNameEquip(), $this->_equipment->getVersionEquip(), $Quantity);
+                return true;
             }
         } catch (Exception | PDOException $e) {
             throw new Exception($e->getMessage());
         }
+        return false;
     }
 
     /**

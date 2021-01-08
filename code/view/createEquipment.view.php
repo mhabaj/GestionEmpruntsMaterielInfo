@@ -16,7 +16,7 @@ require_once("navbar.view.php");
 
     <div class="input-group input-group-sm mb-3">
         <div class="input-group-prepend">
-            <span class="input-group-text" id="inputGroup-sizing-sm"><label><b>Référence</b></label></span>
+            <span class="input-group-text" id="inputGroup-sizing-sm"><label><b>Référence [ format (AN|AP|XX)(000-999) ]</b></label></span>
         </div>
         <input class="form-control" aria-label="Small"  type="text" placeholder="Référence matériel" name="ref"
                value="<?php if (isset($equipmentController) && $equipmentController != null && isset($currentEquipment) && $currentEquipment != null)
@@ -36,7 +36,7 @@ require_once("navbar.view.php");
 
     <div class="input-group input-group-sm mb-3">
         <div class="input-group-prepend">
-            <span class="input-group-text" id="inputGroup-sizing-sm"><br/><label><b>Marque</b></label></span>
+            <span class="input-group-text" id="inputGroup-sizing-sm"><br/><label><b>Marque [ 1 - 30 ]</b></label></span>
         </div>
         <input class="form-control" aria-label="Small"  type="text" placeholder="Marque matériel" name="brand"
                value="<?php if (isset($equipmentController) && $equipmentController != null && isset($currentEquipment) && $currentEquipment != null)
@@ -46,7 +46,7 @@ require_once("navbar.view.php");
 
     <div class="input-group input-group-sm mb-3">
         <div class="input-group-prepend">
-            <span class="input-group-text" id="inputGroup-sizing-sm"><br/><label><b>Nom</b></label></span>
+            <span class="input-group-text" id="inputGroup-sizing-sm"><br/><label><b>Nom [1 - 30]</b></label></span>
         </div>
         <input class="form-control" aria-label="Small"  type="text" placeholder="Nom matériel" name="name"
                value="<?php if (isset($equipmentController) && $equipmentController != null && isset($currentEquipment) && $currentEquipment != null)
@@ -56,7 +56,7 @@ require_once("navbar.view.php");
 
     <div class="input-group input-group-sm mb-3">
         <div class="input-group-prepend">
-            <span class="input-group-text" id="inputGroup-sizing-sm"><br/><label><b>Version</b></label></span>
+            <span class="input-group-text" id="inputGroup-sizing-sm"><br/><label><b>Version [ 3 - 15 ]</b></label></span>
         </div>
         <input class="form-control" aria-label="Small"  type="text" placeholder="Version matériel" name="version"
                value="<?php if (isset($equipmentController) && $equipmentController != null && isset($currentEquipment) && $currentEquipment != null)
@@ -83,6 +83,8 @@ require_once("navbar.view.php");
     <br/>
     <button class="btn btn-success" type="submit" name="submitEquipment">Create Equipment</button>
 </form>
+<?php if (isset($erreur) && !$erreur == "") echo "<p>" . $erreur . "</p>"; ?>
+
 <?php
 require_once("footer.view.php");
 ?>

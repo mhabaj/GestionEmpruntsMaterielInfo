@@ -1,4 +1,6 @@
 <?php
+$title = "Details de l'utilisateur";
+$erreur = "";
 
 require_once("Controller/control-session.php");
 require_once("Model/User.php");
@@ -19,13 +21,7 @@ if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1 && isset(
     $currentUser = $userController->getUser();
 
     if (isset($userController) && $userController != null && isset($currentUser) && $currentUser != null) {
-        ?>
-        <?php
-        // on include view ici
-        require_once("view/detailUser.view.php")
-        ?>
 
-        <?php
         if (isset($_POST['endBorrow']) && $_SESSION['isAdmin_user'] == 1 && isset($_POST['idBorrow']) && is_numeric($_POST['idBorrow'])) {
 
             try {
@@ -38,6 +34,8 @@ if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1 && isset(
             }
 
         }
+        // on include view ici
+        require_once("view/detailUser.view.php");
     } else {
         ob_end_clean();
         header('Location: DashBoard.php');

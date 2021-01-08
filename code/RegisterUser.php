@@ -1,5 +1,6 @@
 <?php
-
+$title = "Creer un utilisateur";
+$erreur = "";
 require_once("Controller/control-session.php");
 require_once("Controller/DataBase.php");
 require_once("Model/User.php");
@@ -34,8 +35,7 @@ if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1) {
             }
         } catch (Exception $e) {
             ob_end_clean();
-
-            header('Location:DashBoard.php');
+            header("refresh:3;url=DashBoard.php");
             echo $e->getMessage();
 
         }

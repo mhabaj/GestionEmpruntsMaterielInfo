@@ -81,25 +81,27 @@ class UserDAO
 
     /**
      * @param $user
-     * @param $newPassword
+     * @param $hashedNewPassword
+     * @return bool
      * @throws Exception
      */
-    public function changeUserPassword($user, $newPassword)
+    public function changeUserPassword($user, $hashedNewPassword): bool
     {
         $bdd = new DataBase();
         $con = $bdd->getCon();
         $con->beginTransaction();
-        $hashedNewPassword = sha1($newPassword);
 
         try {
             $requete = "UPDATE USERS SET password_user= ? WHERE id_user = ?;";
             $stmt = $con->prepare($requete);
             $stmt->execute([$hashedNewPassword, $user->getIdUser()]);
             $con->commit();
+            return true;
         } catch (Exception $e) {
             $con->rollback();
             throw new Exception("Could not update password");
         }
+
 
     }
 
@@ -111,8 +113,10 @@ class UserDAO
      * @param $_lastname_user
      * @param $_phone
      * @param $_isAdmin_user
+     * @return bool
+     * @throws Exception
      */
-    public function modifyUser($_idUser, $_matricule_user, $_email_user, $_name_user, $_lastname_user, $_phone, $_isAdmin_user)
+    public function modifyUser($_idUser, $_matricule_user, $_email_user, $_name_user, $_lastname_user, $_phone, $_isAdmin_user): bool
     {
         $bdd = new DataBase();
         $con = $bdd->getCon();
@@ -124,12 +128,15 @@ class UserDAO
             $stmt = $con->prepare($query);
             $stmt->execute([$_matricule_user, $_email_user, $_name_user, $_lastname_user, $_phone, $_isAdmin_user, $_idUser]);
             $con->commit();
+            $bdd->closeCon();
+            return true;
 
         } catch (PDOException $e) {
-            $con->roleback();
-            throw new PDOException("Error!: " . $e->getMessage());
+            $con->rollback();
+            $bdd->closeCon();
+
+            throw new Exception($e->getMessage());
         }
-        $bdd->closeCon();
     }
 
     /**
@@ -166,7 +173,6 @@ class UserDAO
 
     /**
      * @param $matricule
-     * @param $mdp
      * @return bool
      */
     public function matriculeUserExists($matricule): bool
@@ -246,7 +252,7 @@ class UserDAO
      * @return User|null
      */
     public
-    function getLastInsertedUser()
+    function getLastInsertedUser(): ?User
     {
 
         $bdd = new DataBase();

@@ -1,7 +1,8 @@
 <?php
 $title = "Page d'authentification";
-require_once("Controller/UserController.php");
 $erreur = "";
+
+require_once("Controller/UserController.php");
 ob_start();
 
 if (!isset($_SESSION['id_user']) || ($_SESSION['id_user'] != '')) {
@@ -35,7 +36,7 @@ if (!isset($_SESSION['id_user']) || ($_SESSION['id_user'] != '')) {
     require_once("view/authentification.view.php");
 
 } else {
-    //ob_end_clean();
+    ob_end_clean();
     header('Location: DashBoard.php');
 }
 

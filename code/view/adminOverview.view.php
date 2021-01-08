@@ -15,6 +15,7 @@ if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1) {
         <input type="search" placeholder="Matricule de l'utilisateur" name="UserToSearch">
         <button class="btn btn-success" type="submit" name="startSearchingUser">Rechercher utilisateur</button>
     </form>
+    <?php if (isset($erreurAdmin) && !$erreurAdmin == "") echo "<p>" . $erreurAdmin . "</p>"; ?>
     
     <?php
 

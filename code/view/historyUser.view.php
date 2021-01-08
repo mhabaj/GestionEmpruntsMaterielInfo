@@ -17,7 +17,9 @@ require_once("navbar.view.php");
         </p>
         <!-- /Intro-->
 
+
 <div class="panel panel-primary">
+    <?php if (isset($erreur) && !$erreur == "") echo "<p>" . $erreur . "</p>"; ?>
     <div class="panel-heading">emprunt n°<?php if (isset($donnees)) echo $donnees['id_borrow']; ?></div>
     <div class="panel-body">
     <strong> Emprunt numéro </strong> : <?php if (isset($donnees)) echo $donnees['id_borrow']; ?> <br/>

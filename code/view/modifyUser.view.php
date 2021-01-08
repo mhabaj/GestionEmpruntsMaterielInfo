@@ -48,7 +48,7 @@ require_once("navbar.view.php");
                 ?>
                 <label><b>Modifer les droits de l'utilisateur</b></label>
                 <label>
-                    <input type="checkbox" checked="checked" name="administrateur" value="ok" style="margin-bottom:15px">Administrateur
+                    <input type="checkbox" <?php if(isset($userController) && $userController != null && isset($currentUser) && $currentUser != null) {if($currentUser->getIsAdmin() == "1") echo "checked='checked'";} else {echo "";} ?>" name="administrateur" value="ok" style="margin-bottom:15px">Administrateur
                 </label>
                 <?php
             }

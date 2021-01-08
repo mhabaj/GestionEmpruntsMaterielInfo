@@ -72,7 +72,7 @@ class Functions
      */
     public static function checkNameMateriel($nom): bool
     {
-        if (preg_match('/^[A-Za-z0-9-._,:#()"]{1,30}$/', $nom)) {
+        if (preg_match('/^[A-Za-z0-9-._,:#() "]{1,30}$/', trim($nom))) {
             return true;
         } else {
             throw new Exception("Le nom du matériel que vous avez entré est invalide");
@@ -128,7 +128,7 @@ class Functions
      */
     public static function checkBrandEquip($brand): bool
     {
-        if (preg_match('/^([A-Za-z0-9-._,;:#()"]){1,30}$/', $brand)) {
+        if (preg_match('/^([A-Za-z0-9-._,;:#() "]){1,30}$/', trim($brand))) {
             return true;
         } else {
             throw new Exception("Le nom de la marque que vous avez entré est invalide");
@@ -142,7 +142,7 @@ class Functions
      */
     public static function checkTypeEquip($type): bool
     {
-        if (preg_match('/^([A-Za-z0-9-._,;:#()"]){1,30}$/', $type)) {
+        if (preg_match('/^([A-Za-z0-9-._,;:#() "]){1,30}$/', trim($type))) {
             return true;
         } else {
             throw new Exception("Le type de la marque que vous avez entré est invalide");
@@ -159,7 +159,7 @@ class Functions
         if ($entered_date != null && strtotime($entered_date) > strtotime('now')) {
             return true;
         } else {
-            throw new Exception("Incorrect End Reservation Date input (must not be prior to today's date)");
+            throw new Exception("La date de fin de réservation est incorrecte (Elle doit être ultérieure à la date d'aujourd'hui.). [format : YYYY/MM/DD]");
         }
     }
 
