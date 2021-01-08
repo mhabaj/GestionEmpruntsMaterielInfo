@@ -113,9 +113,12 @@ class UserController
      */
     public function createUser($matricule, $password, $passwordRepeat, $email, $lastname, $name, $phone, $isAdmin): bool
     {
+
         if ($passwordRepeat != $password) {
             throw new Exception("Les deux mots de passe ne correspondent pas !");
         }
+
+        $hashedpassword = sha1($password);
 
         if ($this->_userDAO->matriculeUserExists($matricule) == false
             && Functions::checkMatricule($matricule) == true
@@ -126,7 +129,7 @@ class UserController
 
             $this->_user = new User();
 
-            $this->_userDAO->createUser($matricule, $email, $password, $name, $lastname, $phone, $isAdmin);
+            $this->_userDAO->createUser($matricule, $email, $hashedpassword, $name, $lastname, $phone, $isAdmin);
             $this->_user->setMatriculeUser($matricule);
             $this->_user->setEmail($email);
             $this->_user->setLastName($lastname);

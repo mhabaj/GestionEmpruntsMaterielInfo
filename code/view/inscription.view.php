@@ -36,14 +36,14 @@ require_once("navbar.view.php");
     <br><br>
     <label><b>Confirmez si l'utilisateur sera un administrateur</b></label>
     <label>
-        <input type="checkbox" checked="checked" name="administrateur"  value ="ok" style="margin-bottom:15px">Administrateur
+        <input type="checkbox" checked='checked' name="administrateur" value="ok" style="margin-bottom:15px">Administrateur
     </label>
     <hr>
     <button class="btn btn-success" type="submit" name="submitInscription">Confirmer l'inscription</button>
 </form>
 <?php if (isset($erreur) && !$erreur == "") echo "<p>" . $erreur . "</p>"; ?>
     <br>
-<form method="Post">
+<form action="DashBoard.php">
     <button class="btn btn-danger" type="submit"  name="cancelbtn">Annuler l'inscription </button>
 </form>
 
