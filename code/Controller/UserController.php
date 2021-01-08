@@ -1,10 +1,10 @@
 <?php
-require_once("Functions.php");
+require_once(__DIR__ ."/../Controller/Functions.php");
 
-require_once("ControllerDAO/BorrowDAO.php");
-require_once("ControllerDAO/UserDAO.php");
-require_once("EquipmentController.php");
-require_once("BorrowController.php");
+require_once(__DIR__ ."/../ControllerDAO/BorrowDAO.php");
+require_once(__DIR__ ."/../ControllerDAO/UserDAO.php");
+require_once(__DIR__ ."/../Controller/EquipmentController.php");
+require_once(__DIR__ ."/../Controller/BorrowController.php");
 
 /**
  * Class UserController

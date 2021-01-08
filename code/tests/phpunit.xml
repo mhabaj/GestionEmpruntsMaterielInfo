@@ -8,7 +8,7 @@
          syntaxCheck="true">
     <testsuites>
         <testsuite name="Test suite">
-            <directory>.</directory>
+            <directory>E:\wamp64\www\GestionEmpruntsMaterielInfo\code\tests</directory>
         </testsuite>
     </testsuites>
 </phpunit>
