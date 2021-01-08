@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="fc02a28c-5f5f-4a9a-b28f-69f9dfcb6675" name="Default Changelist" comment="Resolution bugs et erreur header + ajout buttn add user">
+      <change beforePath="$PROJECT_DIR$/code/Controller/BorrowController.php" beforeDir="false" afterPath="$PROJECT_DIR$/code/Controller/BorrowController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/Controller/EquipmentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/code/Controller/EquipmentController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/Controller/Functions.php" beforeDir="false" afterPath="$PROJECT_DIR$/code/Controller/Functions.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/Controller/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/code/Controller/UserController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/ControllerDAO/BorrowDAO.php" beforeDir="false" afterPath="$PROJECT_DIR$/code/ControllerDAO/BorrowDAO.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/ControllerDAO/EquipmentDAO.php" beforeDir="false" afterPath="$PROJECT_DIR$/code/ControllerDAO/EquipmentDAO.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/ControllerDAO/UserDAO.php" beforeDir="false" afterPath="$PROJECT_DIR$/code/ControllerDAO/UserDAO.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/DashBoard.php" beforeDir="false" afterPath="$PROJECT_DIR$/code/DashBoard.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/Model/Borrow.php" beforeDir="false" afterPath="$PROJECT_DIR$/code/Model/Borrow.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/Model/Equipment.php" beforeDir="false" afterPath="$PROJECT_DIR$/code/Model/Equipment.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/Model/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/code/Model/User.php" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings">
+    <execution />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="UML Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1mc8XtlFZNRAHsxgEv8ZFTjvFAo" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="autoscrollToSource" value="true" />
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DatabaseDriversLRU" value="mysql" />
+    <property name="DefaultPlantUmlFileTemplate" value="UML Class" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\wamp64\www\GestionEmpruntsMaterielInfo\code\ControllerDAO" />
+      <recent name="C:\wamp64\www\GestionEmpruntsMaterielInfo\code" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="fc02a28c-5f5f-4a9a-b28f-69f9dfcb6675" name="Default Changelist" comment="" />
+      <created>1609781563959</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1609781563959</updated>
+      <workItem from="1609781567353" duration="308000" />
+      <workItem from="1609781879597" duration="3431000" />
+      <workItem from="1609787232261" duration="1514000" />
+      <workItem from="1609796547328" duration="4852000" />
+      <workItem from="1609849986818" duration="6707000" />
+      <workItem from="1609861213750" duration="882000" />
+      <workItem from="1609862230241" duration="587000" />
+      <workItem from="1609881122079" duration="14068000" />
+      <workItem from="1609921125810" duration="1341000" />
+      <workItem from="1609927600385" duration="8388000" />
+      <workItem from="1609955166620" duration="18702000" />
+      <workItem from="1610029794572" duration="12112000" />
+      <workItem from="1610046194920" duration="1154000" />
+      <workItem from="1610047781884" duration="6836000" />
+      <workItem from="1610117474019" duration="1962000" />
+      <workItem from="1610119466889" duration="8092000" />
+    </task>
+    <task id="LOCAL-00001" summary="Resolution bugs et erreur header + ajout buttn add user">
+      <created>1609932054568</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1609932054568</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Resolution bugs et erreur header + ajout buttn add user">
+      <created>1610029948813</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1610029948813</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Resolution bugs et erreur header + ajout buttn add user">
+      <created>1610058018057</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1610058018057</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Resolution bugs et erreur header + ajout buttn add user" />
+    <option name="LAST_COMMIT_MESSAGE" value="Resolution bugs et erreur header + ajout buttn add user" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>
