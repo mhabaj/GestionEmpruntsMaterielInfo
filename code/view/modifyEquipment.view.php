@@ -1,5 +1,21 @@
-<html>
-<body>
+<?php
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+require_once("head.view.php");
+require_once("navbar.view.php");
+?>
+<!-- Intro -->
+<div class="container">
+    <div class="maincontent">
+        <br> <br>
+        <h2 class="thin"></h2>
+        <p class="text-muted">
+
+        </p>
+        <!-- /Intro-->
 <form method="POST" enctype="multipart/form-data">
     <label>Modifier cette équipement: </label>
     <br>
@@ -20,11 +36,11 @@
     <input type="text" placeholder="Version de l'équipement" name="version_equip" required
            value="<?php if (isset($equipmentController) && $equipmentController != null && isset($currentEquipment) && $currentEquipment != null) echo $currentEquipment->getVersionEquip(); ?>">
     <p> Quantité totale du materiel <b>(Disponible à modifier/ Occupé / Total présent:
-            <mark><?php if (isset($equipmentController) && $equipmentController != null && isset($currentEquipment) && $currentEquipment != null) echo EquipmentDAO::howMuchAvailable($currentEquipment->getRefEquip()) . "/" . (EquipmentDAO::howMuchAvailable($currentEquipment->getRefEquip()) - EquipmentDAO::howMuchTotal($currentEquipment->getRefEquip())) * -1 . "/" . EquipmentDAO::howMuchTotal($currentEquipment->getRefEquip()); ?></mark>
+            <mark><?php if (isset($equipmentController) && $equipmentController != null && isset($currentEquipment) && $currentEquipment != null) echo $equipmentController->getEquipmentDAO()->howMuchAvailable($currentEquipment->getRefEquip()) . "/" . ($equipmentController->getEquipmentDAO()->howMuchAvailable($currentEquipment->getRefEquip()) - $equipmentController->getEquipmentDAO()->howMuchTotal($currentEquipment->getRefEquip())) * -1 . "/" . $equipmentController->getEquipmentDAO()->howMuchTotal($currentEquipment->getRefEquip()); ?></mark>
             ): </b></p>
     <input type="number" placeholder="Quantite de l'équipement" name="quantite_equip" required
-           min="<?php if (isset($equipmentController) && $equipmentController != null && isset($currentEquipment) && $currentEquipment != null) echo(EquipmentDAO::howMuchTotal($currentEquipment->getRefEquip()) - EquipmentDAO::howMuchAvailable($currentEquipment->getRefEquip())); ?>"
-           value="<?php if (isset($equipmentController) && $equipmentController != null && isset($currentEquipment) && $currentEquipment != null) echo EquipmentDAO::howMuchTotal($currentEquipment->getRefEquip()); ?>">
+           min="<?php if (isset($equipmentController) && $equipmentController != null && isset($currentEquipment) && $currentEquipment != null) echo($equipmentController->getEquipmentDAO()->howMuchTotal($currentEquipment->getRefEquip()) - $equipmentController->getEquipmentDAO()->howMuchAvailable($currentEquipment->getRefEquip())); ?>"
+           value="<?php if (isset($equipmentController) && $equipmentController != null && isset($currentEquipment) && $currentEquipment != null) echo $equipmentController->getEquipmentDAO()->howMuchTotal($currentEquipment->getRefEquip()); ?>">
     <br>
     <p><label><b>Images: </label></p>
 
@@ -45,6 +61,10 @@
     <input type="file" id="photo" name="photo"/><br/>
 
 
-   <p> <input type="submit" value="Modifier l'equipement" placeholder="Modifier l'équipement"
-              name="modifierEquipment"> </p>
+    <p><input class="btn btn-success" type="submit" value="Modifier l'equipement" placeholder="Modifier l'équipement"
+              name="modifierEquipment"></p>
 </form>
+<?php if (isset($erreur) && !$erreur == "") echo "<p>" . $erreur . "</p>"; ?>
+<?php
+require_once("footer.view.php");
+?>

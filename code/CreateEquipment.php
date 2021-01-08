@@ -1,15 +1,18 @@
 <?php
-
+$title = "Creation d'equipement";
+$erreur = "";
 require_once("Controller/control-session.php");
 require_once "Model/Equipment.php";
 require_once "Controller/Functions.php";
 require_once "Controller/EquipmentController.php";
 require_once("ControllerDAO/UserDAO.php");
+require_once("Controller/UserController.php");
 ob_start();
 
 
 if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1) {
-    $currentUser = UserDAO::getUserById($_SESSION['id_user']);
+    $tmpUsrCtrl = new UserController($_SESSION['id_user']);
+    $currentUser = $tmpUsrCtrl->getUser();
 
     try {
         $currentEquipment = null;
@@ -22,18 +25,7 @@ if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1) {
         }
         $equipmentController = new EquipmentController();
         $equipmentController->loadEquipmentFromObject($currentEquipment);
-        ?>
 
-        <?php
-        //IMPORT LA VUE:
-
-        require_once("view/createEquipment.view.php");
-
-
-        ?>
-
-
-        <?php
 
         if (isset($_POST['submitEquipment'])) {
             if (isset($_POST['ref']) && isset($_POST['type']) && isset($_POST['name']) && isset($_POST['brand']) && isset($_POST['version']) && isset($_POST['quantity'])) {
@@ -54,7 +46,7 @@ if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1) {
 
                     $photo = Functions::uploadImage($currentEquipment->getTypeEquip());
                     if ($photo != null && $photo != "") {
-                        EquipmentDAO::addImageToEquipment($photo, $tempRef);
+                        $equipmentController->getEquipmentDAO()->addImageToEquipment($photo, $tempRef);
                     }
                     unset($currentEquipment);
                     unset($equipmentController);
@@ -62,15 +54,17 @@ if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1) {
                     header("Location: DetailEquipment.php?ref_equip=" . $tempRef);
 
                 } catch (Exception $e) {
-                    echo "<p>" . $e->getMessage() . "</p>";
+                    $erreur = "<p>" . $e->getMessage() . "</p>";
                 }
             }
         }
+//IMPORT LA VUE:
 
+        require_once("view/createEquipment.view.php");
 
     } catch (Exception $e) {
         header("refresh:3;url=DashBoard.php");
-        echo $e->getMessage();
+        echo "<p>" . $e->getMessage() . "</p>";
         echo "<p> Redirection dans 3 secondes.. </p>";
         ob_end_clean();
 

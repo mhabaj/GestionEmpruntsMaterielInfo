@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ ."/../Controller/DataBase.php";
+require_once "Controller/DataBase.php";
 
 /**
  * Class BorrowDAO
@@ -15,11 +15,13 @@ class BorrowDAO
     /**
      * @param $refEquip
      * @param $endDate
+     * @param $idUser
      * @return Borrow
-     * @throws PDOException
      */
-    public function startBorrow($refEquip, $endDate): Borrow
+    public function startBorrow($refEquip, $endDate, $idUser): Borrow
     {
+
+
         date_default_timezone_set('Europe/Paris');
         $currentDateTime = date('Y/m/d');
 
@@ -45,7 +47,7 @@ class BorrowDAO
 
         $requestInsert1 = "INSERT INTO borrow (id_user, id_device, id_borrow) VALUES (?, ? , ?);";
         $myStatement = $con->prepare($requestInsert1);
-        $myStatement->execute([$_SESSION['id_user'], $device_id, $id_borrow]);
+        $myStatement->execute([$idUser, $device_id, $id_borrow]);
 
 
         $con->commit();
@@ -60,8 +62,9 @@ class BorrowDAO
      * @return bool
      * @throws Exception
      */
-    public function stopBorrow($idBorrow, $device_id,$end_date): bool
+    public function stopBorrow($idBorrow, $device_id, $end_date): bool
     {
+
 
         $bdd = new DataBase();
         $con = $bdd->getCon();
