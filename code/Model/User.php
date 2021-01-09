@@ -1,8 +1,10 @@
 <?php
 
-
 /**
  * Class User
+ * Class representing a User
+ *
+ * @author Alhabaj Mahmod, Anica Sean, Belda Tom, Ingarao Adrien, Maggouh Naoufal, Ung Alexandre
  */
 class User
 {

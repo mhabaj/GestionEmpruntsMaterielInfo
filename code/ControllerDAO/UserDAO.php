@@ -6,7 +6,9 @@ require_once(__DIR__ . "/../Model/Borrow.php");
 
 
 /**
- * Class UserDAO
+ * @Class UserDAO.php
+ * @author Alhabaj Mahmod, Anica Sean, Belda Tom, Ingarao Adrien, Maggouh Naoufal, Ung Alexandre
+ * Class that allows the interaction between database and the classes of the model.
  */
 class UserDAO
 {
@@ -20,7 +22,11 @@ class UserDAO
 
 
     /**
+     * Method that returns true if a user exists in the database, or false if not.
+     * The user is identified by his id.
+     *
      * @param $id
+     * @preC $id must be valid therefore > 0
      *
      * @return bool
      */
@@ -42,7 +48,10 @@ class UserDAO
     }
 
     /**
+     * Methods that returns an user object identified by his id.
+     *
      * @param int $id
+     * @preC $id must exist in the database.
      *
      * @return User|null
      */
@@ -91,6 +100,9 @@ class UserDAO
     }
 
     /**
+     * Method that allows the change of the password of a certain user, where $user
+     * is the user whose password is changedn and $hashedNewPassword is the new password.
+     *
      * @param $user
      * @param $hashedNewPassword
      *
@@ -118,6 +130,10 @@ class UserDAO
     }
 
     /**
+     * Methods that allows to modify all the attributes of a certain user,
+     * the id, username(matricule_user), email, firstname(name), lastname, phone and the boolean isAdmin_user which specifies
+     * if the user is an admin(true) or not(false).
+     *
      * @param $_idUser
      * @param $_matricule_user
      * @param $_email_user
@@ -153,6 +169,8 @@ class UserDAO
     }
 
     /**
+     * methods that allows the user to connect to the website, using his username(matricule) and his password.
+     *
      * @param $matricule
      * @param $mdp
      *
@@ -186,6 +204,8 @@ class UserDAO
     }
 
     /**
+     * Method that return true if a username(matricule) of a user exists or else false.
+     *
      * @param $matricule
      *
      * @return bool
@@ -196,7 +216,7 @@ class UserDAO
         $con = $bdd->getCon();
 
 
-        //Inserer valeurs
+        //insert of the id of the user
         $requete = "SELECT * FROM users WHERE matricule_user like ?;";
         $stmt = $con->prepare($requete);
         $stmt->execute([$matricule]);
@@ -209,7 +229,7 @@ class UserDAO
 
 
     /**
-     * renvoie un statement? de l'historique de l'utilisateur
+     * Methods that returns a statement that allows to get the history of borrowed items of a certain user. (identified by his id).
      *
      * @param $id_user_toDisplay
      *
@@ -234,6 +254,8 @@ class UserDAO
     }
 
     /**
+     * method that allows to create a user by specifying all the attributes of an user.
+     *
      * @param $_matriculeUser
      * @param $_emailUser
      * @param $_passwordUser
@@ -266,6 +288,8 @@ class UserDAO
     }
 
     /**
+     * method to get the last inserted id of the database, in order to update the id like.
+     *
      * @return User|null
      */
     public

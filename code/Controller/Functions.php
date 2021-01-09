@@ -2,6 +2,7 @@
 
 /**
  * Class Functions
+ *
  */
 class Functions
 {
@@ -267,5 +268,3 @@ class Functions
     }
 
 }
-//Functions::checkPhoneNumber("0678954874874");
-//-----------------------------------------------------

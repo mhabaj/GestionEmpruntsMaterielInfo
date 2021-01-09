@@ -81,7 +81,7 @@ require_once("navbar.view.php");
 
 
     <br/>
-    <button class="btn btn-success" type="submit" name="submitEquipment">Create Equipment</button>
+    <button class="btn btn-success" type="submit" name="submitEquipment">Creer l'equipement</button>
 </form>
 <?php if (isset($erreur) && !$erreur == "") echo "<p>" . $erreur . "</p>"; ?>
 

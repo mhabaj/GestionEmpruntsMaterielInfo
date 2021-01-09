@@ -5,6 +5,9 @@ require_once(__DIR__ ."/../Controller/Functions.php");
 
 /**
  * Class EquipmentController
+ * Controller class for Equipment
+ *
+ * @author Alhabaj Mahmod, Anica Sean, Belda Tom, Ingarao Adrien, Maggouh Naoufal, Ung Alexandre
  */
 class EquipmentController
 {
@@ -26,6 +29,7 @@ class EquipmentController
 
     /**
      * EquipmentController constructor.
+     *
      * @throws Exception
      */
     public function __construct()
@@ -34,6 +38,8 @@ class EquipmentController
     }
 
     /**
+     * Load the equipment from the database
+     *
      * @param string $refEquipment
      * @throws Exception
      */
@@ -43,6 +49,8 @@ class EquipmentController
     }
 
     /**
+     * Load the equipment from an Equipment object
+     *
      * @param Equipment $equipment
      */
     public function loadEquipmentFromObject(Equipment $equipment)
@@ -51,6 +59,8 @@ class EquipmentController
     }
 
     /**
+     * Modify the equipment with the input values
+     *
      * @param $ref_equip
      * @param $type_equip
      * @param $nom_equip
@@ -86,6 +96,8 @@ class EquipmentController
     }
 
     /**
+     * Create a new equipment the quantity specified
+     *
      * @param $Quantity
      * @return bool
      * @throws Exception
