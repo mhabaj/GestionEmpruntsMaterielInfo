@@ -237,14 +237,14 @@ class UserControllerTest extends TestCase
         $userController->createUser($matricule, $password, $passwordRepeat, $email, $lastname, $name, $phone, $isAdmin);
         $user = $userController->getUserDAO()->getLastInsertedUser();
 
+        $hashedPassword = sha1($password);
         assertEquals($matricule,$user->getMatriculeUser());
-        assertEquals($password,$user->getPassword());
+        assertEquals($hashedPassword,$user->getPassword());
         assertEquals($email,$user->getEmail());
         assertEquals($lastname,$user->getLastName());
         assertEquals($name,$user->getFirstName());
         assertEquals($phone,$user->getPhone());
         assertEquals($isAdmin,$user->getIsAdmin());
-
     }
 
     /**
@@ -461,7 +461,7 @@ class UserControllerTest extends TestCase
         ];
     }
 
-    public function providerValidStartBorrow()
+    public function providerValidStartBorrow(): array
     {
         return[
             ["AP154", "2021/10/12", "1"]

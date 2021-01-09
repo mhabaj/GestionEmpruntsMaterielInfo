@@ -1,10 +1,10 @@
 <?php
-require_once(__DIR__ ."/../Controller/Functions.php");
+require_once(__DIR__ . "/../Controller/Functions.php");
 
-require_once(__DIR__ ."/../ControllerDAO/BorrowDAO.php");
-require_once(__DIR__ ."/../ControllerDAO/UserDAO.php");
-require_once(__DIR__ ."/../Controller/EquipmentController.php");
-require_once(__DIR__ ."/../Controller/BorrowController.php");
+require_once(__DIR__ . "/../ControllerDAO/BorrowDAO.php");
+require_once(__DIR__ . "/../ControllerDAO/UserDAO.php");
+require_once(__DIR__ . "/../Controller/EquipmentController.php");
+require_once(__DIR__ . "/../Controller/BorrowController.php");
 
 /**
  * Class UserController
@@ -24,6 +24,7 @@ class UserController
 
     /**
      * UserController constructor.
+     *
      * @param int|null $id for userID or "void" for empty object
      */
     public function __construct(int $id = null)
@@ -49,10 +50,11 @@ class UserController
 
     /**
      * @param EquipmentController $equipmentController
-     * @param $ref_equip_toBorrow
-     * @param $dateFin
-     * @param $quantity
-     * @param $idUser
+     * @param                     $ref_equip_toBorrow
+     * @param                     $dateFin
+     * @param                     $quantity
+     * @param                     $idUser
+     *
      * @return bool Object, else null
      * PREC : quantity > 0 && reservation date after current server date
      * @throws Exception
@@ -72,13 +74,18 @@ class UserController
                 }
                 return true;
 
+            } else {
+                throw new Exception("Reservation Impossible: quantite de materiel disponible insuffisante");
+
             }
+
         }
         return false;
     }
 
     /**
      * @param $id_borrow_toDel
+     *
      * @throws Exception
      */
     public function endBorrow($id_borrow_toDel)
@@ -108,6 +115,7 @@ class UserController
      * @param $name
      * @param $phone
      * @param $isAdmin
+     *
      * @return bool
      * @throws Exception
      */
@@ -152,6 +160,7 @@ class UserController
      * @param $name
      * @param $phone
      * @param $isAdmin
+     *
      * @return bool
      * @throws Exception
      */
@@ -181,6 +190,7 @@ class UserController
     /**
      * @param $password
      * @param $passwordRepeat
+     *
      * @return bool
      * @throws Exception
      */
