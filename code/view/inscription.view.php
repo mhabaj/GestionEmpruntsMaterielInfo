@@ -36,7 +36,7 @@ require_once("navbar.view.php");
     <br><br>
     <label><b>Confirmez si l'utilisateur sera un administrateur</b></label>
     <label>
-        <input type="checkbox" checked='checked' name="administrateur" value="ok" style="margin-bottom:15px">Administrateur
+        <input type="checkbox" name="administrateur" value="ok" style="margin-bottom:15px">Administrateur
     </label>
     <hr>
     <button class="btn btn-success" type="submit" name="submitInscription">Confirmer l'inscription</button>
