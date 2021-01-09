@@ -17,6 +17,10 @@ Dans le dossier Documentation/ il y a tous les fichiers utilisés pour décrire 
 		-Schema MLD de la base de donnees.
 		-Script SQL pour import une base de données préremplie ==> Le mot de passe de chaque utilisateur == sa matricule.
 		-Script SQL pour import une base de données vide.
+- Doxygen/
+	- Generation de la documentation phpDoc.
+-tests fonctionnels/ 
+	-exports rapport tests fonctionnels.
 - Cahier des recettes
 - Expression des besoins
 - Diagramme de Gantt
