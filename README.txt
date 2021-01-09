@@ -1,4 +1,7 @@
 # GestionEmpruntsMaterielInfo
+github: https://github.com/mhabaj/GestionEmpruntsMaterielInfo
+
+---------------------------------------------------------------
  Platforme de gestion d'emprunts de materiel informatique
 
 Dans le dossier code/ il y a tous les fichiers source de l'application divisé selon le modèle MVC:
