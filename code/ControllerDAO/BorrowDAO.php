@@ -3,16 +3,21 @@ require_once(__DIR__ ."/../Controller/DataBase.php");
 
 /**
  * Class BorrowDAO
+ *
+ * @author Alhabaj Mahmod, Anica Sean, Belda Tom, Ingarao Adrien, Maggouh Naoufal, Ung Alexandre
  */
 class BorrowDAO
 {
+    /**
+     * BorrowDAO constructor.
+     */
     public function __construct()
     {
-
-
     }
 
     /**
+     * Starts a borrow of an equipment
+     *
      * @param $refEquip
      * @param $endDate
      * @param $idUser
@@ -56,6 +61,8 @@ class BorrowDAO
     }
 
     /**
+     * Ends a borrow of an equipment
+     *
      * @param $idBorrow
      * @param $device_id
      * @param $end_date

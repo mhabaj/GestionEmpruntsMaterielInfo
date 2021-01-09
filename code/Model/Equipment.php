@@ -1,6 +1,11 @@
 <?php
 
-
+/**
+ * Class Equipment
+ * Class representing an Equipment
+ *
+ * @author Alhabaj Mahmod, Anica Sean, Belda Tom, Ingarao Adrien, Maggouh Naoufal, Ung Alexandre
+ */
 class Equipment
 {
     private $_ref_equip;

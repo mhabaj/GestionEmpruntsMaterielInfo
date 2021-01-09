@@ -11,7 +11,9 @@ use function PHPUnit\Framework\assertSame;
 
 /**
  * Class EquipmentControllerTest
+ * Unitary and integration test for class EquipmentController
  * @covers EquipmentController
+ * @author Alhabaj Mahmod, Anica Sean, Belda Tom, Ingarao Adrien, Maggouh Naoufal, Ung Alexandre
  */
 final class EquipmentControllerTest extends TestCase
 {
@@ -21,6 +23,7 @@ final class EquipmentControllerTest extends TestCase
 
 
     /**
+     * Test valid modification for object equipment
      * @covers       EquipmentController::modifyEquipment
      * @dataProvider providerValidModifyEquipment
      * @param $ref_equip
@@ -28,7 +31,7 @@ final class EquipmentControllerTest extends TestCase
      * @param $name_equip
      * @param $brand_equip
      * @param $version_equip
-     * @param $quantity_equip
+     * @param $quantity_equ
      * @throws Exception
      *
      */
@@ -61,6 +64,7 @@ final class EquipmentControllerTest extends TestCase
     }
 
     /**
+     * Test invalid modification for object equipment
      * @covers       EquipmentController::modifyEquipment
      * @dataProvider providerBadValuesModifyEquipment
      * @param $ref_equip
@@ -70,6 +74,7 @@ final class EquipmentControllerTest extends TestCase
      * @param $version_equip
      * @param $quantity_equip
      * @throws Exception
+     *
      */
     public function testBadValuesModifyEquipment($ref_equip, $type_equip, $name_equip, $brand_equip, $version_equip, $quantity_equip): void
     {
@@ -101,6 +106,7 @@ final class EquipmentControllerTest extends TestCase
     }
 
     /**
+     * Test valid creation of object Equipment
      * @covers       EquipmentController::createNewEquipment
      * @dataProvider providerValidCreateNewEquipment
      * @param $ref_equip
@@ -109,7 +115,7 @@ final class EquipmentControllerTest extends TestCase
      * @param $brand_equip
      * @param $version_equip
      * @param $quantity_equip
-     * @throws Exception
+     * @throws Excep
      */
     public function testValidCreateNewEquipment($ref_equip, $type_equip, $name_equip, $brand_equip, $version_equip, $quantity_equip): void
     {
@@ -130,6 +136,7 @@ final class EquipmentControllerTest extends TestCase
     }
 
     /**
+     * Test invalid creation for object Equipment
      * @covers       EquipmentController::createNewEquipment
      * @dataProvider providerBadValuesCreateNewEquipment
      * @param $ref_equip
@@ -140,6 +147,7 @@ final class EquipmentControllerTest extends TestCase
      * @param $quantity_equip
      * @throws Exception
      * @throws TypeError
+     *
      */
     public function testBadValuesCreateNewEquipment($ref_equip, $type_equip, $name_equip, $brand_equip, $version_equip, $quantity_equip): void
     {
@@ -165,21 +173,24 @@ final class EquipmentControllerTest extends TestCase
     /*******************************************************************************TEST D'INTEGRATION***************************************************************************************/
     /****************************************************************************************************************************************************************************************/
 
+    /** Executes before the first test */
     public static function setUpBeforeClass(): void
     {
-
-
         $edao = new EquipmentDAO();
 
         $edao->createEquipment("XX001", "TypeEquip", "BrandEquip", "NameEquip", "VersionEquip", 1);
     }
 
+    /** Executes after the last test */
     public static function tearDownAfterClass(): void
     {
         $dataBase = new DataBase();
         $dataBase->purgeDatabase();
     }
 
+    /**
+     * Test creation for object Equipment
+     */
     public function testCreateEquipment(): void
     {
         $equipment1 = new Equipment("XX000", "TypeTest", "NameTest", "BrandTest", "VersionTest");
@@ -204,6 +215,7 @@ final class EquipmentControllerTest extends TestCase
 
     }
 
+    /** Test invalid creation for object Equipment with already existing ref in db  */
     public function testCreateEquipmentDoublon(): void
     {
         $equipment = new Equipment("XX002", "TypeTest", "NameTest", "BrandTest", "VersionTest");
@@ -220,6 +232,7 @@ final class EquipmentControllerTest extends TestCase
 
     }
 
+     /** Test modification of an Equipment */
     public function testModifyEquipment(): void
     {
         $ec = new EquipmentController();
@@ -239,7 +252,7 @@ final class EquipmentControllerTest extends TestCase
         $this->assertEquals($equipment->getNameEquip(), "NameTest1");
 
     }
-
+    /** Test invalid modification of an Equipment with already existing ref in db  */
     public function testModifyEquipmentDoublon(): void
     {
         $ec = new EquipmentController();
@@ -262,6 +275,7 @@ final class EquipmentControllerTest extends TestCase
 
     }
 
+    /** Test modification of the quantity of an Equipment  */
     public function testModifyEquipmentDeviceNumber(): void
     {
         $ec = new EquipmentController();
@@ -286,8 +300,6 @@ final class EquipmentControllerTest extends TestCase
 
         $ec->modifyEquipment("XX006", "TypeTest", "NameTest", "BrandTest", "VersionTest", -1);
     }
-
-
 
 
 

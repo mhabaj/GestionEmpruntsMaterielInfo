@@ -259,7 +259,7 @@ class Functions
 
         $photo = $sousdossier . $Type . $ph;
 
-        // UPLOAD DE L'IMAGE
+        // UPLOAD the image
         $fichier = basename($_FILES['photo']['name']);
 
 
@@ -270,7 +270,7 @@ class Functions
             $taille = filesize($_FILES['photo']['tmp_name']);
             $extensions = array('.PNG', '.png', '.jpg', '.JPG', '.jpeg', '.JPEG', 'gif', 'GIF');
             $extension = strrchr($_FILES['photo']['name'], '.');
-            //Début des vérifications de sécurité...
+            //checks of security
             if (!in_array($extension, $extensions)) //Si l'extension n'est pas dans le tableau
             {
                 $erreur = "Seulement les photos de type png, jpg, jpeg et gif sont acceptes";
@@ -281,9 +281,9 @@ class Functions
                 $erreur = "Photo trop grande ";
             }
 
-            if (empty($erreur)) //S'il n'y a pas d'erreur, on upload:
+            if (empty($erreur)) //if there's no error we upload
             {
-                //On formate le nom du fichier ici:
+                //we parse the file
                 $table = array(
                     'Š' => 'S', 'š' => 's', 'Đ' => 'Dj', 'đ' => 'dj', 'Ž' => 'Z', 'ž' => 'z', 'Č' => 'C', 'č' => 'c', 'Ć' => 'C', 'ć' => 'c',
                     'À' => 'A', 'Á' => 'A', 'Â' => 'A', 'Ã' => 'A', 'Ä' => 'A', 'Å' => 'A', 'Æ' => 'A', 'Ç' => 'C', 'È' => 'E', 'É' => 'E',

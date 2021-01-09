@@ -1,12 +1,12 @@
 <?php
 $title = "Page d'authentification";
 $erreur = "";
-session_start();// ici on continue la session
+session_start();
+
 require_once("Controller/UserController.php");
 ob_start();
 
 if (!isset($_SESSION['id_user']) || ($_SESSION['id_user'] == '')) {
-
 
     if (isset($_POST['submitLogin'])) {
 

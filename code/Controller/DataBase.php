@@ -3,6 +3,9 @@
 
 /**
  * Class DataBase
+ * Manages the connections to the database
+ *
+ * @author Alhabaj Mahmod, Anica Sean, Belda Tom, Ingarao Adrien, Maggouh Naoufal, Ung Alexandre
  */
 class DataBase
 {
@@ -30,13 +33,16 @@ class DataBase
     }
 
     /**
-     *
+     * Ends the connection with the database
      */
     public function closeCon()
     {
         $this->_con = null;
     }
 
+    /**
+     * Starts a connection with the database
+     */
     public function connect()
     {
         if ($this->_con == null) {
@@ -51,6 +57,9 @@ class DataBase
         }
     }
 
+    /**
+     * Purges the database
+     */
     public function purgeDatabase()
     {
 
@@ -63,6 +72,9 @@ class DataBase
         $this->_con = null;
     }
 
+    /**
+     * @return mixed
+     */
     public function getCon()
     {
         return $this->_con;
