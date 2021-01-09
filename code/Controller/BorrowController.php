@@ -3,6 +3,8 @@ require_once(__DIR__ ."/../ControllerDAO/BorrowDAO.php");
 
 /**
  * Class BorrowController
+ *
+ * @author Alhabaj Mahmod, Anica Sean, Belda Tom, Ingarao Adrien, Maggouh Naoufal, Ung Alexandre
  */
 class BorrowController
 {
