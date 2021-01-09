@@ -1,10 +1,13 @@
 <?php
-require_once(__DIR__ ."/../ControllerDAO/EquipmentDAO.php");
-require_once(__DIR__ ."/../Model/Equipment.php");
-require_once(__DIR__ ."/../Controller/Functions.php");
+require_once(__DIR__ . "/../ControllerDAO/EquipmentDAO.php");
+require_once(__DIR__ . "/../Model/Equipment.php");
+require_once(__DIR__ . "/../Controller/Functions.php");
 
 /**
  * Class EquipmentController
+ *
+ *
+ *
  */
 class EquipmentController
 {
@@ -26,6 +29,7 @@ class EquipmentController
 
     /**
      * EquipmentController constructor.
+     *
      * @throws Exception
      */
     public function __construct()
@@ -35,6 +39,7 @@ class EquipmentController
 
     /**
      * @param string $refEquipment
+     *
      * @throws Exception
      */
     public function loadEquipmentFromDDB(string $refEquipment)
@@ -50,13 +55,17 @@ class EquipmentController
         $this->_equipment = $equipment;
     }
 
+
     /**
+     *
+     *
      * @param $ref_equip
      * @param $type_equip
      * @param $nom_equip
      * @param $marque_equip
      * @param $version_equip
      * @param $quantity_equip
+     *
      * @throws Exception
      */
     public function modifyEquipment($ref_equip, $type_equip, $nom_equip, $marque_equip, $version_equip, $quantity_equip)
@@ -87,6 +96,7 @@ class EquipmentController
 
     /**
      * @param $Quantity
+     *
      * @return bool
      * @throws Exception
      */

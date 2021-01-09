@@ -10,7 +10,6 @@ ob_start();
 /* catch les erreurs */
 if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1) {
 
-
     //on include inscriptions.view
     require_once('view/inscription.view.php');
 

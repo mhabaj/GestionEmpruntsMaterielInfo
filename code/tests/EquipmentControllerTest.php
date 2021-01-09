@@ -30,6 +30,7 @@ final class EquipmentControllerTest extends TestCase
      * @param $version_equip
      * @param $quantity_equip
      * @throws Exception
+     *
      */
     public function testValidModifyEquipment($ref_equip, $type_equip, $name_equip, $brand_equip, $version_equip, $quantity_equip): void
     {
