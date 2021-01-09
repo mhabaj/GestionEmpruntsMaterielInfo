@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta content="text/html; charset=UTF-8" http-equiv="content-type" />
+	<title>tests sur le compte administrateur</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">emprunter un matériel</td></tr>
+</thead>
+<tbody>
+<tr><td>open</td><td>http://localhost:63342/Index.php/code/Authentification.php<datalist><option>http://localhost:63342/Index.php/code/Authentification.php</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>name=matricule<datalist><option>name=matricule</option><option>//input[@name='matricule']</option><option>//input</option><option>css=input[name="matricule"]</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>name=matricule<datalist><option>name=matricule</option><option>//input[@name='matricule']</option><option>//input</option><option>css=input[name="matricule"]</option></datalist></td><td>admin12</td>
+</tr>
+<tr><td>click</td><td>name=password<datalist><option>name=password</option><option>//input[@name='password']</option><option>//div[2]/input</option><option>css=input[name="password"]</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>name=password<datalist><option>name=password</option><option>//input[@name='password']</option><option>//div[2]/input</option><option>css=input[name="password"]</option></datalist></td><td>admin1</td>
+</tr>
+<tr><td>click</td><td>name=submitLogin<datalist><option>name=submitLogin</option><option>//button[@name='submitLogin']</option><option>//form/button</option><option>css=button[name="submitLogin"]</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>//div<datalist><option>//div</option><option>css=div</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>//a[3]/div<datalist><option>//a[3]/div</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>name=dateRes<datalist><option>name=dateRes</option><option>//input[@name='dateRes']</option><option>//input</option><option>css=input[name="dateRes"]</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>name=dateRes<datalist><option>name=dateRes</option><option>//input[@name='dateRes']</option><option>//input</option><option>css=input[name="dateRes"]</option></datalist></td><td>2021-01-21</td>
+</tr>
+<tr><td>click</td><td>name=reserveEquipment<datalist><option>name=reserveEquipment</option><option>//input[@name='reserveEquipment']</option><option>//input[3]</option><option>css=input[name="reserveEquipment"]</option></datalist></td><td></td>
+</tr>
+</tbody></table>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">terminer un emprunt</td></tr>
+</thead>
+<tbody>
+<tr><td>open</td><td>http://localhost:63342/Index.php/code/Authentification.php<datalist><option>http://localhost:63342/Index.php/code/Authentification.php</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>name=matricule<datalist><option>name=matricule</option><option>//input[@name='matricule']</option><option>//input</option><option>css=input[name="matricule"]</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>name=matricule<datalist><option>name=matricule</option><option>//input[@name='matricule']</option><option>//input</option><option>css=input[name="matricule"]</option></datalist></td><td>admin12</td>
+</tr>
+<tr><td>click</td><td>name=password<datalist><option>name=password</option><option>//input[@name='password']</option><option>//div[2]/input</option><option>css=input[name="password"]</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>name=password<datalist><option>name=password</option><option>//input[@name='password']</option><option>//div[2]/input</option><option>css=input[name="password"]</option></datalist></td><td>admin1</td>
+</tr>
+<tr><td>click</td><td>name=submitLogin<datalist><option>name=submitLogin</option><option>//button[@name='submitLogin']</option><option>//form/button</option><option>css=button[name="submitLogin"]</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>name=id_user_toDisplay<datalist><option>name=id_user_toDisplay</option><option>//button[@name='id_user_toDisplay']</option><option>//button</option><option>css=button[name="id_user_toDisplay"]</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>xpath=(//input[@name='endBorrow'])[89]<datalist><option>xpath=(//input[@name='endBorrow'])[89]</option><option>//form[89]/input[2]</option></datalist></td><td></td>
+</tr>
+</tbody></table>
+</body>
+</html>

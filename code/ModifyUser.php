@@ -57,7 +57,10 @@ if (isset($_SESSION['isAdmin_user']) && $_SESSION['isAdmin_user'] == 1 && isset(
                 if ($userController->modifyPassword($_POST['password'], $_POST['passwordrepeat']) == false) {
                     $url = 'DetailUser.php?id_user_toDisplay=' . $currentUser->getIdUser();
                     header("refresh:2;url=$url");
-                    $erreur = "<p> Les deux mots de passe ne correspondent pas <p/>";
+
+                    echo "<p> Les deux mots de passe ne correspondent pas <p/>";
+                    echo "<p> Vous allez etre rediriges dans 2 secondes.. <p/>";
+
                 } else {
                     header('Location: DetailUser.php?id_user_toDisplay=' . $currentUser->getIdUser());
                 }

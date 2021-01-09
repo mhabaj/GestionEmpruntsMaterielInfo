@@ -4,10 +4,11 @@ require_once(__DIR__ ."/../Controller/DataBase.php");
 
 /**
  * Class EquipmentDAO
+ *
+ * @author Alhabaj Mahmod, Anica Sean, Belda Tom, Ingarao Adrien, Maggouh Naoufal, Ung Alexandre
  */
 class EquipmentDAO
 {
-
 
     /**
      * EquipmentDAO constructor.

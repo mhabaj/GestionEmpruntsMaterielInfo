@@ -12,6 +12,12 @@ use function PHPUnit\Framework\assertEquals;
 use function PHPUnit\Framework\assertNotEquals;
 use function PHPUnit\Framework\assertSame;
 
+/**
+ * Class UserControllerTest
+ * Unitary and integration test for class UserControllerTest
+ * @covers EquipmentController
+ * @author Alhabaj Mahmod, Anica Sean, Belda Tom, Ingarao Adrien, Maggouh Naoufal, Ung Alexandre
+ */
 class UserControllerTest extends TestCase
 {
 
@@ -19,6 +25,7 @@ class UserControllerTest extends TestCase
     public static $idBorrow;
 
     /**
+     * test valid modification of a password of a user
      * @covers EquipmentController::createNewEquipment
      * @dataProvider providerValidModifyPassword
      * @param $passwordToChange
@@ -44,6 +51,7 @@ class UserControllerTest extends TestCase
     }
 
     /**
+     * test invalid modification of a password of a user
      * @covers       EquipmentController::createNewEquipment
      * @dataProvider providerBadValuesModifyPassword
      * @param $passwordToChange
@@ -71,6 +79,7 @@ class UserControllerTest extends TestCase
     }
 
     /**
+     * test valid modification of a user
      * @covers       EquipmentController::ModifyUser
      * @dataProvider providerValidModifyUser
      * @param $id
@@ -105,6 +114,7 @@ class UserControllerTest extends TestCase
 
 
     /**
+     * test valid creation of a user
      * @covers UserController::createUser
      * @dataProvider providerValidCreateUser
      * @param $matricule
@@ -137,7 +147,8 @@ class UserControllerTest extends TestCase
     /***********************************************************************************************************************************************************************************/
 
     /**
-     * @return User|null
+     * return id of the last inserted user
+     * @return int id
      */
     public static function getLastInsertedBorrowId(): int
     {
@@ -152,6 +163,10 @@ class UserControllerTest extends TestCase
 
     }
 
+    /**
+     * return id of the last inserted device
+     * @return int id
+     */
     public static function getLastInsertedDeviceId(): int
     {
         $bdd = new DataBase();
@@ -163,6 +178,7 @@ class UserControllerTest extends TestCase
         $result = $stmt->fetch();
         return $result['id'];
     }
+
 
     public static function setUpBeforeClass(): void
     {
@@ -188,10 +204,11 @@ class UserControllerTest extends TestCase
         $dataBase->purgeDatabase();
     }
 
-
+    /**
+     * test the end of reservation of a borrow
+     */
     public function testEndBorrow(): void
     {
-
         $uc = new UserController(UserControllerTest::$idUser);
 
         $borrow = new Borrow("XX100", "2100/01/01");
@@ -215,10 +232,10 @@ class UserControllerTest extends TestCase
         $this->expectException(Exception::class);
 
         Functions::checkReservationDate($result['enddate_borrow']);
-
     }
 
     /**
+     * test valid creation of a user
      * @covers UserController::createUser
      * @dataProvider providerValidCreateUser2
      * @param $matricule
@@ -237,17 +254,18 @@ class UserControllerTest extends TestCase
         $userController->createUser($matricule, $password, $passwordRepeat, $email, $lastname, $name, $phone, $isAdmin);
         $user = $userController->getUserDAO()->getLastInsertedUser();
 
+        $hashedPassword = sha1($password);
         assertEquals($matricule,$user->getMatriculeUser());
-        assertEquals($password,$user->getPassword());
+        assertEquals($hashedPassword,$user->getPassword());
         assertEquals($email,$user->getEmail());
         assertEquals($lastname,$user->getLastName());
         assertEquals($name,$user->getFirstName());
         assertEquals($phone,$user->getPhone());
         assertEquals($isAdmin,$user->getIsAdmin());
-
     }
 
     /**
+     * test invalid creation of a user
      * @covers UserController::createUser
      * @dataProvider providerInvalidCreateUser2
      * @param $matricule
@@ -279,6 +297,7 @@ class UserControllerTest extends TestCase
 
 
     /**
+     * test valid modification of user
      * @covers       UserController::modifyUser
      * @param $id
      * @param $matricule
@@ -309,6 +328,7 @@ class UserControllerTest extends TestCase
     }
 
     /**
+     * test invalid modification of a user
      * @covers UserController::modifyUser
      * @dataProvider providerInvalidModifyUser2
      * @param $id
@@ -335,6 +355,7 @@ class UserControllerTest extends TestCase
     }
 
     /**
+     * test valid modification of a password
      * @covers       UserController::modifyPassword
      * @dataProvider providerValidModifyPassword
      * @param $password
@@ -352,6 +373,7 @@ class UserControllerTest extends TestCase
     }
 
     /**
+     * test invalid modification of a password
      * @covers UserController::modifyPassword
      * @dataProvider providerInvalidModifyPassword2
      * @param $password
@@ -461,7 +483,7 @@ class UserControllerTest extends TestCase
         ];
     }
 
-    public function providerValidStartBorrow()
+    public function providerValidStartBorrow(): array
     {
         return[
             ["AP154", "2021/10/12", "1"]

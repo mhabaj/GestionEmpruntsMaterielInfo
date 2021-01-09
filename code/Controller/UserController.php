@@ -1,13 +1,17 @@
 <?php
-require_once(__DIR__ ."/../Controller/Functions.php");
+require_once(__DIR__ . "/../Controller/Functions.php");
 
-require_once(__DIR__ ."/../ControllerDAO/BorrowDAO.php");
-require_once(__DIR__ ."/../ControllerDAO/UserDAO.php");
-require_once(__DIR__ ."/../Controller/EquipmentController.php");
-require_once(__DIR__ ."/../Controller/BorrowController.php");
+require_once(__DIR__ . "/../ControllerDAO/BorrowDAO.php");
+require_once(__DIR__ . "/../ControllerDAO/UserDAO.php");
+require_once(__DIR__ . "/../Controller/EquipmentController.php");
+require_once(__DIR__ . "/../Controller/BorrowController.php");
 
 /**
+ * Manages and performes actions on/by a User object. Uses a userDAO class.
  * Class UserController
+ *
+ * @author Alhabaj Mahmod, Anica Sean, Belda Tom, Ingarao Adrien, Maggouh Naoufal, Ung Alexandre.
+ *
  */
 class UserController
 {
@@ -24,14 +28,15 @@ class UserController
 
     /**
      * UserController constructor.
-     * @param int|null $id for userID or "void" for empty object
+     *
+     * @param int|null $id for userID or nothing to only initialize the UserDAO Class
      */
     public function __construct(int $id = null)
     {
         if ($id == null) {
             $this->_userDAO = new UserDAO();
         } else {
-            if (is_int($id)) {
+            if (is_numeric($id)) {
                 $this->_userDAO = new UserDAO();
                 $this->_user = $this->_userDAO->getUserByID($id);
             }
@@ -39,7 +44,9 @@ class UserController
     }
 
     /**
-     * @return bool
+     * Destroys session and it's variables.
+     *
+     * @return void
      */
     public function disconnect(): void
     {
@@ -48,12 +55,15 @@ class UserController
     }
 
     /**
+     * Starts a borrow using the ref_equip, endDate, quantity for a given IdUser
+     *
      * @param EquipmentController $equipmentController
-     * @param $ref_equip_toBorrow
-     * @param $dateFin
-     * @param $quantity
-     * @param $idUser
-     * @return bool Object, else null
+     * @param                     $ref_equip_toBorrow
+     * @param                     $dateFin
+     * @param                     $quantity
+     * @param                     $idUser
+     *
+     * @return bool true if borrow created successfully, else false.
      * PREC : quantity > 0 && reservation date after current server date
      * @throws Exception
      */
@@ -72,13 +82,20 @@ class UserController
                 }
                 return true;
 
+            } else {
+                throw new Exception("Reservation Impossible: quantite de materiel disponible insuffisante");
+
             }
+
         }
         return false;
     }
 
     /**
+     * Ends a borrow given it's ID for the currentUser
+     *
      * @param $id_borrow_toDel
+     *
      * @throws Exception
      */
     public function endBorrow($id_borrow_toDel)
@@ -100,6 +117,9 @@ class UserController
 
 
     /**
+     *
+     * Registers a new User into the database.
+     *
      * @param $matricule
      * @param $password
      * @param $passwordRepeat
@@ -108,6 +128,7 @@ class UserController
      * @param $name
      * @param $phone
      * @param $isAdmin
+     *
      * @return bool
      * @throws Exception
      */
@@ -145,6 +166,8 @@ class UserController
 
 
     /**
+     * Modifies a user given it's ID
+     *
      * @param $id
      * @param $matricule
      * @param $email
@@ -152,11 +175,11 @@ class UserController
      * @param $name
      * @param $phone
      * @param $isAdmin
+     *
      * @return bool
      * @throws Exception
      */
-    public
-    function modifyUser($id, $matricule, $email, $lastname, $name, $phone, $isAdmin): bool
+    public function modifyUser($id, $matricule, $email, $lastname, $name, $phone, $isAdmin): bool
     {
 
         if (Functions::checkMatricule($matricule) == true
@@ -179,8 +202,11 @@ class UserController
     }
 
     /**
+     * Modifies current user password's
+     *
      * @param $password
      * @param $passwordRepeat
+     *
      * @return bool
      * @throws Exception
      */
@@ -203,8 +229,7 @@ class UserController
     /**
      * @return mixed
      */
-    public
-    function getUser(): ?User
+    public function getUser(): ?User
     {
         return $this->_user;
     }

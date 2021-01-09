@@ -25,7 +25,7 @@
                 </li>
                 <li>
                         <form method="GET" action="Disconnect.php" enctype="multipart/form-data">
-                            <button class="btn btn-danger" type="submit" name="disconnect">SIGN OUT</button>
+                            <button class="btn btn-danger" type="submit" name="disconnect">Deconnexion</button>
                         </form>
 
                 </li>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta content="text/html; charset=UTF-8" http-equiv="content-type" />
+	<title>tests sur les utilisateurs</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">modifier un utilisateur</td></tr>
+</thead>
+<tbody>
+<tr><td>open</td><td>http://localhost:63342/Index.php/code/DetailUser.php?id_user_toDisplay=3<datalist><option>http://localhost:63342/Index.php/code/DetailUser.php?id_user_toDisplay=3</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>name=modifyUser<datalist><option>name=modifyUser</option><option>//input[@name='modifyUser']</option><option>//input</option><option>css=input[name="modifyUser"]</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>name=phone<datalist><option>name=phone</option><option>//input[@name='phone']</option><option>//input[5]</option><option>css=input[name="phone"]</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>name=phone<datalist><option>name=phone</option><option>//input[@name='phone']</option><option>//input[5]</option><option>css=input[name="phone"]</option></datalist></td><td>694658988</td>
+</tr>
+<tr><td>click</td><td>name=submitModification<datalist><option>name=submitModification</option><option>//button[@name='submitModification']</option><option>//button</option><option>css=button[name="submitModification"]</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>name=phone<datalist><option>name=phone</option><option>//input[@name='phone']</option><option>//input[5]</option><option>css=input[name="phone"]</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>name=phone<datalist><option>name=phone</option><option>//input[@name='phone']</option><option>//input[5]</option><option>css=input[name="phone"]</option></datalist></td><td>0694658988</td>
+</tr>
+<tr><td>click</td><td>name=submitModification<datalist><option>name=submitModification</option><option>//button[@name='submitModification']</option><option>//button</option><option>css=button[name="submitModification"]</option></datalist></td><td></td>
+</tr>
+</tbody></table>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">modifier le mot de passe</td></tr>
+</thead>
+<tbody>
+<tr><td>open</td><td>http://localhost:63342/Index.php/code/DetailUser.php?id_user_toDisplay=3<datalist><option>http://localhost:63342/Index.php/code/DetailUser.php?id_user_toDisplay=3</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>name=modifyPassword<datalist><option>name=modifyPassword</option><option>//input[@name='modifyPassword']</option><option>//form[2]/input</option><option>css=input[name="modifyPassword"]</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>name=password<datalist><option>name=password</option><option>//input[@name='password']</option><option>//input</option><option>css=input[name="password"]</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>name=password<datalist><option>name=password</option><option>//input[@name='password']</option><option>//input</option><option>css=input[name="password"]</option></datalist></td><td>aled123</td>
+</tr>
+<tr><td>click</td><td>//form<datalist><option>//form</option><option>css=form</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>name=passwordrepeat<datalist><option>name=passwordrepeat</option><option>//input[@name='passwordrepeat']</option><option>//input[2]</option><option>css=input[name="passwordrepeat"]</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>name=passwordrepeat<datalist><option>name=passwordrepeat</option><option>//input[@name='passwordrepeat']</option><option>//input[2]</option><option>css=input[name="passwordrepeat"]</option></datalist></td><td>aled123</td>
+</tr>
+<tr><td>click</td><td>name=submitModificationMdp<datalist><option>name=submitModificationMdp</option><option>//button[@name='submitModificationMdp']</option><option>//button</option><option>css=button[name="submitModificationMdp"]</option></datalist></td><td></td>
+</tr>
+</tbody></table>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">consulter l'historique de l'utilisateur</td></tr>
+</thead>
+<tbody>
+<tr><td>open</td><td>http://localhost:63342/Index.php/code/DetailUser.php?id_user_toDisplay=3<datalist><option>http://localhost:63342/Index.php/code/DetailUser.php?id_user_toDisplay=3</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>name=History<datalist><option>name=History</option><option>//input[@name='History']</option><option>//form[3]/input</option><option>css=input[name="History"]</option></datalist></td><td></td>
+</tr>
+</tbody></table>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">créer un utilisateur</td></tr>
+</thead>
+<tbody>
+<tr><td>click</td><td>xpath=(//button[@name='startSearchingUser'])[2]<datalist><option>xpath=(//button[@name='startSearchingUser'])[2]</option><option>//form[5]/button</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>name=matricule<datalist><option>name=matricule</option><option>//input[@name='matricule']</option><option>//input</option><option>css=input[name="matricule"]</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>name=matricule<datalist><option>name=matricule</option><option>//input[@name='matricule']</option><option>//input</option><option>css=input[name="matricule"]</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>name=matricule<datalist><option>name=matricule</option><option>//input[@name='matricule']</option><option>//input</option><option>css=input[name="matricule"]</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>name=matricule<datalist><option>name=matricule</option><option>//input[@name='matricule']</option><option>//input</option><option>css=input[name="matricule"]</option></datalist></td><td>admin05</td>
+</tr>
+<tr><td>click</td><td>name=password<datalist><option>name=password</option><option>//input[@name='password']</option><option>//input[2]</option><option>css=input[name="password"]</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>name=password<datalist><option>name=password</option><option>//input[@name='password']</option><option>//input[2]</option><option>css=input[name="password"]</option></datalist></td><td>admin</td>
+</tr>
+<tr><td>click</td><td>name=passwordrepeat<datalist><option>name=passwordrepeat</option><option>//input[@name='passwordrepeat']</option><option>//input[3]</option><option>css=input[name="passwordrepeat"]</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>name=passwordrepeat<datalist><option>name=passwordrepeat</option><option>//input[@name='passwordrepeat']</option><option>//input[3]</option><option>css=input[name="passwordrepeat"]</option></datalist></td><td>admin</td>
+</tr>
+<tr><td>click</td><td>name=email<datalist><option>name=email</option><option>//input[@name='email']</option><option>//input[4]</option><option>css=input[name="email"]</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>name=email<datalist><option>name=email</option><option>//input[@name='email']</option><option>//input[4]</option><option>css=input[name="email"]</option></datalist></td><td>test123@gmail.com</td>
+</tr>
+<tr><td>click</td><td>name=lastname<datalist><option>name=lastname</option><option>//input[@name='lastname']</option><option>//input[5]</option><option>css=input[name="lastname"]</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>name=lastname<datalist><option>name=lastname</option><option>//input[@name='lastname']</option><option>//input[5]</option><option>css=input[name="lastname"]</option></datalist></td><td>mylene</td>
+</tr>
+<tr><td>click</td><td>name=name<datalist><option>name=name</option><option>//input[@name='name']</option><option>//input[6]</option><option>css=input[name="name"]</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>name=name<datalist><option>name=name</option><option>//input[@name='name']</option><option>//input[6]</option><option>css=input[name="name"]</option></datalist></td><td>micoton</td>
+</tr>
+<tr><td>click</td><td>name=phone<datalist><option>name=phone</option><option>//input[@name='phone']</option><option>//input[7]</option><option>css=input[name="phone"]</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>name=phone<datalist><option>name=phone</option><option>//input[@name='phone']</option><option>//input[7]</option><option>css=input[name="phone"]</option></datalist></td><td>0694789589</td>
+</tr>
+<tr><td>click</td><td>name=administrateur<datalist><option>name=administrateur</option><option>//input[@name='administrateur']</option><option>//label[9]/input</option><option>css=input[name="administrateur"]</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>name=submitInscription<datalist><option>name=submitInscription</option><option>//button[@name='submitInscription']</option><option>//button</option><option>css=button[name="submitInscription"]</option></datalist></td><td></td>
+</tr>
+<tr><td>open</td><td>http://localhost:63342/Index.php/code/DashBoard.php<datalist><option>http://localhost:63342/Index.php/code/DashBoard.php</option></datalist></td><td></td>
+</tr>
+</tbody></table>
+</body>
+</html>

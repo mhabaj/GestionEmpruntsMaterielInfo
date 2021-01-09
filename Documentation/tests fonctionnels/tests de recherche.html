@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta content="text/html; charset=UTF-8" http-equiv="content-type" />
+	<title>tests de recherche</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">rechercher équipement par nom</td></tr>
+</thead>
+<tbody>
+<tr><td>open</td><td>http://localhost:63342/Index.php/code/DashBoard.php<datalist><option>http://localhost:63342/Index.php/code/DashBoard.php</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>name=EquipmentToSearch<datalist><option>name=EquipmentToSearch</option><option>//input[@name='EquipmentToSearch']</option><option>//input</option><option>css=input[name="EquipmentToSearch"]</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>name=EquipmentToSearch<datalist><option>name=EquipmentToSearch</option><option>//input[@name='EquipmentToSearch']</option><option>//input</option><option>css=input[name="EquipmentToSearch"]</option></datalist></td><td>Macbook Air</td>
+</tr>
+<tr><td>click</td><td>name=startSearching<datalist><option>name=startSearching</option><option>//button[@name='startSearching']</option><option>//form[2]/button</option><option>css=button[name="startSearching"]</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>//div<datalist><option>//div</option><option>css=div</option></datalist></td><td></td>
+</tr>
+</tbody></table>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">rechercher équipement par référence</td></tr>
+</thead>
+<tbody>
+<tr><td>open</td><td>http://localhost:63342/Index.php/code/DashBoard.php<datalist><option>http://localhost:63342/Index.php/code/DashBoard.php</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>id=radio_ref<datalist><option>id=radio_ref</option><option>//input[@id='radio_ref']</option><option>//input[3]</option><option>css=#radio_ref</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>name=EquipmentToSearch<datalist><option>name=EquipmentToSearch</option><option>//input[@name='EquipmentToSearch']</option><option>//input</option><option>css=input[name="EquipmentToSearch"]</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>name=EquipmentToSearch<datalist><option>name=EquipmentToSearch</option><option>//input[@name='EquipmentToSearch']</option><option>//input</option><option>css=input[name="EquipmentToSearch"]</option></datalist></td><td>XX111</td>
+</tr>
+<tr><td>click</td><td>name=startSearching<datalist><option>name=startSearching</option><option>//button[@name='startSearching']</option><option>//form[2]/button</option><option>css=button[name="startSearching"]</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>//div<datalist><option>//div</option><option>css=div</option></datalist></td><td></td>
+</tr>
+</tbody></table>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">rechercher un utilisateur</td></tr>
+</thead>
+<tbody>
+<tr><td>open</td><td>http://localhost:63342/Index.php/code/DashBoard.php<datalist><option>http://localhost:63342/Index.php/code/DashBoard.php</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>name=UserToSearch<datalist><option>name=UserToSearch</option><option>//input[@name='UserToSearch']</option><option>//form[4]/input</option><option>css=input[name="UserToSearch"]</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>name=UserToSearch<datalist><option>name=UserToSearch</option><option>//input[@name='UserToSearch']</option><option>//form[4]/input</option><option>css=input[name="UserToSearch"]</option></datalist></td><td>admin01</td>
+</tr>
+<tr><td>click</td><td>name=startSearchingUser<datalist><option>name=startSearchingUser</option><option>//button[@name='startSearchingUser']</option><option>//form[4]/button</option><option>css=button[name="startSearchingUser"]</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>//a[11]/div<datalist><option>//a[11]/div</option></datalist></td><td></td>
+</tr>
+</tbody></table>
+</body>
+</html>
